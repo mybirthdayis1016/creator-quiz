@@ -419,6 +419,54 @@
   }
 
   .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+  /* ── BLK Warning Block ── */
+  .blk-warn {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin-bottom: 1.625rem;
+    position: relative;
+  }
+  .blk-warn-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    margin-bottom: .625rem;
+  }
+  .blk-warn-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    line-height: 1.5;
+  }
+  .blk-warn-txt {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: .875rem;
+  }
+  .blk-warn-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .blk-warn-step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .blk-warn-num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 500;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .blk-warn-stxt { font-size: 13px; line-height: 1.7; color: var(--text-secondary); }
 
   /* ── Mobile ── */
   @media (max-width: 480px) {
@@ -492,6 +540,14 @@
       <div class="sys-lbl">你的專屬簡單系統</div>
       <div class="sys-title" id="sys-title"></div>
       <div class="sys-txt" id="sys-txt"></div>
+    </div>
+
+
+    <div class="blk-warn" id="blk-warn" style="display:none">
+      <div class="blk-warn-tag">老陳老師特別提醒你</div>
+      <div class="blk-warn-title" id="blk-warn-title"></div>
+      <div class="blk-warn-txt" id="blk-warn-txt"></div>
+      <div class="blk-warn-steps" id="blk-warn-steps"></div>
     </div>
 
     <hr class="divider">
@@ -742,7 +798,6 @@ function getDims() {
 }
 
 function getType(d) {
-  if (d.BLK >= 3.5) return 'blocked';
   if (d.ID  >= 3.5) return 'compound';
   const E=d.E>=3.5, N=d.N>=3.5, F=d.F>=3.5, J=d.J>=3.5;
   if (E && N)       return 'visionary';
@@ -753,6 +808,37 @@ function getType(d) {
   if (!E && !F && J)return 'systematic';
   return 'explorer';
 }
+
+
+const BLK_WARN = {
+  high_fear: {
+    title: '你有一個隱藏的煞車——害怕被看見',
+    txt: '你的個性特質非常清晰，但你有一個很強的心理阻力：害怕發出去被批評、被忽視、或被誤解。這個煞車會讓你即使知道該怎麼做，還是動不了。老陳老師看過太多有才華的創作者，就是卡在這裡。',
+    steps: [
+      '先發給一個你信任的人看，不是發給所有人——從一個人開始，習慣「被看見」這件事。',
+      '告訴自己：第一篇的目的不是好，是「存在」。存在了，才有下一篇。',
+      '每次發完之後，不管有沒有人回應，都算完成一次——用完成次數衡量自己，不用回應數。'
+    ]
+  },
+  high_notready: {
+    title: '你有一個隱藏的煞車——覺得自己還沒準備好',
+    txt: '你的個性特質非常清晰，但你有一個很強的習慣：等自己更好、更準備好、更有把握再開始。老陳老師告訴你一個殘酷的真相：這個「準備好」的感覺永遠不會來，因為你的標準會跟著你一起成長。',
+    steps: [
+      '設定一個「夠了就發」的標準，不是「完美才發」——例如：能讓一個人看懂，就夠了。',
+      '把你現在的程度記錄下來發出去，一年後回頭看，你會慶幸你當時發了。',
+      '找一個比你晚開始、但已經在做的人，問他：「你當時覺得準備好了嗎？」答案幾乎都是沒有。'
+    ]
+  },
+  both: {
+    title: '你有兩個隱藏的煞車——完美主義加上害怕被看見',
+    txt: '你的個性特質非常清晰，但你同時有兩個強烈的阻力：覺得自己還不夠好，又害怕發出去被批評。這兩個加在一起，會讓你一直停在「準備」的狀態，永遠踏不出去。老陳老師看過最多的創作者困境，就是這個組合。',
+    steps: [
+      '今天只做一件事：寫三句話，不用發，先讓「動」這個動作存在。明天再寫三句，第三天才考慮發。',
+      '把你的第一篇設定為「只給一個人看」——不是發給所有人，只傳給一個你信任的朋友，先從這裡開始。',
+      '記住：你現在的「不夠好」，對還沒開始的人來說，已經是「遠遠超前」了。'
+    ]
+  }
+};
 
 function showResult() {
   const d = getDims();
@@ -789,6 +875,33 @@ function showResult() {
     c.innerHTML = '<div class="dim-top"><div class="dim-name">'+label+'</div><div class="dim-pct">'+pct+'%</div></div><div class="dim-bg"><div class="dim-fill" style="width:'+pct+'%"></div></div>';
     dg.appendChild(c);
   });
+
+
+  // BLK warning block
+  const blkWarn = document.getElementById('blk-warn');
+  const highFear = d.BLK >= 3.5 && ans[15] >= 4;
+  const highNotReady = d.BLK >= 3.5 && ans[14] >= 4;
+  let warnKey = null;
+  if (highFear && highNotReady) warnKey = 'both';
+  else if (highFear) warnKey = 'high_fear';
+  else if (highNotReady) warnKey = 'high_notready';
+
+  if (warnKey) {
+    const W = BLK_WARN[warnKey];
+    document.getElementById('blk-warn-title').textContent = W.title;
+    document.getElementById('blk-warn-txt').textContent = W.txt;
+    const ws = document.getElementById('blk-warn-steps');
+    ws.innerHTML = '';
+    W.steps.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'blk-warn-step';
+      div.innerHTML = '<div class="blk-warn-num">'+(i+1)+'</div><div class="blk-warn-stxt">'+s+'</div>';
+      ws.appendChild(div);
+    });
+    blkWarn.style.display = 'block';
+  } else {
+    blkWarn.style.display = 'none';
+  }
 
   const cg = document.getElementById('ctype-grid');
   cg.innerHTML = '';
