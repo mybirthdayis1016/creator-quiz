@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>創作者定位測驗 | 10XUE 老陳老師</title>
+<meta name="description" content="回答16個問題，找出你獨一無二的創作者定位與專屬簡單系統。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f5f5f3;
+    --text: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #9b9b9b;
+    --border: rgba(0,0,0,0.12);
+    --border-hover: rgba(0,0,0,0.28);
+    --border-active: rgba(0,0,0,0.45);
+    --accent: #1a1a1a;
+    --accent-text: #ffffff;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1a;
+      --bg-secondary: #252525;
+      --text: #f0f0f0;
+      --text-secondary: #a0a0a0;
+      --text-tertiary: #6b6b6b;
+      --border: rgba(255,255,255,0.12);
+      --border-hover: rgba(255,255,255,0.28);
+      --border-active: rgba(255,255,255,0.5);
+      --accent: #f0f0f0;
+      --accent-text: #1a1a1a;
+    }
+  }
+
+  html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .site-logo {
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: .5rem;
+  }
+  .site-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border);
+    margin: .75rem auto 0;
+  }
+
+  /* ── Progress ── */
+  .prog-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+  .prog-bg {
+    background: var(--bg-secondary);
+    border-radius: 100px;
+    height: 3px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: var(--text);
+    border-radius: 100px;
+    transition: width .4s ease;
+  }
+
+  /* ── Question ── */
+  .q-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 3px 10px;
+    margin-bottom: 1rem;
+  }
+  .q-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: .4rem;
+  }
+  .q-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 1.875rem;
+  }
+
+  /* ── Likert ── */
+  .likert-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-bottom: .625rem;
+  }
+  .likert-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+  .lk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 4px 11px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lk:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+  .lk.sel { border-color: var(--border-active); background: var(--bg-secondary); }
+  .lk.sel .lk-dot { background: var(--accent); border-color: var(--accent); }
+  .lk-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-hover);
+    transition: all .15s;
+  }
+  .lk-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+  .lk-word {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.35;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ── Nav buttons ── */
+  .nav { display: flex; justify-content: space-between; align-items: center; }
+  .btn {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 24px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 0.5px solid var(--border-hover);
+    background: transparent;
+    color: var(--text);
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--bg-secondary); }
+  .btn.pri {
+    background: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent);
+  }
+  .btn.pri:hover { opacity: .85; }
+  .btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
+
+  /* ── Result ── */
+  .result { display: none; }
+
+  .res-hero {
+    text-align: center;
+    padding: 2rem 0 2rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .res-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: var(--text-secondary);
+    margin-bottom: .875rem;
+  }
+  .trait-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.125rem;
+  }
+  .trait {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 11px;
+    border-radius: 100px;
+    border: 0.5px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .res-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: .5rem;
+  }
+  .res-tagline {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  /* ── Section ── */
+  .sec { margin-bottom: 1.625rem; }
+  .sec-lbl {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    margin-bottom: .5rem;
+  }
+  .sec-txt { font-size: 14px; line-height: 1.85; }
+
+  /* ── Dim grid ── */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 1.625rem;
+  }
+  .dim-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+  }
+  .dim-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 7px;
+  }
+  .dim-name { font-size: 12px; font-weight: 500; }
+  .dim-pct { font-size: 11px; color: var(--text-secondary); }
+  .dim-bg {
+    background: var(--bg);
+    border-radius: 100px;
+    height: 4px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
+  .dim-fill { height: 100%; border-radius: 100px; background: var(--text); }
+
+  /* ── Insight box ── */
+  .insight {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin-bottom: 1.625rem;
+  }
+  .insight-lbl {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    margin-bottom: .625rem;
+  }
+  .insight-txt { font-size: 14px; line-height: 1.875; }
+
+  /* ── System box ── */
+  .sys-box {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin-bottom: 1.625rem;
+  }
+  .sys-lbl {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    margin-bottom: .5rem;
+  }
+  .sys-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; }
+  .sys-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+
+  /* ── Content type selector ── */
+  .ctype-grid { display: flex; flex-direction: column; gap: 8px; margin-top: .75rem; }
+  .ctype-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    text-align: left;
+    background: transparent;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ctype-btn:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+  .ctype-btn.active { border-color: var(--border-active); background: var(--bg-secondary); }
+  .ctype-btn.active .ctype-dot { background: var(--accent); border-color: var(--accent); }
+  .ctype-dot {
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-hover);
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: all .15s;
+  }
+  .ctype-info { flex: 1; }
+  .ctype-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .ctype-eg { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+
+  /* ── Steps ── */
+  .steps-wrap { display: none; margin-bottom: 1.625rem; }
+  .steps-wrap.show { display: block; }
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step { display: flex; gap: 13px; }
+  .step-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-txt { font-size: 14px; line-height: 1.75; }
+
+  /* ── CTA ── */
+  .cta-box {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    margin-top: .5rem;
+  }
+  .cta-eyebrow {
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .1em;
+    color: var(--text-secondary);
+    margin-bottom: .875rem;
+  }
+  .cta-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px; font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: .75rem;
+  }
+  .cta-sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: var(--accent-text);
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity .15s;
+  }
+  .cta-btn:hover { opacity: .85; }
+
+  .restart {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: none;
+    font-family: 'Noto Sans TC', sans-serif;
+    width: 100%;
+  }
+
+  .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+
+  /* ── Mobile ── */
+  @media (max-width: 480px) {
+    .page-wrap { padding: 1.5rem 1rem 4rem; }
+    .q-text { font-size: 17px; }
+    .lk-word { font-size: 10px; }
+    .dim-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <div class="site-logo">10XUE · 老陳老師</div>
+    <div class="site-divider"></div>
+  </header>
+
+  <!-- Quiz -->
+  <div id="quiz">
+    <div class="prog-row">
+      <span id="chap-name"></span>
+      <span id="q-counter"></span>
+    </div>
+    <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="q-tag" id="q-tag"></div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-hint" id="q-hint"></div>
+    <div class="likert-labels">
+      <span>← 完全不像我</span>
+      <span>完全像我 →</span>
+    </div>
+    <div class="likert-row" id="likert-row"></div>
+    <div class="nav">
+      <button class="btn" id="btn-back" onclick="go(-1)">← 上一題</button>
+      <button class="btn pri" id="btn-next" onclick="go(1)" disabled>下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result" id="result">
+    <div class="res-hero">
+      <div class="res-eyebrow">你的創作者原型</div>
+      <div class="trait-row" id="trait-row"></div>
+      <div class="res-name" id="res-name"></div>
+      <div class="res-tagline" id="res-tagline"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-lbl">你現在的狀態</div>
+      <div class="sec-txt" id="res-status"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-lbl" style="margin-bottom:10px">你的六個維度</div>
+    <div class="dim-grid" id="dim-grid"></div>
+
+    <div class="insight">
+      <div class="insight-lbl">老陳老師說</div>
+      <div class="insight-txt" id="res-insight"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec">
+      <div class="sec-lbl">你的核心優勢</div>
+      <div class="sec-txt" id="res-diff"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="sys-box">
+      <div class="sys-lbl">你的專屬簡單系統</div>
+      <div class="sys-title" id="sys-title"></div>
+      <div class="sys-txt" id="sys-txt"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="sec-lbl">選擇你主要想分享的內容類型，看你的具體行動步驟</div>
+    <div class="ctype-grid" id="ctype-grid"></div>
+
+    <div class="steps-wrap" id="steps-wrap">
+      <div class="sec-lbl" style="margin-bottom:.875rem">你的三個具體步驟</div>
+      <div class="steps" id="steps"></div>
+    </div>
+
+    <hr class="divider">
+    <div class="cta-box">
+      <div class="cta-eyebrow">老陳老師的訂閱服務</div>
+      <div class="cta-title" id="cta-title"></div>
+      <div class="cta-sub" id="cta-sub"></div>
+      <a class="cta-btn" href="https://10xue.tw" target="_blank">了解訂閱服務 →</a>
+    </div>
+    <button class="restart" onclick="restart()">重新測驗</button>
+  </div>
+
+</div>
+
+<script>
+const WORDS = ['完全不像我','比較不像','有時候像','蠻像的','完全像我'];
+
+const Qs = [
+  {dim:'E',rev:true, ch:'第一章：能量來源',tag:'能量來源',t:'跟一群人相處一整天之後，我需要一個人待著充電。',s:'想想你實際上的感受，不是你覺得應該怎樣。'},
+  {dim:'E',rev:true, ch:'第一章：能量來源',tag:'能量來源',t:'比起很多人留言互動，我更享受一個人慢慢把一篇文章寫好。',s:'哪種狀態讓你更有成就感？'},
+  {dim:'E',rev:false,ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡在網路上認識新朋友、和陌生人聊天。',s:'就算只是文字互動也算，選最像你平常的狀態。'},
+  {dim:'N',rev:false,ch:'第二章：思考方式',tag:'思考方式',t:'看到一件新事物，我第一個想的是「這讓我聯想到什麼」。',s:'不是應該怎麼想，是你真實的第一個念頭。'},
+  {dim:'N',rev:true, ch:'第二章：思考方式',tag:'思考方式',t:'我比較喜歡有步驟、有清單的內容，而不是概念性的思考文章。',s:'在消費別人內容的時候，你偏好哪一種？'},
+  {dim:'N',rev:false,ch:'第二章：思考方式',tag:'思考方式',t:'我常常同時有很多想法，腦袋停不下來。',s:'這是描述你日常的狀態嗎？'},
+  {dim:'F',rev:false,ch:'第三章：決策方式',tag:'決策方式',t:'我希望看完我內容的人，第一個感受是「你懂我」。',s:'比起「我學到東西了」，你更想要哪一種回應？'},
+  {dim:'F',rev:true, ch:'第三章：決策方式',tag:'決策方式',t:'做一個困難決定時，我會先列出優缺點，分析完再決定。',s:'你實際上是這樣做決定的嗎？'},
+  {dim:'F',rev:false,ch:'第三章：決策方式',tag:'決策方式',t:'有人跟我說他的困境，我會先陪他說說感受，而不是馬上給建議。',s:'你通常的第一反應是什麼？'},
+  {dim:'J',rev:false,ch:'第四章：行動方式',tag:'行動方式',t:'我比較喜歡先把計畫想清楚，確定了再動手。',s:'描述你實際做事的方式，不是你理想的方式。'},
+  {dim:'J',rev:false,ch:'第四章：行動方式',tag:'行動方式',t:'沒做完的事情放著，會讓我一直不舒服。',s:'那種「還沒做完」的感覺，對你來說有多強烈？'},
+  {dim:'J',rev:true, ch:'第四章：行動方式',tag:'行動方式',t:'我做事比較隨興，根據當下狀態決定今天做什麼。',s:'這句話像不像你平常的行動模式？'},
+  {dim:'ID',rev:false,ch:'第五章：身份輪廓',tag:'身份輪廓',t:'我很難用一個詞描述自己，因為我同時在做好幾件不同的事。',s:'別人問你「你是做什麼的」，你回答起來容易嗎？'},
+  {dim:'ID',rev:false,ch:'第五章：身份輪廓',tag:'身份輪廓',t:'我有走過一段特別的路，那段經歷讓我變成現在這個人。',s:'不一定是成功故事，困難或轉折也算。'},
+  {dim:'BLK',rev:false,ch:'第六章：起跑狀態',tag:'起跑狀態',t:'我覺得自己還沒準備好，想再多學一點再開始。',s:'誠實選就好，這很常見，不是弱點。'},
+  {dim:'BLK',rev:false,ch:'第六章：起跑狀態',tag:'起跑狀態',t:'我怕發出去沒人看，或被批評，所以一直沒有動。',s:'這個擔心有沒有讓你真的停下來過？'}
+];
+
+const CTYPES = [
+  {key:'knowledge',title:'知識技能型',eg:'設計師、理財規劃師、健身教練、廚師、老師……我有一個專業或技能想分享'},
+  {key:'life',     title:'生活經歷型',eg:'媽媽、旅居者、斜槓工作者、從某個困境走出來的人……我想分享我的生活方式或人生故事'},
+  {key:'creative', title:'創作作品型',eg:'插畫師、攝影師、手工藝者、室內設計師……我有作品要展示'},
+  {key:'opinion',  title:'觀點意見型',eg:'對產業有獨特見解的創業者、有主張的教育者……我對某些事有強烈看法想說出來'},
+  {key:'business', title:'商品服務型',eg:'開店的人、接案者、有課程的老師、顧問……我有產品或服務，想用內容帶客戶'}
+];
+
+const STEPS = {
+  knowledge:{
+    blocked:    ['今天打開手機備忘錄，寫下你最常被人問到的一個問題，把答案用三句話寫下來，不用完整，先讓它存在。','第三天，把這三句話用「大多數人不知道的是___」開頭整理好，發到你最常用的平台。','下週看看有沒有人留言或私訊，他們問的問題就是你下一篇的題目——讀者幫你規劃內容。'],
+    compound:   ['列出你所有的身份和技能標籤，找出「最少人同時擁有」的兩三個組合，那就是你的定位句。','用定位句發一篇自我介紹：「我是一個___×___，我幫___解決___的問題」，這是所有內容的起點。','接下來每週用你最常被問的一個問題做一篇內容，三個月後你會有一個清晰的知識型個人品牌。'],
+    visionary:  ['今天選你這週對你的專業最有感的一個觀點，用「大家都說___，但我覺得其實___」格式寫出來。','發出去，設定每週固定一天是你的「觀點輸出日」，靈感不重要，出現才重要。','每週一個觀點，持續八週，你的受眾會開始期待你的觀點，那就是你的品牌護城河。'],
+    social:     ['選你最近一次幫助某個人解決問題的經歷，用「有個人問我___，我告訴他___，他後來___」格式寫出來。','在結尾問讀者：「你有沒有遇過類似的困惑？」讓你的專業變成對話入口，而不是單向廣播。','每週一個「幫助別人的故事」，三個月後讀者會覺得你不只是專家，更是懂他們的人。'],
+    demonstrator:['今天選一件你最近正在做的專業工作，把做法步驟用三句話寫下來，不需要有結論，過程就是內容。','把「我怎麼做」的過程發出去，真實的工作現場比任何教學都更有說服力。','每週記錄一個正在做的案例進展，讓讀者跟著你一起走，這是最強的信任建立方式。'],
+    insight:    ['選一個你在專業領域裡想了很久但還沒說的洞見，給自己30分鐘寫出來，時間到就發。','不要等到「完整」再發，先發出去，根據讀者反應補充——讀者的問題是最好的編輯。','下週再做一次，七次之後你會有一個深度的知識型內容資產庫。'],
+    empath:     ['選你在專業上曾經最掙扎的一個問題，用「我剛開始的時候以為___，後來才發現___」格式寫出來。','在結尾加：「如果你現在也在這個困惑裡，你不是一個人。」讓你的知識有溫度。','每週一個「我曾經不知道的事」，誠實的知識分享比完美的教學更讓人記住你。'],
+    systematic: ['選你專業領域裡一個可以拆成三步驟的知識點，每週只說一個重點，不超過四百字。','在文章裡加入一個你自己親身遇過的案例，讓這個知識點有人味，不只是乾貨。','在文末問：「你在這個步驟遇到最大的困難是什麼？」讀者的回答就是你下一篇的題目。'],
+    explorer:   ['這週選你最想搞懂的一個專業問題，做一個小實驗，把「我試了什麼、發現什麼」三句話寫下來發出去。','下週換一個實驗，帶著讀者一起探索你的學習過程，這比教人更真實，也更容易持續。','七週後回頭看，你會發現一兩個最讓你有感的方向，那就是你接下來深耕的主題。']
+  },
+  life:{
+    blocked:    ['今天選這週發生的一件事，哪怕是很小的日常，用三句話寫下你當時的感受，存在備忘錄就好。','第三天，把這三句話加上「如果你也有過這種感覺，你不是一個人」，就這樣發出去。','重複七天，你會發現你的日常比你以為的更有內容——你只是以前沒有把它說出來。'],
+    compound:   ['把你所有的生活角色和身份全部列出來，找出那個「最少人同時擁有」的組合，那就是你的定位。','用「我是一個___×___的人，我想和同樣___的你說說___」這個格式寫一篇自我介紹，發出去。','接下來每週選你身份組合裡最有感的一個角色，說一個那個角色才有的故事，這就是你的差異化。'],
+    visionary:  ['選你對你的生活方式或人生觀最有感的一個觀點，用「大家說___，但我覺得其實___」格式寫出來。','發出去，設定每週固定一天輸出，不管那天有沒有靈感，讓出現變成習慣而不是選擇。','你的生活觀點就是你的品牌，持續出現八週，受眾會開始把你和這個觀點連結在一起。'],
+    social:     ['選你這週最有感受的一件日常小事，用「有一天我___，然後我發現___」格式寫出來，不需要結論。','在結尾問：「你有沒有過這種感覺？」讓你的故事成為對話的開場，而不是一個結束。','每週一個日常故事，三個月後讀者會覺得你是他們生活的一部分，這是最強的社群黏著力。'],
+    demonstrator:['今天記錄你正在過的生活的一個片段，不需要美化，真實的日常比精心策劃的內容更吸引人。','把「我這週做了什麼、遇到什麼、怎麼解決」用三句話寫下來發出去，過程比結果更有故事性。','每週一個生活現場記錄，讓讀者跟著你一起生活，這種陪伴感是任何廣告都買不到的信任。'],
+    insight:    ['選一個你對生活或人生已經想了很久的洞見，給自己30分鐘寫出來，不用完整，時間到就發。','用「我以為___，但後來我發現___」的轉折結構，這是最讓人停下來閱讀的格式。','每週一個洞見，七週後你會有七篇讓人截圖的內容，那就是你的個人品牌資產庫的起點。'],
+    empath:     ['選你走過的一段最難的時期，用「有一段時間，我___，那時候我以為___，後來才明白___」格式寫出來。','在結尾加：「如果你現在也在這個狀態，我想告訴你___。」讓你的故事成為別人的光。','每週一個「我曾經走過的路」，你的傷疤比你的成功更有力量，因為它讓別人覺得自己不孤單。'],
+    systematic: ['把你的生活方式拆成一個可以重複的系統，每週用一篇內容說清楚這個系統的一個環節，不超過四百字。','在每篇文章裡加入你自己的真實案例，讓系統有人味，讀者不只是學你的方法，更是相信你。','在文末問：「你在這個地方的困難是什麼？」讀者的回答就是你下一篇的題目。'],
+    explorer:   ['這週試一件你一直想嘗試的生活方式改變，把「我試了什麼、發現什麼」三句話寫下來發出去。','帶著讀者一起探索，你不需要有答案，誠實地記錄你的過程，這比任何成功學更吸引人。','七週後你會發現哪些生活主題最讓你有感，也最讓讀者有反應，那就是你的定位方向。']
+  },
+  creative:{
+    blocked:    ['今天拍一張你最近做的任何一個作品的照片，哪怕還沒完成，過程中的作品比完成品更吸引人。','在照片旁邊寫三句話：「我在做___，遇到___，我決定___。」就這樣發出去，不需要完美。','重複七天，讓「發出去」這個動作變成習慣，你會發現你的創作過程比成品更有人看。'],
+    compound:   ['把你所有的創作身份列出來，找出那個「最少人同時擁有」的組合，那就是你的差異化定位。','發一篇「我是誰」的內容：「我是一個___×___的創作者，我做的不只是___，我更在乎___。」','接下來每週選你身份組合裡一個面向，說一個只有你才能說的創作故事，這就是你的品牌。'],
+    visionary:  ['選你對你的創作領域最有看法的一個觀點，用「大家做___，但我覺得真正重要的是___」格式寫出來。','在作品旁邊說你的觀點，讓你的作品不只是作品，而是你世界觀的呈現，這才是真正的個人品牌。','每週一個觀點加一個作品，讓你的創作和你的思考一起出現，讀者會同時記住作品和你這個人。'],
+    social:     ['選一個你最近做的作品，說一個它背後的故事：「這個作品是因為___而誕生的，做的過程我感受到___。」','讓你的作品有溫度，讀者不只是欣賞你的技術，更是想認識做出這個作品的那個人。','每週一個「作品背後的故事」，三個月後讀者會覺得和你有情感連結，這比粉絲數更重要。'],
+    demonstrator:['今天拍一段你創作過程的片段，從原材料到完成，讓人看見你怎麼做。','「過程」比「結果」更吸引人，人們想看的不只是你做出來的東西，更是你怎麼做到的——今天就發出去。','每週一個「創作現場」，讓讀者跟著你的手一起走，這是建立粉絲最強的方式之一。'],
+    insight:    ['選一個你在創作領域裡的洞見，給自己30分鐘，把它和一個你的作品放在一起說，時間到就發。','用「這個作品讓我想到___」連結你的作品和你的觀點，讓人看到你的創作深度，不只是表面的美。','每週一個作品加一個洞見，七週後你的內容深度會讓你在同類創作者裡明顯不同。'],
+    empath:     ['選一個你做這個作品時最有感受的時刻，用「做這個的時候，我感覺到___，那讓我想起___」寫出來。','讓你的創作有情感，讀者不只是看作品，更是感受到你在做這個作品時的狀態，這種連結最深。','每週一個「創作時的感受」，你的情感就是你作品最強的詮釋，也是別人無法複製你的原因。'],
+    systematic: ['把你的創作流程拆成三個步驟，每週用一篇內容說清楚其中一個步驟，讓想學你的人知道怎麼開始。','在步驟說明裡加入你自己遇過的問題和解法，讓你的教學有真實感，不只是理論上的流程。','在文末問：「你在這個步驟最大的困難是什麼？」讀者的回答就是你下一篇的題目。'],
+    explorer:   ['這週嘗試一個你從來沒試過的創作方式或材料，把「我試了什麼、發現什麼」三句話寫下來發出去。','帶著讀者一起實驗，你不需要成功，誠實地記錄，失敗的實驗比成功的作品更吸引人看。','七週後你會找到你最有感覺的創作方向，那個過程本身就是你最真實的品牌故事。']
+  },
+  opinion:{
+    blocked:    ['今天選一個你覺得「大家都想錯了」的觀點，不管大小，用三句話把你的想法寫下來，存在備忘錄。','第三天，用「大家說___，但我覺得其實___，因為___」格式整理好，直接發出去。','重複七天，讓「說出你的觀點」這個動作變成習慣，你的觀點就是你最強的創作材料。'],
+    compound:   ['把你所有的身份和背景列出來，找出「最少人同時擁有」的組合，這個組合就是你觀點的可信度來源。','發一篇「我為什麼有資格說這件事」的自我介紹，讓讀者知道你的觀點從哪裡來，信任從這裡建立。','接下來每週從你的身份組合裡選一個角度，說一個只有你才能說的觀點，這就是你無法被取代的聲音。'],
+    visionary:  ['選你這週最有感的一個觀點，用「大家說___，但我覺得其實___，因為___」格式寫出來。','設定每週固定一天發你的觀點，不管那天有沒有靈感，讓出現比靈感更重要，系統優先。','你的觀點就是你的品牌，持續出現八週，受眾會開始把你和這個領域的思考連結在一起。'],
+    social:     ['選一個你觀察到身邊很多人有的困惑或誤解，用「我發現很多人覺得___，但其實___」格式寫出來。','在結尾問：「你也有過這個困惑嗎？」讓你的觀點成為對話的開場，而不是一個獨白。','每週一個「我發現大家誤解了___」，你的觀點會讓讀者覺得你懂他們，這是最強的信任建立。'],
+    demonstrator:['選你最近正在觀察的一個現象，把「我看到___，我做了___，發現___」用三句話寫出來。','用具體例子支撐你的觀點，讓讀者看到你怎麼得出這個結論，而不只是你說你覺得。','每週一個「我的觀察」，讓你的觀點有根據，讀者不只是聽你說，更是跟著你思考。'],
+    insight:    ['選一個你已經想了很久但還沒說的觀點，給自己30分鐘把它寫出來，時間到就發，不要再改。','那個你覺得「還沒準備好說」的觀點，往往是你最有價值的觀點——現在就說，讓讀者告訴你對不對。','每週一個深度觀點，七週後你的內容深度會讓你在你的領域裡成為被人引用的聲音。'],
+    empath:     ['選一個你對某件事的強烈感受，用「這件事讓我很___，因為我親眼看過___，我覺得___」格式寫出來。','讓你的觀點有感受，不只是分析，你的情感投入讓你的觀點比數據更讓人記住。','每週一個「讓我有強烈感受的事」，讀者會感覺到你在乎，這種在乎就是你的品牌。'],
+    systematic: ['把你對某個主題的觀點拆成三層：現象是什麼、原因是什麼、解法是什麼，每週說清楚其中一層。','用這個結構讓你的觀點有邏輯感，讀者不只是「覺得有道理」，更是「知道為什麼有道理」。','在文末問：「你覺得還有什麼原因我沒提到？」讀者的回答會讓你的觀點更完整。'],
+    explorer:   ['這週選一個你想搞清楚的問題，把「我在想___，我目前的想法是___，但我還不確定___」寫出來發出去。','你不需要有答案，帶著讀者一起找答案，比給答案更讓人想追蹤你。','七週後你會找到你最有感的主題方向，那個探索過程就是你最真實的思想型品牌。']
+  },
+  business:{
+    blocked:    ['今天選你的客戶最常問你的一個問題，把答案用三句話寫下來，存在備忘錄，不用發出去。','第三天，把這三句話整理成「你可能不知道___，其實___，所以___」格式，直接發出去。','重複七天，你會發現你每天回答客戶的問題，就是你用不完的內容素材庫。'],
+    compound:   ['列出你提供的服務和你的個人身份組合，找出「最少人同時擁有」的交叉點，那就是你的定位。','發一篇「我為什麼做這個服務」的故事，讓客戶知道你的背景和動機，信任從故事開始不從產品開始。','接下來每週選你客戶最常有的一個困惑，用你獨特的身份視角來解答，這就是你的差異化內容。'],
+    visionary:  ['選你對你的產業或服務最有看法的一個觀點，用「大家都說___，但我做了這麼久發現___」格式寫出來。','讓你的內容有主張，不只是介紹你的服務，而是展示你的世界觀——客戶買的是你的觀點不只是你的產品。','每週一個產業觀點，八週後潛在客戶會覺得你是他們最信任的那個人，轉換率自然提升。'],
+    social:     ['選你最近幫助一個客戶解決問題的故事，用「有個客戶來找我時___，我們一起做了___，結果___」格式寫出來。','不要說你的服務有多好，讓客戶的故事說話——真實的成果比任何廣告都更有說服力。','每週一個客戶故事，三個月後潛在客戶會覺得「我也想要這樣的結果」，主動來找你。'],
+    demonstrator:['今天記錄你工作現場的一個片段——你怎麼服務客戶、你怎麼做決策、你的工作現場長什麼樣。','讓潛在客戶看到你工作的樣子，這種透明度比任何銷售話術都更讓人信任，今天就發出去。','每週一個工作現場記錄，讓客戶在找你之前就已經信任你，這讓你的銷售工作變得非常簡單。'],
+    insight:    ['選一個你在你的領域裡的專業洞見，給自己30分鐘把它寫出來，時間到就發，不要等到完整。','用「大多數人在這件事上的誤解是___，真正的關鍵其實是___」格式，展示你的專業深度。','每週一個專業洞見，七週後潛在客戶會覺得你是這個領域裡最懂他們問題的那個人。'],
+    empath:     ['選你的客戶最常有的一個擔心或恐懼，用「我知道你可能在想___，我自己也曾經___」格式寫出來。','讓你的內容先理解客戶再提供解法——被理解的感覺讓人信任你，信任讓人付錢給你。','每週一個「我理解你的擔心」，你的客戶會覺得你懂他，這種懂是最強的銷售力。'],
+    systematic: ['把你的服務流程拆成三個步驟，每週用一篇內容說清楚其中一步，讓潛在客戶提前了解你怎麼工作。','在每篇文章裡加入一個真實案例，讓你的流程有具體感，讀者不只是理解，更是想親身體驗。','在文末問：「你在這個步驟最大的困惑是什麼？」讀者的回答就是你下一篇內容的題目。'],
+    explorer:   ['這週試一個你從來沒試過的行銷或服務方式，把「我試了什麼、發現什麼」三句話寫下來發出去。','讓潛在客戶看到你持續在進步和實驗，這種成長感讓人覺得跟你合作會越來越好。','七週後你會找到最適合你帶客戶的內容方式，那個方式就是你的內容行銷系統。']
+  }
+};
+
+const TYPES = {
+  blocked:{
+    traits:['等待起跑','完美主義','高度敏感'],
+    name:'蓄勢待發型創作者',tag:'你不是沒準備好，你只是還沒有一個夠簡單的系統',
+    status:'你有想法、也有動機，但每次要動的時候，總有什麼讓你停下來。可能是覺得自己還不夠好，可能是怕沒人看，可能是不知道從哪裡開始。這不是你意志力的問題，是你還沒有一個小到不可能失敗的系統。',
+    insight:'我看過太多人準備了兩年還沒發第一篇。不是他們不夠好，是他們把「開始」這件事想得太重了。你今天寫三句話，明天寫三句話，一個月後你會發現你已經有三十個想法——這比準備兩年更有用。',
+    diff:'你想得比別人深，準備得比別人仔細。一旦你有了一個夠簡單的系統，你的內容品質會讓人驚訝。你缺的不是能力，是一個不需要靠意志力就能啟動的習慣迴路。',
+    sys:'「三句話系統」',systxt:'每天只做一件事：把你今天最想說的一件事，用三句話寫下來。不用完整，不用好看，不用發出去。先讓「每天動一下」這個動作存在七天，再慢慢擴大。你的系統就只有這三句話，越簡單越能持續。',
+    cta:'老陳老師幫你把第一步拆得足夠小',ctas:'訂閱服務裡有「起跑系統」課程，30天從零到第一批固定讀者，每個步驟都簡單到今天就能做。'
+  },
+  compound:{
+    traits:['複合身份','獨特經歷','說不清楚的人'],
+    name:'複合身份型創作者',tag:'你說不清楚自己是誰——那個「說不清楚」就是你的定位',
+    status:'你同時是好幾種人，每次介紹自己都說不完整。你走過別人沒走過的路，但你不確定那值不值得說。你以為模糊是問題，但那個「說不清楚的組合」才是別人無法複製你的原因。',
+    insight:'很多同學來問我：「老師我要選哪個方向？」我說你根本不需要選。你那些說不清楚的部分，就是你最難被取代的地方。你只需要學會把它說清楚。',
+    diff:'世界上沒有另一個人同時有你這些身份、這些故事、這些轉折。這個組合就是你的品牌，你不需要再「選」一個方向，你只需要一個簡單的系統把它說清楚。',
+    sys:'「身份矩陣一句話系統」',systxt:'你的唯一任務是練習說清楚這一句話：「我是一個___×___的人，我幫___做到___。」這句話就是你所有內容的起點。每週用這句話的一個元素做一篇內容，不需要想太多，系統幫你決定做什麼。',
+    cta:'老陳老師幫你把「說不清楚的你」說得讓人記住',ctas:'訂閱服務裡有「身份矩陣工作坊」，一個下午幫你找出你的定位句，以及第一個月的內容計畫。'
+  },
+  visionary:{
+    traits:['外向能量','直覺思考','影響力驅動'],
+    name:'外向願景型創作者',tag:'你天生有磁場，你的想法加上你的人格，就是你的品牌',
+    status:'你充滿想法、享受互動、對未來有強烈的感覺。你不缺創意，你缺的是一個把想法「定期輸出」的系統。你最大的危機是想太多、說太多，卻沒有一個固定頻道讓人持續找到你。',
+    insight:'有想法的人很多，但能持續出現的人很少。你缺的不是創意，是一個讓你不靠靈感也能每週發文的結構。結構建好了，靈感自然會來找你。',
+    diff:'你的差異化不是你說什麼，而是只有你才能那樣說——你的語氣、你的熱情、你看事情的角度，都是別人學不走的。你需要的是一個系統，把這個「只有你」的特質定期送到受眾面前。',
+    sys:'「每週一個觀點系統」',systxt:'每週選一個你這週最有感的觀點，用這個格式輸出：「大家都說___，但我覺得其實是___，因為___。」就這一句話展開，不超過三百字。簡單到你不需要靈感就能做，這就是你的週更系統。',
+    cta:'老陳老師幫你把能量轉化成可持續的影響力',ctas:'訂閱服務裡有「觀點型創作者」的內容系統課程，讓你的想法不再只是想法，而是每週穩定出現的品牌資產。'
+  },
+  social:{
+    traits:['外向能量','情感連結','社群驅動'],
+    name:'外向共鳴型創作者',tag:'你最大的天賦是讓人覺得「你懂我」，而且你享受這個過程',
+    status:'你喜歡互動、在乎別人的感受、享受和人建立連結的過程。你的內容不是要教人什麼，而是要讓人覺得「你說出了我說不出來的話」。你的挑戰是太在乎每個人的感受，反而難以持續輸出。',
+    insight:'你最強的地方是你讓人覺得被懂。但很多共鳴型的創作者都有一個問題：太在乎每個人的感受，結果反而不敢說話。你只需要記住：你不是為了所有人說話，你只是為了那個最需要聽到這句話的人說。',
+    diff:'你的差異化是「讓人感覺被理解」的能力。在充滿資訊的世界裡，能讓人覺得「你懂我」的創作者才是讓人一直回來的那種——這比知識更稀缺。',
+    sys:'「每週一個共鳴故事系統」',systxt:'每週選一件你自己有感受的事，用這個格式寫出來：「那一刻我感覺到___，後來我才明白___。」不需要精心設計，真實感受就是你最強的材料。每週一篇，就這樣。',
+    cta:'老陳老師幫你把情感連結變成穩定的創作系統',ctas:'訂閱服務裡有「共鳴型創作者」的完整路徑，從你的第一個故事，走到讓人信任你、願意為你的內容付費。'
+  },
+  demonstrator:{
+    traits:['外向能量','邏輯思考','實戰示範'],
+    name:'外向實戰型創作者',tag:'你最能讓人信服的方式，是讓他們看到你怎麼做',
+    status:'你外向、有邏輯、做事有條理。你最有說服力的時候不是講道理，而是直接示範——「你看，我就是這樣做的，你也可以。」你的挑戰是你的「做」比「說」多，但創作需要你把做的過程說出來。',
+    insight:'你每天在做的事情，就是你最好的內容素材。你不需要另外準備什麼「值得說的事」，你只需要養成一個習慣：做了什麼，記下來，發出去。就這樣。',
+    diff:'你的差異化是「讓人看見過程」。在一個到處都是結論的世界，有人願意展示自己怎麼做、做錯什麼、怎麼調整——這種透明度是最強的信任建立方式。',
+    sys:'「行動記錄系統」',systxt:'每週記錄你正在做的一件事：你做了什麼、遇到什麼問題、你怎麼解決的。不需要有結論，不需要完美，過程本身就是內容。每週一次，固定格式，就這樣。',
+    cta:'老陳老師幫你把你的行動變成別人想追蹤的內容',ctas:'訂閱服務裡有「實戰型創作者」的內容策略課程，教你如何把你每天在做的事，變成讓人一直回來看的系列內容。'
+  },
+  insight:{
+    traits:['內向能量','直覺思考','深度洞見'],
+    name:'深度洞見型創作者',tag:'你看到的東西，是大多數人沒有注意到的層次',
+    status:'你喜歡一個人想事情，你的腦袋會自動把很多事情連結在一起，看到別人看不到的角度。你的挑戰是想法太多、太深、太難整理，所以一直沒有發出去——或者發出去之前改了又改。',
+    insight:'我給你一個規則：30分鐘寫完就發。不夠好沒關係，讀者會告訴你哪裡要改，這比你自己改一百遍更有效。我看過太多這樣的人，想了三年，一篇都沒發。你想清楚了才說話，我很欣賞——但先說出來，再變得更好。',
+    diff:'你的差異化是讓人停下來的深度。在一個什麼都很淺、很快的時代，你的東西讓人截圖、存起來、反覆看——這是大多數創作者做不到的，你只需要讓這些東西定期出現。',
+    sys:'「30分鐘截止系統」',systxt:'選一個你已經想了很久的話題，給自己整整30分鐘，寫完就發，不管有沒有覺得準備好。30分鐘截止，時間到就發。這個系統的目的是打破你的「再改一下」迴圈，讓出現比完美更重要。',
+    cta:'老陳老師幫你把深度思考變成讓人記住的內容',ctas:'訂閱服務裡有「深度型創作者」的發文系統，幫你從想得太多、發得太少，走到每週穩定輸出你的洞見。'
+  },
+  empath:{
+    traits:['內向能量','情感連結','私密故事'],
+    name:'私密故事型創作者',tag:'你願意說出來的那些話，正是別人最需要聽到卻說不出口的',
+    status:'你內向、敏感、有很深的情感洞察力。你的故事裡有很多別人沒辦法公開說的感受——那些孤獨、那些掙扎、那些你後來才明白的事。你最大的挑戰是怕說出來太私密、怕被誤解，所以一直沒有動。',
+    insight:'我一直覺得，創作者最大的武器不是知識，是勇氣。你願意說出別人說不出口的感受，這件事本身就是你和別人最大的差距。不要低估你的故事，因為某個人正在等著聽你說它。',
+    diff:'你的差異化是你願意說出真實感受的勇氣。在一個大家都在展示完美的世界裡，說出「我也曾經很難」的人，才是讓人最信任的那種創作者。',
+    sys:'「一封信系統」',systxt:'每週寫一封信給一個具體的人——那個跟你一年前一樣的人。告訴他你希望當時有人告訴你的事。這封信就是你的內容。你不是在對所有人說話，你是在對一個人說話，這讓你更容易開口。',
+    cta:'老陳老師幫你把你的故事變成別人的光',ctas:'訂閱服務裡有「故事型創作者」的完整路徑，從你的第一封信，走到讓人信任你、願意持續追蹤你的社群。'
+  },
+  systematic:{
+    traits:['內向能量','邏輯思考','系統規劃'],
+    name:'系統知識型創作者',tag:'你把複雜的事情說得清楚——這是市場上最稀缺的能力之一',
+    status:'你喜歡分析、喜歡有結構，你解釋事情的方式讓人很容易理解。你在乎有沒有用、有沒有邏輯、有沒有真的幫到人。你的挑戰是標準太高，一直在等「夠完整」才發，結果一直沒發。',
+    insight:'很多知識型創作者有一個通病：寧可不發，也不發不完整的東西。但我告訴你，你那篇「不夠完整」的文章，對你的讀者來說可能已經是他這個月看過最有用的東西了。出現比完美重要，永遠是。',
+    diff:'你的差異化是你組織知識的方式——你的邏輯框架、你舉的例子、你選擇的切入角度。這些加在一起，就是只有你才能做出來的內容，別人學不走。',
+    sys:'「一個重點系統」',systxt:'每週只說一個重點，用這個格式：「關於___，大多數人不知道的一件事是___。」就這一個重點展開，加一個你自己的案例，不超過四百字。一個重點說清楚，比十個重點列清單更有影響力。',
+    cta:'老陳老師幫你把你的知識變成可持續的品牌資產',ctas:'訂閱服務裡有「知識型創作者」的完整貨幣化路徑，從第一篇文章到第一批為你的知識付費的訂閱者。'
+  },
+  explorer:{
+    traits:['內向能量','彈性行動','探索實驗'],
+    name:'探索實驗型創作者',tag:'你還在找方向——但你的探索過程本身就是你最真實的內容',
+    status:'你比較彈性、隨興，不喜歡被一個方向綁死。你的挑戰不是找不到方向，而是同時在乎太多方向，所以一直沒有把任何一個走深。你需要的不是「選定方向」，而是一個讓你邊探索邊出現的簡單系統。',
+    insight:'不知道要做什麼方向的人，我給你一個最簡單的答案：先動，再找方向。你不是要先想清楚才開始，你是要在做的過程中想清楚。你的探索本身就是內容，你的讀者願意跟著一個還在找路的人走，只要你真實地記錄這個過程。',
+    diff:'你的優勢是你還沒被任何一個框架定型。你可以真實地記錄你在摸索什麼、嘗試什麼、發現什麼——這種真實感，是那些「已經想清楚了」的創作者做不到的。',
+    sys:'「每週一個實驗系統」',systxt:'每週做一個小實驗，不管大小：試一個新平台、試一種新格式、試一個新話題。把這個實驗的過程和結果記錄下來，發出去。你不是在教人，你是在帶著讀者一起實驗，這就是你的內容系統。',
+    cta:'老陳老師幫你把探索過程變成你的品牌故事',ctas:'訂閱服務裡有「探索型創作者」的起步課程，幫你在邊走邊找的過程中，建立起讓人想持續追蹤你的理由。'
+  }
+};
+
+const DIMS = [
+  {key:'E', lo:'內向能量', hi:'外向能量'},
+  {key:'N', lo:'實感思考', hi:'直覺思考'},
+  {key:'F', lo:'邏輯決策', hi:'情感決策'},
+  {key:'J', lo:'彈性行動', hi:'計畫行動'},
+  {key:'ID',lo:'單一身份', hi:'複合身份'},
+  {key:'BLK',lo:'準備起跑',hi:'心理卡關'}
+];
+
+let cur = 0, ans = new Array(16).fill(null), currentKey = '';
+
+function render() {
+  const q = Qs[cur];
+  document.getElementById('chap-name').textContent = q.ch;
+  document.getElementById('q-counter').textContent = (cur+1) + ' / 16';
+  document.getElementById('prog-fill').style.width = ((cur+1)/16*100) + '%';
+  document.getElementById('q-tag').textContent = q.tag;
+  document.getElementById('q-text').textContent = q.t;
+  document.getElementById('q-hint').textContent = q.s;
+  const row = document.getElementById('likert-row');
+  row.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const d = document.createElement('div');
+    d.className = 'lk' + (ans[cur] === i ? ' sel' : '');
+    d.innerHTML = '<div class="lk-dot"></div><div class="lk-num">'+i+'</div><div class="lk-word">'+WORDS[i-1]+'</div>';
+    d.onclick = (v => () => pick(v))(i);
+    row.appendChild(d);
+  }
+  document.getElementById('btn-back').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = ans[cur] === null;
+  document.getElementById('btn-next').textContent = cur === 15 ? '看我的結果 →' : '下一題 →';
+}
+
+function pick(v) { ans[cur] = v; render(); }
+
+function go(d) {
+  if (d === 1 && cur === 15) { showResult(); return; }
+  cur = Math.max(0, Math.min(15, cur + d));
+  render();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function getDims() {
+  const s={E:0,N:0,F:0,J:0,ID:0,BLK:0}, c={E:0,N:0,F:0,J:0,ID:0,BLK:0};
+  Qs.forEach((q,i) => {
+    if (ans[i] === null) return;
+    const v = q.rev ? (6 - ans[i]) : ans[i];
+    s[q.dim] += v; c[q.dim]++;
+  });
+  const r = {};
+  Object.keys(s).forEach(k => r[k] = c[k] ? s[k]/c[k] : 3);
+  return r;
+}
+
+function getType(d) {
+  if (d.BLK >= 3.5) return 'blocked';
+  if (d.ID  >= 3.5) return 'compound';
+  const E=d.E>=3.5, N=d.N>=3.5, F=d.F>=3.5, J=d.J>=3.5;
+  if (E && N)       return 'visionary';
+  if (E && F && !N) return 'social';
+  if (E && !F && !N)return 'demonstrator';
+  if (!E && N)      return 'insight';
+  if (!E && F && !N)return 'empath';
+  if (!E && !F && J)return 'systematic';
+  return 'explorer';
+}
+
+function showResult() {
+  const d = getDims();
+  const key = getType(d);
+  currentKey = key;
+  const A = TYPES[key];
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('res-name').textContent = A.name;
+  document.getElementById('res-tagline').textContent = A.tag;
+  document.getElementById('res-status').textContent = A.status;
+  document.getElementById('res-insight').textContent = A.insight;
+  document.getElementById('res-diff').textContent = A.diff;
+  document.getElementById('sys-title').textContent = A.sys;
+  document.getElementById('sys-txt').textContent = A.systxt;
+  document.getElementById('cta-title').textContent = A.cta;
+  document.getElementById('cta-sub').textContent = A.ctas;
+
+  const tr = document.getElementById('trait-row');
+  tr.innerHTML = '';
+  A.traits.forEach(t => {
+    const s = document.createElement('span');
+    s.className = 'trait'; s.textContent = t; tr.appendChild(s);
+  });
+
+  const dg = document.getElementById('dim-grid');
+  dg.innerHTML = '';
+  DIMS.forEach(dd => {
+    const raw = d[dd.key] || 3;
+    const pct = Math.round((raw-1)/4*100);
+    const label = raw >= 3 ? dd.hi : dd.lo;
+    const c = document.createElement('div');
+    c.className = 'dim-card';
+    c.innerHTML = '<div class="dim-top"><div class="dim-name">'+label+'</div><div class="dim-pct">'+pct+'%</div></div><div class="dim-bg"><div class="dim-fill" style="width:'+pct+'%"></div></div>';
+    dg.appendChild(c);
+  });
+
+  const cg = document.getElementById('ctype-grid');
+  cg.innerHTML = '';
+  CTYPES.forEach(ct => {
+    const b = document.createElement('button');
+    b.className = 'ctype-btn';
+    b.innerHTML = '<div class="ctype-dot"></div><div class="ctype-info"><div class="ctype-title">'+ct.title+'</div><div class="ctype-eg">'+ct.eg+'</div></div>';
+    b.onclick = () => selectCtype(ct.key, ct.title, b);
+    cg.appendChild(b);
+  });
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function selectCtype(key, title, el) {
+  document.querySelectorAll('.ctype-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const stepsData = STEPS[key][currentKey];
+  const sw = document.getElementById('steps-wrap');
+  sw.classList.add('show');
+  const st = document.getElementById('steps');
+  st.innerHTML = '';
+  stepsData.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'step';
+    div.innerHTML = '<div class="step-num">'+(i+1)+'</div><div class="step-txt">'+s+'</div>';
+    st.appendChild(div);
+  });
+  setTimeout(() => sw.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+function restart() {
+  cur = 0; ans = new Array(16).fill(null); currentKey = '';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('steps-wrap').classList.remove('show');
+  document.getElementById('quiz').style.display = 'block';
+  render();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+const WORDS = ['完全不像我','比較不像','有時候像','蠻像的','完全像我'];
+render();
+</script>
+</body>
+</html>
