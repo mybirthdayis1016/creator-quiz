@@ -118,6 +118,21 @@ body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: va
   .dim-grid { grid-template-columns: 1fr; }
 }
 </style>
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1193210454959916');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
+/></noscript>
 </head>
 <body>
 <div class="page-wrap">
@@ -648,6 +663,14 @@ function showResult() {
 
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('result').style.display = 'block';
+  // Meta Pixel - 追蹤完成測驗事件
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'Lead', {
+      content_name: A.name,
+      content_category: mbti
+    });
+  }
+
 
   // mbti not shown to user
   document.getElementById('res-name').textContent = A.name;
