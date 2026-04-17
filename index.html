@@ -4,501 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>創作者定位測驗 | 10XUE 老陳老師</title>
-<meta name="description" content="回答16個問題，找出你獨一無二的創作者定位與專屬簡單系統。">
+<meta name="description" content="回答24個問題，找出你在16種創作者原型中的精準定位。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #ffffff; --bg-secondary: #f5f5f3; --text: #1a1a1a;
+  --text-secondary: #6b6b6b; --text-tertiary: #9b9b9b;
+  --border: rgba(0,0,0,0.12); --border-hover: rgba(0,0,0,0.28);
+  --border-active: rgba(0,0,0,0.45); --accent: #1a1a1a;
+  --accent-text: #ffffff; --radius-md: 8px; --radius-lg: 12px;
+}
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #ffffff;
-    --bg-secondary: #f5f5f3;
-    --text: #1a1a1a;
-    --text-secondary: #6b6b6b;
-    --text-tertiary: #9b9b9b;
-    --border: rgba(0,0,0,0.12);
-    --border-hover: rgba(0,0,0,0.28);
-    --border-active: rgba(0,0,0,0.45);
-    --accent: #1a1a1a;
-    --accent-text: #ffffff;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --bg: #1a1a1a; --bg-secondary: #252525; --text: #f0f0f0;
+    --text-secondary: #a0a0a0; --text-tertiary: #6b6b6b;
+    --border: rgba(255,255,255,0.12); --border-hover: rgba(255,255,255,0.28);
+    --border-active: rgba(255,255,255,0.5); --accent: #f0f0f0; --accent-text: #1a1a1a;
   }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a1a;
-      --bg-secondary: #252525;
-      --text: #f0f0f0;
-      --text-secondary: #a0a0a0;
-      --text-tertiary: #6b6b6b;
-      --border: rgba(255,255,255,0.12);
-      --border-hover: rgba(255,255,255,0.28);
-      --border-active: rgba(255,255,255,0.5);
-      --accent: #f0f0f0;
-      --accent-text: #1a1a1a;
-    }
-  }
-
-  html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-
-  body {
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  .page-wrap {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 5rem;
-  }
-
-  /* ── Header ── */
-  .site-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-  .site-logo {
-    font-size: 12px;
-    letter-spacing: .18em;
-    color: var(--text-secondary);
-    font-weight: 500;
-    margin-bottom: .5rem;
-  }
-  .site-divider {
-    width: 32px;
-    height: 1px;
-    background: var(--border);
-    margin: .75rem auto 0;
-  }
-
-  /* ── Progress ── */
-  .prog-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-  }
-  .prog-bg {
-    background: var(--bg-secondary);
-    border-radius: 100px;
-    height: 3px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-  }
-  .prog-fill {
-    height: 100%;
-    background: var(--text);
-    border-radius: 100px;
-    transition: width .4s ease;
-  }
-
-  /* ── Question ── */
-  .q-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-secondary);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 3px 10px;
-    margin-bottom: 1rem;
-  }
-  .q-text {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1.7;
-    margin-bottom: .4rem;
-  }
-  .q-hint {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    margin-bottom: 1.875rem;
-  }
-
-  /* ── Likert ── */
-  .likert-labels {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-tertiary);
-    margin-bottom: .625rem;
-  }
-  .likert-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-bottom: 2rem;
-  }
-  .lk {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    padding: 14px 4px 11px;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: border-color .15s, background .15s;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .lk:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
-  .lk.sel { border-color: var(--border-active); background: var(--bg-secondary); }
-  .lk.sel .lk-dot { background: var(--accent); border-color: var(--accent); }
-  .lk-dot {
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-hover);
-    transition: all .15s;
-  }
-  .lk-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-  .lk-word {
-    font-size: 11px;
-    color: var(--text-secondary);
-    text-align: center;
-    line-height: 1.35;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* ── Nav buttons ── */
-  .nav { display: flex; justify-content: space-between; align-items: center; }
-  .btn {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 11px 24px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    border: 0.5px solid var(--border-hover);
-    background: transparent;
-    color: var(--text);
-    transition: background .15s;
-  }
-  .btn:hover { background: var(--bg-secondary); }
-  .btn.pri {
-    background: var(--accent);
-    color: var(--accent-text);
-    border-color: var(--accent);
-  }
-  .btn.pri:hover { opacity: .85; }
-  .btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
-
-  /* ── Result ── */
-  .result { display: none; }
-
-  .res-hero {
-    text-align: center;
-    padding: 2rem 0 2rem;
-    border-bottom: 0.5px solid var(--border);
-    margin-bottom: 2rem;
-  }
-  .res-eyebrow {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    color: var(--text-secondary);
-    margin-bottom: .875rem;
-  }
-  .trait-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 1.125rem;
-  }
-  .trait {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 11px;
-    border-radius: 100px;
-    border: 0.5px solid var(--border);
-    color: var(--text-secondary);
-  }
-  .res-name {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.35;
-    margin-bottom: .5rem;
-  }
-  .res-tagline {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.75;
-  }
-
-  /* ── Section ── */
-  .sec { margin-bottom: 1.625rem; }
-  .sec-lbl {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-secondary);
-    margin-bottom: .5rem;
-  }
-  .sec-txt { font-size: 14px; line-height: 1.85; }
-
-  /* ── Dim grid ── */
-  .dim-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-    gap: 10px;
-    margin-bottom: 1.625rem;
-  }
-  .dim-card {
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    padding: 12px 14px;
-  }
-  .dim-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 7px;
-  }
-  .dim-name { font-size: 12px; font-weight: 500; }
-  .dim-pct { font-size: 11px; color: var(--text-secondary); }
-  .dim-bg {
-    background: var(--bg);
-    border-radius: 100px;
-    height: 4px;
-    overflow: hidden;
-    border: 0.5px solid var(--border);
-  }
-  .dim-fill { height: 100%; border-radius: 100px; background: var(--text); }
-
-  /* ── Insight box ── */
-  .insight {
-    background: var(--bg-secondary);
-    border-radius: var(--radius-md);
-    padding: 16px 18px;
-    margin-bottom: 1.625rem;
-  }
-  .insight-lbl {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-secondary);
-    margin-bottom: .625rem;
-  }
-  .insight-txt { font-size: 14px; line-height: 1.875; }
-
-  /* ── System box ── */
-  .sys-box {
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 16px 18px;
-    margin-bottom: 1.625rem;
-  }
-  .sys-lbl {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-secondary);
-    margin-bottom: .5rem;
-  }
-  .sys-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; }
-  .sys-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
-
-  /* ── Content type selector ── */
-  .ctype-grid { display: flex; flex-direction: column; gap: 8px; margin-top: .75rem; }
-  .ctype-btn {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 16px;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: border-color .15s, background .15s;
-    text-align: left;
-    background: transparent;
-    font-family: 'Noto Sans TC', sans-serif;
-    color: var(--text);
-    width: 100%;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .ctype-btn:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
-  .ctype-btn.active { border-color: var(--border-active); background: var(--bg-secondary); }
-  .ctype-btn.active .ctype-dot { background: var(--accent); border-color: var(--accent); }
-  .ctype-dot {
-    width: 15px; height: 15px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-hover);
-    flex-shrink: 0;
-    margin-top: 3px;
-    transition: all .15s;
-  }
-  .ctype-info { flex: 1; }
-  .ctype-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
-  .ctype-eg { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
-
-  /* ── Steps ── */
-  .steps-wrap { display: none; margin-bottom: 1.625rem; }
-  .steps-wrap.show { display: block; }
-  .steps { display: flex; flex-direction: column; gap: 14px; }
-  .step { display: flex; gap: 13px; }
-  .step-num {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: var(--bg-secondary);
-    border: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 500;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .step-txt { font-size: 14px; line-height: 1.75; }
-
-  /* ── CTA ── */
-  .cta-box {
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.75rem 1.5rem;
-    text-align: center;
-    margin-top: .5rem;
-  }
-  .cta-eyebrow {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: .1em;
-    color: var(--text-secondary);
-    margin-bottom: .875rem;
-  }
-  .cta-title {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 18px; font-weight: 700;
-    line-height: 1.5;
-    margin-bottom: .75rem;
-  }
-  .cta-sub {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.75;
-    margin-bottom: 1.25rem;
-  }
-  .cta-btn {
-    display: inline-block;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 14px; font-weight: 500;
-    padding: 12px 32px;
-    background: var(--accent);
-    color: var(--accent-text);
-    border-radius: var(--radius-md);
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity .15s;
-  }
-  .cta-btn:hover { opacity: .85; }
-
-  .restart {
-    display: block;
-    text-align: center;
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-top: 1rem;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    background: none;
-    border: none;
-    font-family: 'Noto Sans TC', sans-serif;
-    width: 100%;
-  }
-
-  .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
-  /* ── BLK Warning Block ── */
-  .blk-warn {
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 16px 18px;
-    margin-bottom: 1.625rem;
-    position: relative;
-  }
-  .blk-warn-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: .08em;
-    color: var(--text-secondary);
-    margin-bottom: .625rem;
-  }
-  .blk-warn-title {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: .5rem;
-    line-height: 1.5;
-  }
-  .blk-warn-txt {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: .875rem;
-  }
-  .blk-warn-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .blk-warn-step {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .blk-warn-num {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: var(--bg-secondary);
-    border: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 500;
-    flex-shrink: 0; margin-top: 1px;
-  }
-  .blk-warn-stxt { font-size: 13px; line-height: 1.7; color: var(--text-secondary); }
-
-  /* ── Mobile ── */
-  @media (max-width: 480px) {
-    .page-wrap { padding: 1.5rem 1rem 4rem; }
-    .q-text { font-size: 17px; }
-    .lk-word { font-size: 10px; }
-    .dim-grid { grid-template-columns: 1fr; }
-  }
+}
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.page-wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+.site-header { text-align: center; margin-bottom: 2.5rem; }
+.site-logo { font-size: 12px; letter-spacing: .18em; color: var(--text-secondary); font-weight: 500; margin-bottom: .5rem; }
+.site-divider { width: 32px; height: 1px; background: var(--border); margin: .75rem auto 0; }
+.prog-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
+.prog-bg { background: var(--bg-secondary); border-radius: 100px; height: 3px; margin-bottom: 2rem; overflow: hidden; }
+.prog-fill { height: 100%; background: var(--text); border-radius: 100px; transition: width .4s ease; }
+.q-tag { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 3px 10px; margin-bottom: 1rem; }
+.q-text { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 400; line-height: 1.7; margin-bottom: .4rem; }
+.q-hint { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.875rem; }
+.likert-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-tertiary); margin-bottom: .625rem; }
+.likert-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 2rem; }
+.lk { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 4px 11px; border: 0.5px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color .15s, background .15s; user-select: none; -webkit-tap-highlight-color: transparent; }
+.lk:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+.lk.sel { border-color: var(--border-active); background: var(--bg-secondary); }
+.lk.sel .lk-dot { background: var(--accent); border-color: var(--accent); }
+.lk-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border-hover); transition: all .15s; }
+.lk-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.lk-word { font-size: 11px; color: var(--text-secondary); text-align: center; line-height: 1.35; min-height: 30px; display: flex; align-items: center; justify-content: center; }
+.nav { display: flex; justify-content: space-between; align-items: center; }
+.btn { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 500; padding: 11px 24px; border-radius: var(--radius-md); cursor: pointer; border: 0.5px solid var(--border-hover); background: transparent; color: var(--text); transition: background .15s; }
+.btn:hover { background: var(--bg-secondary); }
+.btn.pri { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.btn.pri:hover { opacity: .85; }
+.btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
+.result { display: none; }
+.res-hero { text-align: center; padding: 2rem 0; border-bottom: 0.5px solid var(--border); margin-bottom: 2rem; }
+.res-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--text-secondary); margin-bottom: .75rem; }
+.trait-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 1.125rem; }
+.trait { font-size: 11px; font-weight: 500; padding: 3px 11px; border-radius: 100px; border: 0.5px solid var(--border); color: var(--text-secondary); }
+.res-name { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; line-height: 1.35; margin-bottom: .5rem; }
+.res-tagline { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
+.sec { margin-bottom: 1.625rem; }
+.sec-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
+.sec-txt { font-size: 14px; line-height: 1.85; }
+.dim-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-bottom: 1.625rem; }
+.dim-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 12px 14px; }
+.dim-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.dim-name { font-size: 12px; font-weight: 500; }
+.dim-pct { font-size: 11px; color: var(--text-secondary); }
+.dim-bg { background: var(--bg); border-radius: 100px; height: 4px; overflow: hidden; border: 0.5px solid var(--border); }
+.dim-fill { height: 100%; border-radius: 100px; background: var(--text); }
+.insight { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
+.insight-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .625rem; }
+.insight-txt { font-size: 14px; line-height: 1.875; }
+.diff-box { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
+.diff-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
+.diff-title { font-size: 14px; font-weight: 500; margin-bottom: .5rem; }
+.diff-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.sys-box { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
+.sys-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
+.sys-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; }
+.sys-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
+.blk-warn { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
+.blk-warn-tag { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .625rem; }
+.blk-warn-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; line-height: 1.5; }
+.blk-warn-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: .875rem; }
+.blk-warn-steps { display: flex; flex-direction: column; gap: 8px; }
+.blk-warn-step { display: flex; gap: 10px; align-items: flex-start; }
+.blk-warn-num { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+.blk-warn-stxt { font-size: 13px; line-height: 1.7; color: var(--text-secondary); }
+.ctype-grid { display: flex; flex-direction: column; gap: 8px; margin-top: .75rem; }
+.ctype-btn { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 0.5px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color .15s, background .15s; text-align: left; background: transparent; font-family: 'Noto Sans TC', sans-serif; color: var(--text); width: 100%; -webkit-tap-highlight-color: transparent; }
+.ctype-btn:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
+.ctype-btn.active { border-color: var(--border-active); background: var(--bg-secondary); }
+.ctype-btn.active .ctype-dot { background: var(--accent); border-color: var(--accent); }
+.ctype-dot { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--border-hover); flex-shrink: 0; margin-top: 3px; transition: all .15s; }
+.ctype-info { flex: 1; }
+.ctype-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+.ctype-eg { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+.steps-wrap { display: none; margin-bottom: 1.625rem; }
+.steps-wrap.show { display: block; }
+.steps { display: flex; flex-direction: column; gap: 14px; }
+.step { display: flex; gap: 13px; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--bg-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+.step-txt { font-size: 14px; line-height: 1.75; }
+.cta-box { border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem 1.5rem; text-align: center; margin-top: .5rem; }
+.cta-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--text-secondary); margin-bottom: .875rem; }
+.cta-title { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: .75rem; }
+.cta-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25rem; }
+.cta-btn { display: inline-block; font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 500; padding: 12px 32px; background: var(--accent); color: var(--accent-text); border-radius: var(--radius-md); border: none; cursor: pointer; text-decoration: none; transition: opacity .15s; }
+.cta-btn:hover { opacity: .85; }
+.restart { display: block; text-align: center; font-size: 13px; color: var(--text-secondary); margin-top: 1rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; font-family: 'Noto Sans TC', sans-serif; width: 100%; }
+.divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+@media (max-width: 480px) {
+  .page-wrap { padding: 1.5rem 1rem 4rem; }
+  .q-text { font-size: 17px; }
+  .lk-word { font-size: 10px; }
+  .dim-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <div class="page-wrap">
-
   <header class="site-header">
     <div class="site-logo">10XUE · 老陳老師</div>
     <div class="site-divider"></div>
   </header>
 
-  <!-- Quiz -->
   <div id="quiz">
-    <div class="prog-row">
-      <span id="chap-name"></span>
-      <span id="q-counter"></span>
-    </div>
+    <div class="prog-row"><span id="chap-name"></span><span id="q-counter"></span></div>
     <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
     <div class="q-tag" id="q-tag"></div>
     <div class="q-text" id="q-text"></div>
     <div class="q-hint" id="q-hint"></div>
-    <div class="likert-labels">
-      <span>← 完全不像我</span>
-      <span>完全像我 →</span>
-    </div>
+    <div class="likert-labels"><span>← 完全不像我</span><span>完全像我 →</span></div>
     <div class="likert-row" id="likert-row"></div>
     <div class="nav">
       <button class="btn" id="btn-back" onclick="go(-1)">← 上一題</button>
@@ -506,59 +140,44 @@
     </div>
   </div>
 
-  <!-- Result -->
   <div class="result" id="result">
     <div class="res-hero">
-      <div class="res-eyebrow">你的創作者原型</div>
+        <div class="res-eyebrow">你的創作者原型</div>
       <div class="trait-row" id="trait-row"></div>
       <div class="res-name" id="res-name"></div>
       <div class="res-tagline" id="res-tagline"></div>
     </div>
-
-    <div class="sec">
-      <div class="sec-lbl">你現在的狀態</div>
-      <div class="sec-txt" id="res-status"></div>
-    </div>
-
+    <div class="sec"><div class="sec-lbl">你現在的狀態</div><div class="sec-txt" id="res-status"></div></div>
     <hr class="divider">
-    <div class="sec-lbl" style="margin-bottom:10px">你的六個維度</div>
+    <div class="sec-lbl" style="margin-bottom:10px">你的四個維度</div>
     <div class="dim-grid" id="dim-grid"></div>
-
-    <div class="insight">
-      <div class="insight-lbl">老陳老師說</div>
-      <div class="insight-txt" id="res-insight"></div>
-    </div>
-
+    <div class="insight"><div class="insight-lbl">老陳老師說</div><div class="insight-txt" id="res-insight"></div></div>
     <hr class="divider">
-    <div class="sec">
-      <div class="sec-lbl">你的核心優勢</div>
-      <div class="sec-txt" id="res-diff"></div>
+    <div class="sec"><div class="sec-lbl">你的核心優勢</div><div class="sec-txt" id="res-diff"></div></div>
+    <div class="diff-box">
+      <div class="diff-lbl">你和大多數人不一樣的地方</div>
+      <div class="diff-title" id="diff-title"></div>
+      <div class="diff-txt" id="diff-txt"></div>
     </div>
-
     <hr class="divider">
     <div class="sys-box">
       <div class="sys-lbl">你的專屬簡單系統</div>
       <div class="sys-title" id="sys-title"></div>
       <div class="sys-txt" id="sys-txt"></div>
     </div>
-
-
+    <hr class="divider">
+    <div class="sec-lbl" style="margin-bottom:.75rem">選擇你主要想分享的內容類型，看你的具體行動步驟</div>
+    <div class="ctype-grid" id="ctype-grid"></div>
+    <div class="steps-wrap" id="steps-wrap">
+      <div class="sec-lbl" style="margin-bottom:.875rem">你的三個具體步驟</div>
+      <div class="steps" id="steps"></div>
+    </div>
     <div class="blk-warn" id="blk-warn" style="display:none">
       <div class="blk-warn-tag">老陳老師特別提醒你</div>
       <div class="blk-warn-title" id="blk-warn-title"></div>
       <div class="blk-warn-txt" id="blk-warn-txt"></div>
       <div class="blk-warn-steps" id="blk-warn-steps"></div>
     </div>
-
-    <hr class="divider">
-    <div class="sec-lbl">選擇你主要想分享的內容類型，看你的具體行動步驟</div>
-    <div class="ctype-grid" id="ctype-grid"></div>
-
-    <div class="steps-wrap" id="steps-wrap">
-      <div class="sec-lbl" style="margin-bottom:.875rem">你的三個具體步驟</div>
-      <div class="steps" id="steps"></div>
-    </div>
-
     <hr class="divider">
     <div class="cta-box">
       <div class="cta-eyebrow">老陳老師的訂閱服務</div>
@@ -568,197 +187,338 @@
     </div>
     <button class="restart" onclick="restart()">重新測驗</button>
   </div>
-
 </div>
 
 <script>
 const WORDS = ['完全不像我','比較不像','有時候像','蠻像的','完全像我'];
 
 const Qs = [
-  {dim:'E',rev:true, ch:'第一章：能量來源',tag:'能量來源',t:'跟一群人相處一整天之後，我需要一個人待著充電。',s:'想想你實際上的感受，不是你覺得應該怎樣。'},
-  {dim:'E',rev:true, ch:'第一章：能量來源',tag:'能量來源',t:'比起很多人留言互動，我更享受一個人慢慢把一篇文章寫好。',s:'哪種狀態讓你更有成就感？'},
-  {dim:'E',rev:false,ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡在網路上認識新朋友、和陌生人聊天。',s:'就算只是文字互動也算，選最像你平常的狀態。'},
-  {dim:'N',rev:false,ch:'第二章：思考方式',tag:'思考方式',t:'看到一件新事物，我第一個想的是「這讓我聯想到什麼」。',s:'不是應該怎麼想，是你真實的第一個念頭。'},
-  {dim:'N',rev:true, ch:'第二章：思考方式',tag:'思考方式',t:'我比較喜歡有步驟、有清單的內容，而不是概念性的思考文章。',s:'在消費別人內容的時候，你偏好哪一種？'},
-  {dim:'N',rev:false,ch:'第二章：思考方式',tag:'思考方式',t:'我常常同時有很多想法，腦袋停不下來。',s:'這是描述你日常的狀態嗎？'},
-  {dim:'F',rev:false,ch:'第三章：決策方式',tag:'決策方式',t:'我希望看完我內容的人，第一個感受是「你懂我」。',s:'比起「我學到東西了」，你更想要哪一種回應？'},
-  {dim:'F',rev:true, ch:'第三章：決策方式',tag:'決策方式',t:'做一個困難決定時，我會先列出優缺點，分析完再決定。',s:'你實際上是這樣做決定的嗎？'},
-  {dim:'F',rev:false,ch:'第三章：決策方式',tag:'決策方式',t:'有人跟我說他的困境，我會先陪他說說感受，而不是馬上給建議。',s:'你通常的第一反應是什麼？'},
-  {dim:'J',rev:false,ch:'第四章：行動方式',tag:'行動方式',t:'我比較喜歡先把計畫想清楚，確定了再動手。',s:'描述你實際做事的方式，不是你理想的方式。'},
-  {dim:'J',rev:false,ch:'第四章：行動方式',tag:'行動方式',t:'沒做完的事情放著，會讓我一直不舒服。',s:'那種「還沒做完」的感覺，對你來說有多強烈？'},
-  {dim:'J',rev:true, ch:'第四章：行動方式',tag:'行動方式',t:'我做事比較隨興，根據當下狀態決定今天做什麼。',s:'這句話像不像你平常的行動模式？'},
-  {dim:'ID',rev:false,ch:'第五章：身份輪廓',tag:'身份輪廓',t:'我很難用一個詞描述自己，因為我同時在做好幾件不同的事。',s:'別人問你「你是做什麼的」，你回答起來容易嗎？'},
-  {dim:'ID',rev:false,ch:'第五章：身份輪廓',tag:'身份輪廓',t:'我有走過一段特別的路，那段經歷讓我變成現在這個人。',s:'不一定是成功故事，困難或轉折也算。'},
-  {dim:'BLK',rev:false,ch:'第六章：起跑狀態',tag:'起跑狀態',t:'我覺得自己還沒準備好，想再多學一點再開始。',s:'誠實選就好，這很常見，不是弱點。'},
-  {dim:'BLK',rev:false,ch:'第六章：起跑狀態',tag:'起跑狀態',t:'我怕發出去沒人看，或被批評，所以一直沒有動。',s:'這個擔心有沒有讓你真的停下來過？'}
+  // E/I 6題
+  {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'跟一群人相處一整天之後，我需要一個人待著充電。',s:'想想你實際上的感受，不是你覺得應該怎樣。'},
+  {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'比起很多人留言互動，我更享受一個人慢慢把一篇文章寫好。',s:'哪種狀態讓你更有成就感？'},
+  {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡在網路上認識新朋友、和陌生人聊天。',s:'就算只是文字互動也算，選最像你平常的狀態。'},
+  {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我在人多的場合會比較有活力，一個人反而容易感到無聊。',s:'這描述你嗎？'},
+  {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'我通常需要一段獨處時間，才能把想法整理清楚。',s:'獨處對你來說是充電還是消耗？'},
+  {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡把我在做的事說給別人聽，分享本身就讓我有動力。',s:'分享這個動作，對你來說是享受還是義務？'},
+  // N/S 6題
+  {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'看到一件新事物，我第一個想的是「這讓我聯想到什麼」。',s:'不是應該怎麼想，是你真實的第一個念頭。'},
+  {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我比較喜歡有步驟、有清單的內容，而不是概念性的思考文章。',s:'在消費別人內容的時候，你偏好哪一種？'},
+  {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'我常常同時有很多想法，腦袋停不下來。',s:'這是描述你日常的狀態嗎？'},
+  {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我做事情喜歡先看具體的例子，再理解背後的原理。',s:'學習新東西時，你的習慣是什麼？'},
+  {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'我對「可能性」和「未來會怎樣」比「現在怎麼做」更感興趣。',s:'你更常想的是哪個？'},
+  {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我比較相信親身試過的經驗，而不是理論上說得通的方法。',s:'你做決定時更依賴哪個？'},
+  // F/T 6題
+  {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'我希望看完我內容的人，第一個感受是「你懂我」。',s:'比起「我學到東西了」，你更想要哪一種回應？'},
+  {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'做一個困難決定時，我會先列出優缺點，分析完再決定。',s:'你實際上是這樣做決定的嗎？'},
+  {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'有人跟我說他的困境，我會先陪他說說感受，而不是馬上給建議。',s:'你通常的第一反應是什麼？'},
+  {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'我在乎我的內容有沒有邏輯、有沒有根據，而不只是感覺好不好。',s:'你評估內容品質的標準是什麼？'},
+  {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'我做決定時，「感覺對不對」比「數據說什麼」更重要。',s:'誠實選，不用想應該怎麼答。'},
+  {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'我喜歡用數字、案例、比較來說服人，而不是靠情感共鳴。',s:'你說服別人時，通常用哪種方式？'},
+  // J/P 6題
+  {dim:'J',dir:'J',ch:'第四章：行動方式',tag:'行動方式',t:'我比較喜歡先把計畫想清楚，確定了再動手。',s:'描述你實際做事的方式，不是你理想的方式。'},
+  {dim:'J',dir:'J',ch:'第四章：行動方式',tag:'行動方式',t:'沒做完的事情放著，會讓我一直不舒服。',s:'那種「還沒做完」的感覺，對你來說有多強烈？'},
+  {dim:'J',dir:'P',ch:'第四章：行動方式',tag:'行動方式',t:'我做事比較隨興，根據當下狀態決定今天做什麼。',s:'這句話像不像你平常的行動模式？'},
+  {dim:'J',dir:'P',ch:'第四章：行動方式',tag:'行動方式',t:'我喜歡保持彈性，不喜歡被固定的計畫或流程綁住。',s:'計畫對你來說是支撐還是束縛？'},
+  {dim:'J',dir:'J',ch:'第四章：行動方式',tag:'行動方式',t:'我通常會提前規劃好，而不是等到最後一刻才決定。',s:'你面對截止日期時通常是什麼狀態？'},
+  {dim:'J',dir:'P',ch:'第四章：行動方式',tag:'行動方式',t:'我比較喜歡邊做邊調整，而不是一開始就把所有細節想清楚。',s:'這更像你的工作方式嗎？'},
 ];
 
 const CTYPES = [
   {key:'knowledge',title:'知識技能型',eg:'設計師、理財規劃師、健身教練、廚師、老師……我有一個專業或技能想分享'},
-  {key:'life',     title:'生活經歷型',eg:'媽媽、旅居者、斜槓工作者、從某個困境走出來的人……我想分享我的生活方式或人生故事'},
-  {key:'creative', title:'創作作品型',eg:'插畫師、攝影師、手工藝者、室內設計師……我有作品要展示'},
-  {key:'opinion',  title:'觀點意見型',eg:'對產業有獨特見解的創業者、有主張的教育者……我對某些事有強烈看法想說出來'},
-  {key:'business', title:'商品服務型',eg:'開店的人、接案者、有課程的老師、顧問……我有產品或服務，想用內容帶客戶'}
+  {key:'life',title:'生活經歷型',eg:'媽媽、旅居者、斜槓工作者、從某個困境走出來的人……我想分享我的生活方式或人生故事'},
+  {key:'creative',title:'創作作品型',eg:'插畫師、攝影師、手工藝者、室內設計師……我有作品要展示'},
+  {key:'opinion',title:'觀點意見型',eg:'對產業有獨特見解的創業者、有主張的教育者……我對某些事有強烈看法想說出來'},
+  {key:'business',title:'商品服務型',eg:'開店的人、接案者、有課程的老師、顧問……我有產品或服務，想用內容帶客戶'}
 ];
-
-const STEPS = {
-  knowledge:{
-    blocked:    ['今天打開手機備忘錄，寫下你最常被人問到的一個問題，把答案用三句話寫下來，不用完整，先讓它存在。','第三天，把這三句話用「大多數人不知道的是___」開頭整理好，發到你最常用的平台。','下週看看有沒有人留言或私訊，他們問的問題就是你下一篇的題目——讀者幫你規劃內容。'],
-    compound:   ['列出你所有的身份和技能標籤，找出「最少人同時擁有」的兩三個組合，那就是你的定位句。','用定位句發一篇自我介紹：「我是一個___×___，我幫___解決___的問題」，這是所有內容的起點。','接下來每週用你最常被問的一個問題做一篇內容，三個月後你會有一個清晰的知識型個人品牌。'],
-    visionary:  ['今天選你這週對你的專業最有感的一個觀點，用「大家都說___，但我覺得其實___」格式寫出來。','發出去，設定每週固定一天是你的「觀點輸出日」，靈感不重要，出現才重要。','每週一個觀點，持續八週，你的受眾會開始期待你的觀點，那就是你的品牌護城河。'],
-    social:     ['選你最近一次幫助某個人解決問題的經歷，用「有個人問我___，我告訴他___，他後來___」格式寫出來。','在結尾問讀者：「你有沒有遇過類似的困惑？」讓你的專業變成對話入口，而不是單向廣播。','每週一個「幫助別人的故事」，三個月後讀者會覺得你不只是專家，更是懂他們的人。'],
-    demonstrator:['今天選一件你最近正在做的專業工作，把做法步驟用三句話寫下來，不需要有結論，過程就是內容。','把「我怎麼做」的過程發出去，真實的工作現場比任何教學都更有說服力。','每週記錄一個正在做的案例進展，讓讀者跟著你一起走，這是最強的信任建立方式。'],
-    insight:    ['選一個你在專業領域裡想了很久但還沒說的洞見，給自己30分鐘寫出來，時間到就發。','不要等到「完整」再發，先發出去，根據讀者反應補充——讀者的問題是最好的編輯。','下週再做一次，七次之後你會有一個深度的知識型內容資產庫。'],
-    empath:     ['選你在專業上曾經最掙扎的一個問題，用「我剛開始的時候以為___，後來才發現___」格式寫出來。','在結尾加：「如果你現在也在這個困惑裡，你不是一個人。」讓你的知識有溫度。','每週一個「我曾經不知道的事」，誠實的知識分享比完美的教學更讓人記住你。'],
-    systematic: ['選你專業領域裡一個可以拆成三步驟的知識點，每週只說一個重點，不超過四百字。','在文章裡加入一個你自己親身遇過的案例，讓這個知識點有人味，不只是乾貨。','在文末問：「你在這個步驟遇到最大的困難是什麼？」讀者的回答就是你下一篇的題目。'],
-    explorer:   ['這週選你最想搞懂的一個專業問題，做一個小實驗，把「我試了什麼、發現什麼」三句話寫下來發出去。','下週換一個實驗，帶著讀者一起探索你的學習過程，這比教人更真實，也更容易持續。','七週後回頭看，你會發現一兩個最讓你有感的方向，那就是你接下來深耕的主題。']
-  },
-  life:{
-    blocked:    ['今天選這週發生的一件事，哪怕是很小的日常，用三句話寫下你當時的感受，存在備忘錄就好。','第三天，把這三句話加上「如果你也有過這種感覺，你不是一個人」，就這樣發出去。','重複七天，你會發現你的日常比你以為的更有內容——你只是以前沒有把它說出來。'],
-    compound:   ['把你所有的生活角色和身份全部列出來，找出那個「最少人同時擁有」的組合，那就是你的定位。','用「我是一個___×___的人，我想和同樣___的你說說___」這個格式寫一篇自我介紹，發出去。','接下來每週選你身份組合裡最有感的一個角色，說一個那個角色才有的故事，這就是你的差異化。'],
-    visionary:  ['選你對你的生活方式或人生觀最有感的一個觀點，用「大家說___，但我覺得其實___」格式寫出來。','發出去，設定每週固定一天輸出，不管那天有沒有靈感，讓出現變成習慣而不是選擇。','你的生活觀點就是你的品牌，持續出現八週，受眾會開始把你和這個觀點連結在一起。'],
-    social:     ['選你這週最有感受的一件日常小事，用「有一天我___，然後我發現___」格式寫出來，不需要結論。','在結尾問：「你有沒有過這種感覺？」讓你的故事成為對話的開場，而不是一個結束。','每週一個日常故事，三個月後讀者會覺得你是他們生活的一部分，這是最強的社群黏著力。'],
-    demonstrator:['今天記錄你正在過的生活的一個片段，不需要美化，真實的日常比精心策劃的內容更吸引人。','把「我這週做了什麼、遇到什麼、怎麼解決」用三句話寫下來發出去，過程比結果更有故事性。','每週一個生活現場記錄，讓讀者跟著你一起生活，這種陪伴感是任何廣告都買不到的信任。'],
-    insight:    ['選一個你對生活或人生已經想了很久的洞見，給自己30分鐘寫出來，不用完整，時間到就發。','用「我以為___，但後來我發現___」的轉折結構，這是最讓人停下來閱讀的格式。','每週一個洞見，七週後你會有七篇讓人截圖的內容，那就是你的個人品牌資產庫的起點。'],
-    empath:     ['選你走過的一段最難的時期，用「有一段時間，我___，那時候我以為___，後來才明白___」格式寫出來。','在結尾加：「如果你現在也在這個狀態，我想告訴你___。」讓你的故事成為別人的光。','每週一個「我曾經走過的路」，你的傷疤比你的成功更有力量，因為它讓別人覺得自己不孤單。'],
-    systematic: ['把你的生活方式拆成一個可以重複的系統，每週用一篇內容說清楚這個系統的一個環節，不超過四百字。','在每篇文章裡加入你自己的真實案例，讓系統有人味，讀者不只是學你的方法，更是相信你。','在文末問：「你在這個地方的困難是什麼？」讀者的回答就是你下一篇的題目。'],
-    explorer:   ['這週試一件你一直想嘗試的生活方式改變，把「我試了什麼、發現什麼」三句話寫下來發出去。','帶著讀者一起探索，你不需要有答案，誠實地記錄你的過程，這比任何成功學更吸引人。','七週後你會發現哪些生活主題最讓你有感，也最讓讀者有反應，那就是你的定位方向。']
-  },
-  creative:{
-    blocked:    ['今天拍一張你最近做的任何一個作品的照片，哪怕還沒完成，過程中的作品比完成品更吸引人。','在照片旁邊寫三句話：「我在做___，遇到___，我決定___。」就這樣發出去，不需要完美。','重複七天，讓「發出去」這個動作變成習慣，你會發現你的創作過程比成品更有人看。'],
-    compound:   ['把你所有的創作身份列出來，找出那個「最少人同時擁有」的組合，那就是你的差異化定位。','發一篇「我是誰」的內容：「我是一個___×___的創作者，我做的不只是___，我更在乎___。」','接下來每週選你身份組合裡一個面向，說一個只有你才能說的創作故事，這就是你的品牌。'],
-    visionary:  ['選你對你的創作領域最有看法的一個觀點，用「大家做___，但我覺得真正重要的是___」格式寫出來。','在作品旁邊說你的觀點，讓你的作品不只是作品，而是你世界觀的呈現，這才是真正的個人品牌。','每週一個觀點加一個作品，讓你的創作和你的思考一起出現，讀者會同時記住作品和你這個人。'],
-    social:     ['選一個你最近做的作品，說一個它背後的故事：「這個作品是因為___而誕生的，做的過程我感受到___。」','讓你的作品有溫度，讀者不只是欣賞你的技術，更是想認識做出這個作品的那個人。','每週一個「作品背後的故事」，三個月後讀者會覺得和你有情感連結，這比粉絲數更重要。'],
-    demonstrator:['今天拍一段你創作過程的片段，從原材料到完成，讓人看見你怎麼做。','「過程」比「結果」更吸引人，人們想看的不只是你做出來的東西，更是你怎麼做到的——今天就發出去。','每週一個「創作現場」，讓讀者跟著你的手一起走，這是建立粉絲最強的方式之一。'],
-    insight:    ['選一個你在創作領域裡的洞見，給自己30分鐘，把它和一個你的作品放在一起說，時間到就發。','用「這個作品讓我想到___」連結你的作品和你的觀點，讓人看到你的創作深度，不只是表面的美。','每週一個作品加一個洞見，七週後你的內容深度會讓你在同類創作者裡明顯不同。'],
-    empath:     ['選一個你做這個作品時最有感受的時刻，用「做這個的時候，我感覺到___，那讓我想起___」寫出來。','讓你的創作有情感，讀者不只是看作品，更是感受到你在做這個作品時的狀態，這種連結最深。','每週一個「創作時的感受」，你的情感就是你作品最強的詮釋，也是別人無法複製你的原因。'],
-    systematic: ['把你的創作流程拆成三個步驟，每週用一篇內容說清楚其中一個步驟，讓想學你的人知道怎麼開始。','在步驟說明裡加入你自己遇過的問題和解法，讓你的教學有真實感，不只是理論上的流程。','在文末問：「你在這個步驟最大的困難是什麼？」讀者的回答就是你下一篇的題目。'],
-    explorer:   ['這週嘗試一個你從來沒試過的創作方式或材料，把「我試了什麼、發現什麼」三句話寫下來發出去。','帶著讀者一起實驗，你不需要成功，誠實地記錄，失敗的實驗比成功的作品更吸引人看。','七週後你會找到你最有感覺的創作方向，那個過程本身就是你最真實的品牌故事。']
-  },
-  opinion:{
-    blocked:    ['今天選一個你覺得「大家都想錯了」的觀點，不管大小，用三句話把你的想法寫下來，存在備忘錄。','第三天，用「大家說___，但我覺得其實___，因為___」格式整理好，直接發出去。','重複七天，讓「說出你的觀點」這個動作變成習慣，你的觀點就是你最強的創作材料。'],
-    compound:   ['把你所有的身份和背景列出來，找出「最少人同時擁有」的組合，這個組合就是你觀點的可信度來源。','發一篇「我為什麼有資格說這件事」的自我介紹，讓讀者知道你的觀點從哪裡來，信任從這裡建立。','接下來每週從你的身份組合裡選一個角度，說一個只有你才能說的觀點，這就是你無法被取代的聲音。'],
-    visionary:  ['選你這週最有感的一個觀點，用「大家說___，但我覺得其實___，因為___」格式寫出來。','設定每週固定一天發你的觀點，不管那天有沒有靈感，讓出現比靈感更重要，系統優先。','你的觀點就是你的品牌，持續出現八週，受眾會開始把你和這個領域的思考連結在一起。'],
-    social:     ['選一個你觀察到身邊很多人有的困惑或誤解，用「我發現很多人覺得___，但其實___」格式寫出來。','在結尾問：「你也有過這個困惑嗎？」讓你的觀點成為對話的開場，而不是一個獨白。','每週一個「我發現大家誤解了___」，你的觀點會讓讀者覺得你懂他們，這是最強的信任建立。'],
-    demonstrator:['選你最近正在觀察的一個現象，把「我看到___，我做了___，發現___」用三句話寫出來。','用具體例子支撐你的觀點，讓讀者看到你怎麼得出這個結論，而不只是你說你覺得。','每週一個「我的觀察」，讓你的觀點有根據，讀者不只是聽你說，更是跟著你思考。'],
-    insight:    ['選一個你已經想了很久但還沒說的觀點，給自己30分鐘把它寫出來，時間到就發，不要再改。','那個你覺得「還沒準備好說」的觀點，往往是你最有價值的觀點——現在就說，讓讀者告訴你對不對。','每週一個深度觀點，七週後你的內容深度會讓你在你的領域裡成為被人引用的聲音。'],
-    empath:     ['選一個你對某件事的強烈感受，用「這件事讓我很___，因為我親眼看過___，我覺得___」格式寫出來。','讓你的觀點有感受，不只是分析，你的情感投入讓你的觀點比數據更讓人記住。','每週一個「讓我有強烈感受的事」，讀者會感覺到你在乎，這種在乎就是你的品牌。'],
-    systematic: ['把你對某個主題的觀點拆成三層：現象是什麼、原因是什麼、解法是什麼，每週說清楚其中一層。','用這個結構讓你的觀點有邏輯感，讀者不只是「覺得有道理」，更是「知道為什麼有道理」。','在文末問：「你覺得還有什麼原因我沒提到？」讀者的回答會讓你的觀點更完整。'],
-    explorer:   ['這週選一個你想搞清楚的問題，把「我在想___，我目前的想法是___，但我還不確定___」寫出來發出去。','你不需要有答案，帶著讀者一起找答案，比給答案更讓人想追蹤你。','七週後你會找到你最有感的主題方向，那個探索過程就是你最真實的思想型品牌。']
-  },
-  business:{
-    blocked:    ['今天選你的客戶最常問你的一個問題，把答案用三句話寫下來，存在備忘錄，不用發出去。','第三天，把這三句話整理成「你可能不知道___，其實___，所以___」格式，直接發出去。','重複七天，你會發現你每天回答客戶的問題，就是你用不完的內容素材庫。'],
-    compound:   ['列出你提供的服務和你的個人身份組合，找出「最少人同時擁有」的交叉點，那就是你的定位。','發一篇「我為什麼做這個服務」的故事，讓客戶知道你的背景和動機，信任從故事開始不從產品開始。','接下來每週選你客戶最常有的一個困惑，用你獨特的身份視角來解答，這就是你的差異化內容。'],
-    visionary:  ['選你對你的產業或服務最有看法的一個觀點，用「大家都說___，但我做了這麼久發現___」格式寫出來。','讓你的內容有主張，不只是介紹你的服務，而是展示你的世界觀——客戶買的是你的觀點不只是你的產品。','每週一個產業觀點，八週後潛在客戶會覺得你是他們最信任的那個人，轉換率自然提升。'],
-    social:     ['選你最近幫助一個客戶解決問題的故事，用「有個客戶來找我時___，我們一起做了___，結果___」格式寫出來。','不要說你的服務有多好，讓客戶的故事說話——真實的成果比任何廣告都更有說服力。','每週一個客戶故事，三個月後潛在客戶會覺得「我也想要這樣的結果」，主動來找你。'],
-    demonstrator:['今天記錄你工作現場的一個片段——你怎麼服務客戶、你怎麼做決策、你的工作現場長什麼樣。','讓潛在客戶看到你工作的樣子，這種透明度比任何銷售話術都更讓人信任，今天就發出去。','每週一個工作現場記錄，讓客戶在找你之前就已經信任你，這讓你的銷售工作變得非常簡單。'],
-    insight:    ['選一個你在你的領域裡的專業洞見，給自己30分鐘把它寫出來，時間到就發，不要等到完整。','用「大多數人在這件事上的誤解是___，真正的關鍵其實是___」格式，展示你的專業深度。','每週一個專業洞見，七週後潛在客戶會覺得你是這個領域裡最懂他們問題的那個人。'],
-    empath:     ['選你的客戶最常有的一個擔心或恐懼，用「我知道你可能在想___，我自己也曾經___」格式寫出來。','讓你的內容先理解客戶再提供解法——被理解的感覺讓人信任你，信任讓人付錢給你。','每週一個「我理解你的擔心」，你的客戶會覺得你懂他，這種懂是最強的銷售力。'],
-    systematic: ['把你的服務流程拆成三個步驟，每週用一篇內容說清楚其中一步，讓潛在客戶提前了解你怎麼工作。','在每篇文章裡加入一個真實案例，讓你的流程有具體感，讀者不只是理解，更是想親身體驗。','在文末問：「你在這個步驟最大的困惑是什麼？」讀者的回答就是你下一篇內容的題目。'],
-    explorer:   ['這週試一個你從來沒試過的行銷或服務方式，把「我試了什麼、發現什麼」三句話寫下來發出去。','讓潛在客戶看到你持續在進步和實驗，這種成長感讓人覺得跟你合作會越來越好。','七週後你會找到最適合你帶客戶的內容方式，那個方式就是你的內容行銷系統。']
-  }
-};
 
 const TYPES = {
-  blocked:{
-    traits:['等待起跑','完美主義','高度敏感'],
-    name:'蓄勢待發型創作者',tag:'你不是沒準備好，你只是還沒有一個夠簡單的系統',
-    status:'你有想法、也有動機，但每次要動的時候，總有什麼讓你停下來。可能是覺得自己還不夠好，可能是怕沒人看，可能是不知道從哪裡開始。這不是你意志力的問題，是你還沒有一個小到不可能失敗的系統。',
-    insight:'我看過太多人準備了兩年還沒發第一篇。不是他們不夠好，是他們把「開始」這件事想得太重了。你今天寫三句話，明天寫三句話，一個月後你會發現你已經有三十個想法——這比準備兩年更有用。',
-    diff:'你想得比別人深，準備得比別人仔細。一旦你有了一個夠簡單的系統，你的內容品質會讓人驚訝。你缺的不是能力，是一個不需要靠意志力就能啟動的習慣迴路。',
-    sys:'「三句話系統」',systxt:'每天只做一件事：把你今天最想說的一件事，用三句話寫下來。不用完整，不用好看，不用發出去。先讓「每天動一下」這個動作存在七天，再慢慢擴大。你的系統就只有這三句話，越簡單越能持續。',
-    cta:'老陳老師幫你把第一步拆得足夠小',ctas:'訂閱服務裡有「起跑系統」課程，30天從零到第一批固定讀者，每個步驟都簡單到今天就能做。'
+  ENFJ:{
+    mbti:'ENFJ',traits:['外向','直覺','情感','計畫'],
+    name:'社群引領型創作者',tag:'你天生就是讓人想跟著你走的那種人',
+    status:'你充滿想法、在乎別人的感受、做事有條理。你最大的特質是你能同時感受到別人的狀態，又能清楚說出方向。你的內容不只是資訊，而是一種帶領——讓人看完知道該往哪裡走。',
+    insight:'你的強項是「讓人感覺被帶著走」。但我看過很多 這類型的創作者有一個通病：太在乎每個人的感受，結果說出來的話反而變得模糊，失去了你本來最強的那個「方向感」。你需要學會：有時候說清楚比說好聽更重要。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'大多數人給你的建議是「多互動、多回覆留言」，但這對你只有一半有用。你真正的優勢不是互動的頻率，而是你說話時讓人感覺到的那種「這個人真的在乎我」的溫度——這個溫度比任何互動技巧都難學，而你天生就有。',
+    sys:'「每週一個方向系統」',sysTxt:'每週選一個你最有感的觀點或方向，用「如果你現在___，我覺得你應該___，因為___」格式寫出來。不超過三百字。讓你的讀者每週從你這裡拿到一個清晰的方向感，這就是你最強的內容系統。',
+    cta:'老陳老師幫你把影響力系統化',ctas:'訂閱服務裡有「社群型創作者」的完整路徑，讓你的影響力不靠個人魅力撐著，而是有一個可以複製的系統。'
   },
-  compound:{
-    traits:['複合身份','獨特經歷','說不清楚的人'],
-    name:'複合身份型創作者',tag:'你說不清楚自己是誰——那個「說不清楚」就是你的定位',
-    status:'你同時是好幾種人，每次介紹自己都說不完整。你走過別人沒走過的路，但你不確定那值不值得說。你以為模糊是問題，但那個「說不清楚的組合」才是別人無法複製你的原因。',
-    insight:'很多同學來問我：「老師我要選哪個方向？」我說你根本不需要選。你那些說不清楚的部分，就是你最難被取代的地方。你只需要學會把它說清楚。',
-    diff:'世界上沒有另一個人同時有你這些身份、這些故事、這些轉折。這個組合就是你的品牌，你不需要再「選」一個方向，你只需要一個簡單的系統把它說清楚。',
-    sys:'「身份矩陣一句話系統」',systxt:'你的唯一任務是練習說清楚這一句話：「我是一個___×___的人，我幫___做到___。」這句話就是你所有內容的起點。每週用這句話的一個元素做一篇內容，不需要想太多，系統幫你決定做什麼。',
-    cta:'老陳老師幫你把「說不清楚的你」說得讓人記住',ctas:'訂閱服務裡有「身份矩陣工作坊」，一個下午幫你找出你的定位句，以及第一個月的內容計畫。'
+  ENFP:{
+    mbti:'ENFP',traits:['外向','直覺','情感','彈性'],
+    name:'熱情探索型創作者',tag:'你的熱情本身就是內容，但你需要一個不靠熱情也能動的系統',
+    status:'你對很多事情都充滿熱情、想法源源不絕、很容易感染別人。你最大的問題不是沒有內容，而是內容太多、方向太廣，導致你的受眾不知道你是做什麼的——甚至你自己有時候也不確定。',
+    insight:'你每次開始一件新事情的時候都很興奮，但興奮期一過就很難持續。我看過太多 這類型的創作者，做了五個帳號、嘗試了十種格式，但每個都只做了一半。你缺的不是靈感，是一個讓你不需要靠靈感也能持續的結構。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「專注在一個主題上」，但這個建議對你通常是個陷阱——因為你的優勢本來就是你對很多事情都有熱情和連結。你真正需要的不是縮小範圍，而是找到一個能把你所有熱情串在一起的「主軸故事」，讓多樣性變成你的風格，而不是你的缺點。',
+    sys:'「情緒捕捉系統」',sysTxt:'當你對某件事突然很有感的時候，立刻用三句話把它記下來——不用完整，不用好看，就是記下那個當下的感受。一週後回頭看這些記錄，選一個最有共鳴的展開。這樣你的熱情不會消失，你的內容也不會因為靠意志力撐著而斷更。',
+    cta:'老陳老師幫你把熱情變成可持續的品牌',ctas:'訂閱服務裡有「多元型創作者」的定位系統，幫你找到那個能把你所有熱情串在一起的主軸，讓你的多樣性變成優勢。'
   },
-  visionary:{
-    traits:['外向能量','直覺思考','影響力驅動'],
-    name:'外向願景型創作者',tag:'你天生有磁場，你的想法加上你的人格，就是你的品牌',
-    status:'你充滿想法、享受互動、對未來有強烈的感覺。你不缺創意，你缺的是一個把想法「定期輸出」的系統。你最大的危機是想太多、說太多，卻沒有一個固定頻道讓人持續找到你。',
-    insight:'有想法的人很多，但能持續出現的人很少。你缺的不是創意，是一個讓你不靠靈感也能每週發文的結構。結構建好了，靈感自然會來找你。',
-    diff:'你的差異化不是你說什麼，而是只有你才能那樣說——你的語氣、你的熱情、你看事情的角度，都是別人學不走的。你需要的是一個系統，把這個「只有你」的特質定期送到受眾面前。',
-    sys:'「每週一個觀點系統」',systxt:'每週選一個你這週最有感的觀點，用這個格式輸出：「大家都說___，但我覺得其實是___，因為___。」就這一句話展開，不超過三百字。簡單到你不需要靈感就能做，這就是你的週更系統。',
-    cta:'老陳老師幫你把能量轉化成可持續的影響力',ctas:'訂閱服務裡有「觀點型創作者」的內容系統課程，讓你的想法不再只是想法，而是每週穩定出現的品牌資產。'
+  ENTJ:{
+    mbti:'ENTJ',traits:['外向','直覺','邏輯','計畫'],
+    name:'策略示範型創作者',tag:'你看得到別人看不到的格局，而且你有能力讓人跟著你的策略走',
+    status:'你思考清晰、有遠見、做事有計畫。你最大的特質是你能快速看出一件事的架構和邏輯，然後清楚地說出來。你的內容不是感性的，而是讓人看完覺得「原來是這樣，我怎麼沒想到」。',
+    insight:'你的強項是「把複雜的事情說得有系統」。但 這類型的創作者最常犯的錯是：說話太有效率，忘記加入人情味。你的分析很精準，但有時候讀者需要的不只是「對的答案」，還需要感覺「這個人懂我的狀況」。加一點個人故事，你的影響力會翻倍。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「多說故事、多感性一點」，但這個建議對你是個陷阱——因為你的優勢本來就是邏輯和策略。你真正需要的不是變得更感性，而是在你的策略分析裡加入一個「這個策略我自己用過，結果是___」的個人驗證，讓你的邏輯有溫度，而不是讓你的溫度掩蓋掉邏輯。',
+    sys:'「策略拆解系統」',sysTxt:'每週選一個你觀察到的現象或問題，用「問題是___，大多數人的做法是___，但真正有效的策略是___，我怎麼知道？因為___」格式寫出來。這個格式讓你的策略思維有根據，也有人味。',
+    cta:'老陳老師幫你把策略能力變成品牌資產',ctas:'訂閱服務裡有「策略型創作者」的內容路徑，幫你用你最擅長的邏輯思維，建立一個讓人信服的個人品牌。'
   },
-  social:{
-    traits:['外向能量','情感連結','社群驅動'],
-    name:'外向共鳴型創作者',tag:'你最大的天賦是讓人覺得「你懂我」，而且你享受這個過程',
-    status:'你喜歡互動、在乎別人的感受、享受和人建立連結的過程。你的內容不是要教人什麼，而是要讓人覺得「你說出了我說不出來的話」。你的挑戰是太在乎每個人的感受，反而難以持續輸出。',
-    insight:'你最強的地方是你讓人覺得被懂。但很多共鳴型的創作者都有一個問題：太在乎每個人的感受，結果反而不敢說話。你只需要記住：你不是為了所有人說話，你只是為了那個最需要聽到這句話的人說。',
-    diff:'你的差異化是「讓人感覺被理解」的能力。在充滿資訊的世界裡，能讓人覺得「你懂我」的創作者才是讓人一直回來的那種——這比知識更稀缺。',
-    sys:'「每週一個共鳴故事系統」',systxt:'每週選一件你自己有感受的事，用這個格式寫出來：「那一刻我感覺到___，後來我才明白___。」不需要精心設計，真實感受就是你最強的材料。每週一篇，就這樣。',
-    cta:'老陳老師幫你把情感連結變成穩定的創作系統',ctas:'訂閱服務裡有「共鳴型創作者」的完整路徑，從你的第一個故事，走到讓人信任你、願意為你的內容付費。'
+  ENTP:{
+    mbti:'ENTP',traits:['外向','直覺','邏輯','彈性'],
+    name:'觀點挑戰型創作者',tag:'你最強的武器是你敢說出別人不敢說的那個觀點',
+    status:'你思維靈活、喜歡辯論、對很多事情都有自己的看法。你的特質是你能快速看出一個主流觀點的漏洞，然後提出一個更有趣的角度。你的內容讓人覺得「這個人說的跟別人都不一樣」。',
+    insight:'你的強項是「打破常規的思考」。但 這類型的創作者最大的問題是：你太享受辯論本身，有時候忘記你的受眾不是來跟你辯論的，他們是來得到一個有用的觀點的。你需要學會：把你的反駁能力，轉化成讓人「啊！原來可以這樣想」的洞見，而不是讓人覺得你只是喜歡唱反調。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「說話要更有系統、更有結構」，但這個建議對你只有一半對。你的優勢本來就是你的思維是跳躍的、連結是意外的——這才是你最吸引人的地方。你需要的不是更多結構，而是一個讓你的跳躍思維「有地方落地」的結尾，讓人看完覺得驚喜，而不是困惑。',
+    sys:'「反常識系統」',sysTxt:'每週選一個大家都覺得「理所當然」的觀點，問自己「如果這個是錯的呢？」然後把你的反駁寫出來，最後加一句「所以真正的答案是___」。這個格式讓你的挑戰思維有建設性，讀者會覺得你不只是在唱反調，而是在帶他們看到新的可能。',
+    cta:'老陳老師幫你把挑戰思維變成影響力',ctas:'訂閱服務裡有「觀點型創作者」的內容系統，幫你把你最強的「反常識思維」變成讓人一直回來看的品牌特質。'
   },
-  demonstrator:{
-    traits:['外向能量','邏輯思考','實戰示範'],
-    name:'外向實戰型創作者',tag:'你最能讓人信服的方式，是讓他們看到你怎麼做',
-    status:'你外向、有邏輯、做事有條理。你最有說服力的時候不是講道理，而是直接示範——「你看，我就是這樣做的，你也可以。」你的挑戰是你的「做」比「說」多，但創作需要你把做的過程說出來。',
-    insight:'你每天在做的事情，就是你最好的內容素材。你不需要另外準備什麼「值得說的事」，你只需要養成一個習慣：做了什麼，記下來，發出去。就這樣。',
-    diff:'你的差異化是「讓人看見過程」。在一個到處都是結論的世界，有人願意展示自己怎麼做、做錯什麼、怎麼調整——這種透明度是最強的信任建立方式。',
-    sys:'「行動記錄系統」',systxt:'每週記錄你正在做的一件事：你做了什麼、遇到什麼問題、你怎麼解決的。不需要有結論，不需要完美，過程本身就是內容。每週一次，固定格式，就這樣。',
-    cta:'老陳老師幫你把你的行動變成別人想追蹤的內容',ctas:'訂閱服務裡有「實戰型創作者」的內容策略課程，教你如何把你每天在做的事，變成讓人一直回來看的系列內容。'
+  ESFJ:{
+    mbti:'ESFJ',traits:['外向','實感','情感','計畫'],
+    name:'溫暖陪伴型創作者',tag:'你讓人感覺被照顧，這是創作者最難培養的能力',
+    status:'你在乎別人的感受、做事有條理、注重細節。你的特質是你能感受到別人的狀態，然後給出恰到好處的回應——不是大道理，而是「我懂你，我陪著你」。你的內容讓人感覺溫暖和安心。',
+    insight:'你的強項是「讓人感覺被照顧」。但 這類型的創作者最常犯的問題是：太想讓所有人都滿意，結果你說的話變得太保守、太圓滑，失去了你自己的立場。你需要學會：有時候真正照顧一個人，是告訴他一個他不想聽但需要聽的真相——而不是一直讓他感覺舒服。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要有更強烈的個人觀點」，但這個建議對你是個陷阱——因為你的優勢本來就不是觀點，而是溫度。你真正需要的不是變得更有主張，而是學會在你的溫暖裡加一點誠實——讓人感覺被照顧，同時也感覺被說中。',
+    sys:'「陪伴式內容系統」',sysTxt:'每週選一個你的受眾可能正在經歷的困境，用「如果你現在正在___，我想告訴你___，因為我自己也曾經___」格式寫出來。讓你的溫暖有根據，讓你的陪伴有深度。',
+    cta:'老陳老師幫你把溫暖變成黏著力',ctas:'訂閱服務裡有「陪伴型創作者」的完整路徑，幫你把你天生的溫暖，變成讓人一直回來、願意為你付費的社群黏著力。'
   },
-  insight:{
-    traits:['內向能量','直覺思考','深度洞見'],
-    name:'深度洞見型創作者',tag:'你看到的東西，是大多數人沒有注意到的層次',
-    status:'你喜歡一個人想事情，你的腦袋會自動把很多事情連結在一起，看到別人看不到的角度。你的挑戰是想法太多、太深、太難整理，所以一直沒有發出去——或者發出去之前改了又改。',
-    insight:'我給你一個規則：30分鐘寫完就發。不夠好沒關係，讀者會告訴你哪裡要改，這比你自己改一百遍更有效。我看過太多這樣的人，想了三年，一篇都沒發。你想清楚了才說話，我很欣賞——但先說出來，再變得更好。',
-    diff:'你的差異化是讓人停下來的深度。在一個什麼都很淺、很快的時代，你的東西讓人截圖、存起來、反覆看——這是大多數創作者做不到的，你只需要讓這些東西定期出現。',
-    sys:'「30分鐘截止系統」',systxt:'選一個你已經想了很久的話題，給自己整整30分鐘，寫完就發，不管有沒有覺得準備好。30分鐘截止，時間到就發。這個系統的目的是打破你的「再改一下」迴圈，讓出現比完美更重要。',
-    cta:'老陳老師幫你把深度思考變成讓人記住的內容',ctas:'訂閱服務裡有「深度型創作者」的發文系統，幫你從想得太多、發得太少，走到每週穩定輸出你的洞見。'
+  ESFP:{
+    mbti:'ESFP',traits:['外向','實感','情感','彈性'],
+    name:'生活示範型創作者',tag:'你的日常生活本身就是最好的內容',
+    status:'你活在當下、享受生活、喜歡和人互動。你的特質是你能把生活裡的日常細節說得生動有趣，讓人看完覺得「我也想要這樣的生活」。你不需要寫大道理，你的生活本身就是內容。',
+    insight:'你的強項是「真實的生活感」。但 這類型的創作者最常遇到的問題是：你的內容很有趣，但別人不知道為什麼要追蹤你——因為你沒有給他們一個「只有你才有的理由」。你需要找到你的生活裡，一個只有你才有的獨特視角或故事，讓你的日常不只是日常，而是「你的日常」。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有計畫、更有主題」，但這個建議對你是個陷阱——因為你的優勢本來就是你的即興和真實感。你真正需要的不是更多計畫，而是找到你生活裡一個「只有你才有的標誌性元素」，讓人一看就知道這是你。',
+    sys:'「生活片段系統」',sysTxt:'每天選一個你今天最有感的生活片段，用三句話記錄下來：發生了什麼、你的感受是什麼、你學到或想到了什麼。一週後選最有共鳴的一篇發出去。你的生活就是你的素材庫，永遠不會缺內容。',
+    cta:'老陳老師幫你把生活變成品牌',ctas:'訂閱服務裡有「生活型創作者」的定位系統，幫你從你的日常生活裡，找到那個只有你才有的獨特角度，讓你的生活內容從「有趣」變成「讓人一直追蹤」。'
   },
-  empath:{
-    traits:['內向能量','情感連結','私密故事'],
+  ESTJ:{
+    mbti:'ESTJ',traits:['外向','實感','邏輯','計畫'],
+    name:'實戰教學型創作者',tag:'你最強的地方是你能把複雜的事情說得讓人聽完就能做',
+    status:'你做事有條理、重視效率、說話清晰直接。你的特質是你能快速把一件事情拆成可以執行的步驟，讓人看完知道接下來要做什麼。你的內容不是讓人感動的，而是讓人行動的。',
+    insight:'你的強項是「讓人聽完就能做」。但 這類型的創作者最常犯的問題是：你的教學太有效率，少了一點「為什麼要這樣做」的背景故事，讓人聽完知道怎麼做，但沒有動力真的去做。你需要在每個步驟前加一句「我為什麼這樣建議」，讓你的教學有說服力，不只是有邏輯。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「說話要更感性、更有故事」，但這個建議對你只有一半對。你的優勢就是你的直接和清晰，這是很多人學不來的。你真正需要的不是變得更感性，而是在你的清晰裡加入一個「我自己做過，結果是___」的個人驗證，讓你的建議從「有道理」變成「值得信任」。',
+    sys:'「步驟教學系統」',sysTxt:'每週選一個你已經做過、有真實結果的事情，用「第一步___，第二步___，第三步___，我的結果是___」格式寫出來。加上你自己的真實數字或案例，讓你的教學有根據，讀者有信心可以複製。',
+    cta:'老陳老師幫你把實戰經驗變成可信任的品牌',ctas:'訂閱服務裡有「教學型創作者」的完整貨幣化路徑，讓你的實戰知識從免費分享，走到讓人願意付費的訂閱課程。'
+  },
+  ESTP:{
+    mbti:'ESTP',traits:['外向','實感','邏輯','彈性'],
+    name:'即時行動型創作者',tag:'你最強的內容，就是讓人看到你正在做的事',
+    status:'你行動力強、適應力強、喜歡直接面對問題。你的特質是你能在當下快速反應，然後用最直接的方式說出你的判斷。你的內容不是計畫好的，而是活生生發生的——而這正是你最大的優勢。',
+    insight:'你的強項是「即時反應的真實感」。但 這類型的創作者最常遇到的問題是：你的行動力很強，但缺少一個「為什麼這件事值得追蹤」的故事主軸，讓人看了很刺激，但不知道為什麼要持續追蹤你。你需要給你的即時行動一個長期的脈絡，讓人看到的不只是一個個獨立的精彩瞬間，而是一個持續發展的故事。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有計畫、更有一致性」，但這個建議對你是個陷阱——因為你的優勢就是你的即興和即時。你真正需要的不是更多計畫，而是一個讓你的即時行動「有地方被記錄下來」的習慣，讓每一個精彩瞬間都能累積成你的品牌資產。',
+    sys:'「現場記錄系統」',sysTxt:'每次你做了一件有趣的事或遇到一個真實的挑戰，立刻用60秒錄一段影片或寫三句話記錄下來：發生了什麼、你的判斷是什麼、結果如何。這些即時記錄就是你最強的內容素材，比任何精心製作的內容都更真實、更吸引人。',
+    cta:'老陳老師幫你把行動力變成持續的影響力',ctas:'訂閱服務裡有「實戰型創作者」的內容系統，幫你把你每天在做的事，變成讓人一直想追蹤你的故事線。'
+  },
+  INFJ:{
+    mbti:'INFJ',traits:['內向','直覺','情感','計畫'],
+    name:'深度洞見型創作者',tag:'你說出來的話，是別人想了很久但說不清楚的那個真相',
+    status:'你思考深、有洞察力、在乎別人的感受。你的特質是你能看到一件事情深層的意義，然後用讓人「啊！就是這樣」的方式說出來。你的內容不多，但每一篇都讓人覺得值得收藏。',
+    insight:'你的強項是「說出別人說不出的真相」。但 這類型的創作者最大的問題是：你太在乎每一篇都要完美，結果一直沒有發出去。我看過太多這樣的人，想了三年，一篇都沒發。你需要接受一個事實：你「覺得還不夠好」的那篇文章，對你的讀者來說可能已經是他這個月看過最有深度的東西了。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「多發文、增加頻率」，但這個建議對你是個陷阱——因為你的優勢不是頻率，而是深度。你真正需要的不是更多篇文章，而是讓你已經寫好的東西「出現」的勇氣。你的深度是稀缺的，不要讓完美主義把它藏起來。',
+    sys:'「30分鐘截止系統」',sysTxt:'選一個你已經想了很久但還沒說出來的話題，給自己整整30分鐘寫完，時間到就發，不管有沒有覺得準備好。這個系統的目的不是讓你發更多，而是讓你發出去——因為出現比完美更重要。',
+    cta:'老陳老師幫你把深度思考變成可持續的影響力',ctas:'訂閱服務裡有「深度型創作者」的發文系統，幫你從想得太多、發得太少，走到每週穩定輸出你的洞見。'
+  },
+  INFP:{
+    mbti:'INFP',traits:['內向','直覺','情感','彈性'],
     name:'私密故事型創作者',tag:'你願意說出來的那些話，正是別人最需要聽到卻說不出口的',
-    status:'你內向、敏感、有很深的情感洞察力。你的故事裡有很多別人沒辦法公開說的感受——那些孤獨、那些掙扎、那些你後來才明白的事。你最大的挑戰是怕說出來太私密、怕被誤解，所以一直沒有動。',
+    status:'你內向、有豐富的內心世界、對意義和價值觀很敏感。你的特質是你能感受到別人說不出口的感受，然後用真實的故事說出來，讓人覺得「你說的就是我」。',
     insight:'我一直覺得，創作者最大的武器不是知識，是勇氣。你願意說出別人說不出口的感受，這件事本身就是你和別人最大的差距。不要低估你的故事，因為某個人正在等著聽你說它。',
-    diff:'你的差異化是你願意說出真實感受的勇氣。在一個大家都在展示完美的世界裡，說出「我也曾經很難」的人，才是讓人最信任的那種創作者。',
-    sys:'「一封信系統」',systxt:'每週寫一封信給一個具體的人——那個跟你一年前一樣的人。告訴他你希望當時有人告訴你的事。這封信就是你的內容。你不是在對所有人說話，你是在對一個人說話，這讓你更容易開口。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有系統、更有教學性」，但這個建議對你是個陷阱——因為你的優勢本來就不是教學，而是共鳴。你真正需要的不是把你的故事變成乾貨，而是讓你的故事保持它的真實感——因為那個真實感，才是別人複製不走的東西。',
+    sys:'「一封信系統」',sysTxt:'每週寫一封信給一個具體的人——那個跟你一年前一樣的人。告訴他你希望當時有人告訴你的事。這封信就是你的內容。你不是在對所有人說話，你是在對一個人說話，這讓你更容易開口。',
     cta:'老陳老師幫你把你的故事變成別人的光',ctas:'訂閱服務裡有「故事型創作者」的完整路徑，從你的第一封信，走到讓人信任你、願意持續追蹤你的社群。'
   },
-  systematic:{
-    traits:['內向能量','邏輯思考','系統規劃'],
-    name:'系統知識型創作者',tag:'你把複雜的事情說得清楚——這是市場上最稀缺的能力之一',
-    status:'你喜歡分析、喜歡有結構，你解釋事情的方式讓人很容易理解。你在乎有沒有用、有沒有邏輯、有沒有真的幫到人。你的挑戰是標準太高，一直在等「夠完整」才發，結果一直沒發。',
-    insight:'很多知識型創作者有一個通病：寧可不發，也不發不完整的東西。但我告訴你，你那篇「不夠完整」的文章，對你的讀者來說可能已經是他這個月看過最有用的東西了。出現比完美重要，永遠是。',
-    diff:'你的差異化是你組織知識的方式——你的邏輯框架、你舉的例子、你選擇的切入角度。這些加在一起，就是只有你才能做出來的內容，別人學不走。',
-    sys:'「一個重點系統」',systxt:'每週只說一個重點，用這個格式：「關於___，大多數人不知道的一件事是___。」就這一個重點展開，加一個你自己的案例，不超過四百字。一個重點說清楚，比十個重點列清單更有影響力。',
-    cta:'老陳老師幫你把你的知識變成可持續的品牌資產',ctas:'訂閱服務裡有「知識型創作者」的完整貨幣化路徑，從第一篇文章到第一批為你的知識付費的訂閱者。'
+  INTJ:{
+    mbti:'INTJ',traits:['內向','直覺','邏輯','計畫'],
+    name:'系統建構型創作者',tag:'你能把複雜的知識變成一個讓人可以複製的系統',
+    status:'你思考清晰、有遠見、對效率和邏輯有強烈的要求。你的特質是你能看到一件事情的底層邏輯，然後把它整理成一個清晰的框架或系統。你的內容讓人覺得「這個人真的想清楚了」。',
+    insight:'你的強項是「把複雜的事情變成系統」。但 這類型的創作者最常犯的問題是：你的系統太完整了，反而讓讀者覺得門檻很高、很難開始。你需要學會：每次只給讀者系統的一個入口，讓他先走進來，再慢慢看到全貌。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「說話要更親切、更感性」，但這個建議對你只有一半對。你的優勢就是你的系統思維和清晰邏輯，這是很多人學不來的。你真正需要的不是變得更感性，而是在你的系統裡加入一個「這個系統我自己用過，結果是___」的個人驗證，讓你的邏輯有溫度。',
+    sys:'「框架輸出系統」',sysTxt:'每週選一個你已經想清楚的知識框架，用「大多數人認為___，但真正的邏輯是___，所以正確的做法是___」格式寫出來，加一個你自己的案例。讓你的框架有根據，讀者有方向可以跟。',
+    cta:'老陳老師幫你把系統思維變成品牌資產',ctas:'訂閱服務裡有「知識型創作者」的完整貨幣化路徑，讓你的系統思維從免費分享，走到讓人願意付費的訂閱服務。'
   },
-  explorer:{
-    traits:['內向能量','彈性行動','探索實驗'],
-    name:'探索實驗型創作者',tag:'你還在找方向——但你的探索過程本身就是你最真實的內容',
-    status:'你比較彈性、隨興，不喜歡被一個方向綁死。你的挑戰不是找不到方向，而是同時在乎太多方向，所以一直沒有把任何一個走深。你需要的不是「選定方向」，而是一個讓你邊探索邊出現的簡單系統。',
-    insight:'不知道要做什麼方向的人，我給你一個最簡單的答案：先動，再找方向。你不是要先想清楚才開始，你是要在做的過程中想清楚。你的探索本身就是內容，你的讀者願意跟著一個還在找路的人走，只要你真實地記錄這個過程。',
-    diff:'你的優勢是你還沒被任何一個框架定型。你可以真實地記錄你在摸索什麼、嘗試什麼、發現什麼——這種真實感，是那些「已經想清楚了」的創作者做不到的。',
-    sys:'「每週一個實驗系統」',systxt:'每週做一個小實驗，不管大小：試一個新平台、試一種新格式、試一個新話題。把這個實驗的過程和結果記錄下來，發出去。你不是在教人，你是在帶著讀者一起實驗，這就是你的內容系統。',
-    cta:'老陳老師幫你把探索過程變成你的品牌故事',ctas:'訂閱服務裡有「探索型創作者」的起步課程，幫你在邊走邊找的過程中，建立起讓人想持續追蹤你的理由。'
+  INTP:{
+    mbti:'INTP',traits:['內向','直覺','邏輯','彈性'],
+    name:'深度分析型創作者',tag:'你挖得到別人挖不到的底層邏輯，這是最難被取代的能力',
+    status:'你思考深、喜歡探索概念、對真相有強烈的追求。你的特質是你能不斷地問「為什麼」，直到找到一個別人沒有注意到的底層邏輯，然後用讓人驚訝的方式說出來。',
+    insight:'你的強項是「挖到底層邏輯」。但 這類型的創作者最常遇到的問題是：你的分析太深了，讀者跟不上，結果你的洞見沒有被接收到。你需要學會：在你的深度分析後面，加一句「所以對你來說，這意味著___」，讓你的洞見落地，讀者才能真正用到它。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更簡單、更易懂」，但這個建議對你只有一半對。你的優勢就是你的深度，把它簡化掉就失去了你最強的競爭力。你真正需要的不是讓你的分析變淺，而是在深度分析後面加一個「所以呢？」的落地句，讓深度和實用並存。',
+    sys:'「底層邏輯挖掘系統」',sysTxt:'每週選一個你覺得大家都想錯的事情，不斷問「為什麼」直到你找到底層邏輯，然後用「大家以為___，但底層邏輯其實是___，所以___」格式寫出來。這個格式讓你的分析深度有出口，讀者看完有收穫。',
+    cta:'老陳老師幫你把分析能力變成稀缺的品牌資產',ctas:'訂閱服務裡有「深度分析型創作者」的內容路徑，幫你把你最強的底層邏輯挖掘能力，變成讓人一直回來訂閱的理由。'
+  },
+  ISFJ:{
+    mbti:'ISFJ',traits:['內向','實感','情感','計畫'],
+    name:'細膩記錄型創作者',tag:'你的細節觀察力，讓人覺得被完全理解',
+    status:'你細心、可靠、在乎別人、注重細節。你的特質是你能注意到別人忽略的細節，然後用溫暖的方式說出來，讓人覺得「你真的很懂這件事」。你的內容不是大道理，而是細膩的觀察和陪伴。',
+    insight:'你的強項是「細膩的觀察和記錄」。但 這類型的創作者最常犯的問題是：你太謙虛了，總覺得你說的東西別人都知道、不值得說。但這是錯的——你注意到的那些細節，大多數人根本沒有注意到。你需要開始相信：你的細膩本身就是一種稀缺的能力。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有觀點、更有主張」，但這個建議對你是個陷阱——因為你的優勢本來就不是觀點，而是細節。你真正需要的不是更強烈的主張，而是把你已經在做的細膩觀察，說出來讓人看到——因為那個細膩，才是別人學不走的東西。',
+    sys:'「細節觀察系統」',sysTxt:'每週選一個你這週注意到的細節——可以是生活裡的小事、可以是你的工作、可以是你觀察到的人——用「我注意到___，大多數人可能不在意，但我覺得這很重要，因為___」格式寫出來。你的細膩就是你的內容。',
+    cta:'老陳老師幫你把細膩觀察力變成黏著力',ctas:'訂閱服務裡有「細膩型創作者」的完整路徑，幫你把你天生的觀察力，變成讓人覺得「這個人真的很懂我」的品牌溫度。'
+  },
+  ISFP:{
+    mbti:'ISFP',traits:['內向','實感','情感','彈性'],
+    name:'感官美學型創作者',tag:'你用視覺和感受說話，而這是大多數人最缺乏的能力',
+    status:'你有獨特的美感、活在當下、對感官體驗非常敏銳。你的特質是你能把一個視覺或感受的體驗，傳達給別人，讓人覺得「我也想要這種感覺」。你的內容不是用道理說服人的，而是用美感和感受打動人的。',
+    insight:'你的強項是「用感受傳達意義」。但 這類型的創作者最常遇到的問題是：你的美感很強，但你不太擅長用文字說明你為什麼這樣選擇，讓人只能欣賞你的作品，卻不知道你的思考是什麼。你需要在你的美學作品旁邊，加一點「為什麼我這樣選擇」的說明，讓人不只被你的美吸引，還被你的思維打動。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有系統、更有教學內容」，但這個建議對你是個陷阱——因為你的優勢本來就不是系統，而是感受。你真正需要的不是把你的美學變成教學，而是讓你的美學有一個「故事」——不只讓人看到作品，也讓人看到作品背後的你。',
+    sys:'「美學故事系統」',sysTxt:'每次你完成一個作品或有一個美的體驗，用三句話記錄下來：這個作品或體驗是什麼、你當時的感受是什麼、你為什麼覺得它美或有意義。這三句話就是你的內容——讓你的美學有溫度，讓人不只欣賞你，也理解你。',
+    cta:'老陳老師幫你把美感變成品牌語言',ctas:'訂閱服務裡有「美學型創作者」的定位系統，幫你把你天生的感官敏銳度，變成讓人一看就記住你的品牌風格。'
+  },
+  ISTJ:{
+    mbti:'ISTJ',traits:['內向','實感','邏輯','計畫'],
+    name:'知識整理型創作者',tag:'你把資訊整理得讓人一看就懂，這是真正的稀缺能力',
+    status:'你可靠、有條理、重視事實和細節。你的特質是你能把大量的資訊整理成清晰易懂的格式，讓人一看就知道重點在哪裡。你的內容讓人覺得「這個人真的把這件事研究透了」。',
+    insight:'你的強項是「整理和清晰」。但 這類型的創作者最常犯的問題是：你的內容太完整、太正確，但缺少一個「為什麼你要整理這件事」的個人故事，讓人知道你是什麼樣的人，而不只是一個整理機器。你需要在每篇整理的開頭，加一句「我整理這件事，是因為___」，讓你的知識有人味。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有個人風格、更感性」，但這個建議對你只有一半對。你的優勢就是你的可靠和清晰，這是很多人學不來的。你真正需要的不是變得更感性，而是讓人知道你整理這些知識的「理由」——讓你的可靠有溫度，而不只是有效率。',
+    sys:'「知識整理系統」',sysTxt:'每週選一個你這週研究或學到的東西，用「大多數人對___的理解是___，但真正重要的是___，所以你應該___」格式整理出來，加上你自己為什麼覺得這件事重要的一句話。讓你的整理有方向，讀者有動力行動。',
+    cta:'老陳老師幫你把整理能力變成品牌資產',ctas:'訂閱服務裡有「知識整理型創作者」的完整路徑，讓你的整理能力從免費內容，走到讓人願意付費訂閱的知識服務。'
+  },
+  ISTP:{
+    mbti:'ISTP',traits:['內向','實感','邏輯','彈性'],
+    name:'實驗紀錄型創作者',tag:'你邊做邊記錄，這種真實感是最難被複製的',
+    status:'你獨立、務實、喜歡自己動手解決問題。你的特質是你能快速找到一件事的核心問題，然後用最直接的方式解決它。你的內容不是理論，而是真實的實驗和結果——這種真實感，才是你最大的優勢。',
+    insight:'你的強項是「邊做邊紀錄的真實感」。但 這類型的創作者最常遇到的問題是：你很會做，但不太擅長「說為什麼這樣做」，讓人看到你的結果，但不知道你的思考過程，所以很難真正學到東西。你需要在你的實驗記錄裡，加一句「我為什麼選擇這個方法，而不是那個」，讓你的實驗有教學價值。',
+    diff:'你和大多數創作者不同的地方',
+    diffTxt:'別人建議你「要更有計畫、更有系統」，但這個建議對你是個陷阱——因為你的優勢就是你的即興和務實。你真正需要的不是更多計畫，而是一個「把你的即興決策說出來」的習慣，讓人不只看到你做了什麼，也看到你怎麼想的。',
+    sys:'「實驗日誌系統」',sysTxt:'每次你嘗試一個新方法或解決一個問題，記錄下來三件事：你遇到什麼問題、你選擇的解法是什麼、結果如何。每週發一篇這樣的實驗日誌。你的過程比你的結果更有價值，因為過程是別人複製不走的真實判斷。',
+    cta:'老陳老師幫你把實驗精神變成持續的影響力',ctas:'訂閱服務裡有「實驗型創作者」的內容系統，幫你把你每次的嘗試和發現，變成讓人一直想追蹤你的故事線。'
   }
 };
 
-const DIMS = [
-  {key:'E', lo:'內向能量', hi:'外向能量'},
-  {key:'N', lo:'實感思考', hi:'直覺思考'},
-  {key:'F', lo:'邏輯決策', hi:'情感決策'},
-  {key:'J', lo:'彈性行動', hi:'計畫行動'},
-  {key:'ID',lo:'單一身份', hi:'複合身份'},
-  {key:'BLK',lo:'準備起跑',hi:'心理卡關'}
+const BLK_WARN = {
+  high_fear:{
+    title:'你有一個隱藏的煞車——害怕被看見',
+    txt:'你的個性特質非常清晰，但你有一個很強的心理阻力：害怕發出去被批評、被忽視、或被誤解。這個煞車會讓你即使知道該怎麼做，還是動不了。',
+    steps:['先發給一個你信任的人看，不是發給所有人——從一個人開始，習慣「被看見」這件事。','告訴自己：第一篇的目的不是好，是「存在」。存在了，才有下一篇。','每次發完之後，不管有沒有人回應，都算完成一次——用完成次數衡量自己，不用回應數。']
+  },
+  high_notready:{
+    title:'你有一個隱藏的煞車——覺得自己還沒準備好',
+    txt:'你的個性特質非常清晰，但你有一個很強的習慣：等自己更好、更準備好、更有把握再開始。老陳老師告訴你：這個「準備好」的感覺永遠不會來，因為你的標準會跟著你一起成長。',
+    steps:['設定一個「夠了就發」的標準，不是「完美才發」——例如：能讓一個人看懂，就夠了。','把你現在的程度記錄下來發出去，一年後回頭看，你會慶幸你當時發了。','找一個比你晚開始、但已經在做的人，問他：「你當時覺得準備好了嗎？」答案幾乎都是沒有。']
+  },
+  both:{
+    title:'你有兩個隱藏的煞車——完美主義加上害怕被看見',
+    txt:'你的個性特質非常清晰，但你同時有兩個強烈的阻力：覺得自己還不夠好，又害怕發出去被批評。這兩個加在一起，會讓你一直停在「準備」的狀態，永遠踏不出去。',
+    steps:['今天只做一件事：寫三句話，不用發，先讓「動」這個動作存在。明天再寫三句，第三天才考慮發。','把你的第一篇設定為「只給一個人看」——不是發給所有人，只傳給一個你信任的朋友，先從這裡開始。','記住：你現在的「不夠好」，對還沒開始的人來說，已經是「遠遠超前」了。']
+  }
+};
+
+const DIMS_DISPLAY = [
+  {key:'E', loLabel:'內向能量', hiLabel:'外向能量'},
+  {key:'N', loLabel:'實感思考', hiLabel:'直覺思考'},
+  {key:'F', loLabel:'邏輯決策', hiLabel:'情感決策'},
+  {key:'J', loLabel:'彈性行動', hiLabel:'計畫行動'}
 ];
 
-let cur = 0, ans = new Array(16).fill(null), currentKey = '';
+const CTYPES_STEPS = {
+  knowledge:{
+    ENFJ:['今天選你最常被人問到的一個問題，把答案用「大多數人不知道的是___」開頭寫出來，三句話就夠。','用你天生的引領感，在文章最後加一句：「如果你也在這個困惑裡，可以這樣做___」，給讀者一個方向。','每週一個問題一篇內容，三個月後你會有一個讓人信任你的知識型品牌。'],
+    ENFP:['選你最近對你的專業最有熱情的一個話題，把那個熱情的感覺寫出來，不只寫知識，也寫你為什麼在乎它。','你的熱情會感染讀者，讓他們因為你的熱情而對這個主題感興趣——這是知識型創作者最難做到的。','每週一篇「我最近在研究___，讓我興奮的是___」格式的文章，讓你的知識有人味。'],
+    ENTJ:['選一個你的專業裡，大多數人做錯的事，用「大家的做法是___，但真正有效的策略是___，因為___」格式寫出來。','加上你自己的數據或案例，讓你的策略建議有根據，讀者有信心可以跟著做。','每週一個策略觀點，八週後你的受眾會把你定位成這個領域最可信的策略型聲音。'],
+    ENTP:['選你的專業裡一個你覺得「大家都想錯了」的觀點，用「大家說___，但我覺得其實___，因為___」格式寫出來。','你的反常識觀點會讓人停下來，但記得在最後給讀者一個可以行動的結論，讓挑戰有建設性。','每週一個「反常識知識點」，讓你的品牌風格變成「這個人說的跟別人都不一樣，而且是對的」。'],
+    ESFJ:['選你最近幫助一個人解決的問題，用「有個人來問我___，我告訴他___，他後來___」格式寫出來。','你的溫暖和在乎會讓讀者感覺到：你不只是在分享知識，你是真的想幫他們。','每週一個「幫助別人的故事」，三個月後讀者不只信任你的知識，更信任你這個人。'],
+    ESFP:['選一個你這週在工作或生活裡學到的東西，用真實的生活情境說出來，不要太正式。','你的真實生活感讓知識更容易被接受，讀者會覺得「這是真實可以用的，不是教科書上的理論」。','每週一個「我這週學到___，因為___發生了」格式的內容，讓你的知識有生活感。'],
+    ESTJ:['選一個你已經做過、有真實結果的事情，用「第一步___，第二步___，第三步___，我的結果是___」格式寫出來。','加上你自己的真實數字或案例，讓你的教學有根據，讀者有信心可以複製。','每週一個步驟教學，讓你的品牌風格變成「跟著他做，就能有結果」。'],
+    ESTP:['今天選一件你最近正在做的專業工作，把「我現在遇到___問題，我的判斷是___，我決定___」用三句話寫出來。','你的即時判斷和真實現場感比任何精心準備的教學都更吸引人，今天就發出去。','每週一個「現場判斷記錄」，讓讀者跟著你的思考過程學習，這比任何教學都更有說服力。'],
+    INFJ:['選一個你在你的專業領域裡，想了很久但還沒說出來的洞見，給自己30分鐘寫出來，時間到就發。','你的深度洞見是你最強的武器，不要讓完美主義把它藏起來。讀者需要你的洞見，不是你的完美。','每週一個深度洞見，七週後你會有一個讓人截圖收藏的知識型內容資產庫。'],
+    INFP:['選你在你的專業上曾經最掙扎的一個問題，用「我剛開始的時候以為___，後來才發現___」格式寫出來。','讓你的知識有個人故事，讀者不只學到知識，還感受到你的誠實和真實——這讓你的專業更可信。','每週一個「我曾經不知道的事」，誠實的知識分享比完美的教學更讓人記住你。'],
+    INTJ:['選你的專業領域裡一個可以做成系統或框架的知識點，用「問題是___，大多數人的方法是___，更有效的系統是___」格式寫出來。','你的系統思維讓讀者不只學到一個技巧，而是學到一個可以反覆使用的框架——這是你最強的差異化。','每週一個系統框架，讓你的品牌風格變成「跟著他，可以把這件事徹底搞清楚」。'],
+    INTP:['選一個你在你的專業領域裡一直覺得「大家的理解都不夠深」的地方，把你挖到的底層邏輯寫出來。','在最後加一句「所以對你來說，這意味著___」，讓你的深度分析有落地點，讀者才能真正用到它。','每週一個底層邏輯挖掘，讓你的品牌風格變成「他說的東西，別人都說不出來」。'],
+    ISFJ:['選你的專業裡一個你覺得大家常常忽略的細節，用「大多數人不在意___，但我覺得這很重要，因為___」格式寫出來。','你的細膩觀察力讓讀者發現他們忽略的東西——這種「被提醒」的感覺讓人覺得你真的很懂。','每週一個細節觀察，讓你的品牌風格變成「她注意到的，別人都沒有注意到」。'],
+    ISFP:['選一個你的專業作品或成果，用三句話說出它背後的故事：為什麼做、過程的感受、結果和意義。','讓你的知識有美感和感受，讀者不只學到東西，還被你的美學思維打動——這是其他知識型創作者做不到的。','每週一個「作品背後的故事」，讓你的知識有溫度，讀者想認識做出這些東西的你。'],
+    ISTJ:['選一個你這週研究或學到的東西，用「大多數人對___的理解是___，但真正重要的是___，所以你應該___」格式整理出來。','加上你自己為什麼覺得這件事重要的一句話，讓你的整理有方向，讀者有動力行動。','每週一個知識整理，讓你的品牌風格變成「她整理的東西，拿來就能用」。'],
+    ISTP:['今天選一件你最近嘗試或解決的專業問題，記錄下來：遇到什麼問題、你選的解法、結果如何。','加上你為什麼選這個解法而不是別的——讓讀者不只看到結果，也看到你的判斷過程。','每週一個實驗日誌，讓你的品牌風格變成「他邊做邊記錄，跟著他可以少踩很多坑」。']
+  },
+  life:{
+    ENFJ:['選你這週感受到的一件事，用「如果你也在___的狀態，我想告訴你___」格式寫出來，給讀者一個方向。','你的引領感讓你的生活故事不只是故事，而是讓人知道「原來可以這樣走」的路標。','每週一個生活方向感的內容，讓讀者從你的生活故事裡找到自己的方向。'],
+    ENFP:['選你這週最有熱情的一個生活發現，把那個「啊！」的瞬間寫出來，讓讀者感受到你的驚喜。','你的熱情感染力讓生活內容有活力，讀者不只看你的生活，也被你看待生活的方式感染。','每週一個生活驚喜發現，讓你的品牌風格變成「跟著她，會對生活有不同的感受」。'],
+    ENTJ:['選你的生活方式裡一個你有強烈觀點的地方，用「大家對___的做法是___，但我選擇___，因為___」格式寫出來。','你的策略思維讓你的生活不只是生活，而是一個可以參考的選擇框架，讀者會覺得你想清楚了。','每週一個生活策略觀點，讓你的生活故事有深度和方向感。'],
+    ENTP:['選你的生活裡一個你覺得「大家都做錯了」的事，用反常識的角度說出你的做法和理由。','你的挑戰思維讓生活內容變得有趣和啟發性，讀者會覺得「原來生活還可以這樣想」。','每週一個「生活反常識」，讓你的品牌風格變成「她的生活觀點，讓我重新思考很多事」。'],
+    ESFJ:['選你這週一個讓你有感受的生活細節，用「那一刻我感覺到___，後來我才明白___」格式寫出來。','在結尾問讀者：「你有沒有過這種感覺？」讓你的生活故事成為一個溫暖的對話開場。','每週一個生活共鳴故事，三個月後讀者會覺得你是他們生活的一部分。'],
+    ESFP:['今天記錄你生活的一個真實片段，不需要美化，真實的日常比精心策劃的內容更吸引人。','你的即興和真實感讓生活內容有活力，讀者會覺得「跟著她，生活是有趣的」。','每週一個生活現場記錄，讓讀者跟著你一起生活，這種陪伴感是任何廣告都買不到的信任。'],
+    ESTJ:['選你生活裡一個你已經執行、有結果的習慣或做法，用步驟格式寫出來，讓人可以直接複製。','你的條理讓生活內容有實用性，讀者不只受到啟發，還知道怎麼開始做。','每週一個生活實踐步驟，讓你的品牌風格變成「她說的生活方式，是真的做得到的」。'],
+    ESTP:['今天選一件你最近做的一個生活改變或嘗試，把「我試了___，結果是___，我學到___」用三句話寫下來。','你的行動力和即時感讓生活內容有說服力，讀者會覺得「她真的在過這種生活，不是說說而已」。','每週一個生活實驗記錄，讓你的品牌風格變成「她在示範一種真實的生活方式」。'],
+    INFJ:['選你走過的一段人生經歷，把你後來才理解的深層意義說出來，用「當時我以為___，現在我才明白___」格式寫。','你的洞見讓生活故事有深度，讀者不只看到你的故事，也在你的故事裡看見自己。','每週一個人生洞見，讓你的生活故事從「有趣」變成「讓人反覆思考」。'],
+    INFP:['選你走過的一段最難的時期，用「有一段時間，我___，那時候我以為___，後來才明白___」格式寫出來。','在結尾加：「如果你現在也在這個狀態，我想告訴你___。」讓你的故事成為別人的光。','每週一個「我曾經走過的路」，你的傷疤比你的成功更有力量，因為它讓別人覺得自己不孤單。'],
+    INTJ:['選你的生活方式裡一個你有強烈系統性想法的地方，把你的生活框架整理出來，讓人看清楚你為什麼這樣選擇。','你的系統思維讓生活內容有深度，讀者不只學到一個生活技巧，而是學到一個思考生活的框架。','每週一個生活系統框架，讓你的品牌風格變成「她的生活是有邏輯的，跟著她可以活得更清醒」。'],
+    INTP:['選你對生活或人生一個一直想清楚但還沒說出來的底層邏輯，給自己30分鐘寫出來，時間到就發。','你的分析讓生活故事有哲學深度，讀者會覺得「她說的東西讓我重新想了很多事」。','每週一個人生底層邏輯，讓你的品牌風格變成「跟著她，會對生活有更深的理解」。'],
+    ISFJ:['選你的生活裡一個你注意到的細節，用「我注意到___，大多數人可能不在意，但我覺得___很重要」格式寫出來。','你的細膩觀察讓生活故事有溫度，讀者會覺得「她注意到的，讓我覺得被完全理解」。','每週一個生活細節觀察，讓你的品牌風格變成「跟著她，會更在意生活裡的細節」。'],
+    ISFP:['選你最近一個讓你有強烈感受的生活體驗，用三句話說出：是什麼體驗、你的感受、你學到的意義。','你的感官敏銳度讓生活內容有美感和感受，讀者不只讀你的故事，還感受到你的生活溫度。','每週一個「生活感受記錄」，讓你的品牌風格變成「跟著她，會對生活有更豐富的感受」。'],
+    ISTJ:['選你生活裡一個你已經建立、有效的習慣或系統，把它整理成可以參考的格式，讓人看完就知道怎麼開始。','你的可靠讓生活內容有信任感，讀者會覺得「她說的生活方式，是真的可以做到的」。','每週一個生活整理術，讓你的品牌風格變成「她整理的生活方式，我可以直接複製」。'],
+    ISTP:['今天記錄你生活裡一個你解決的問題或做的一個嘗試，把你的判斷過程說出來，不只說結果。','你的務實和即興讓生活內容有真實感，讀者會覺得「她的生活是真實發生的，不是擺拍的」。','每週一個生活實驗日誌，讓你的品牌風格變成「她邊生活邊記錄，跟著她可以少走很多彎路」。']
+  },
+  creative:{
+    ENFJ:['選你最近完成的一個作品，說出它背後的「為什麼」：你想透過這個作品帶給看的人什麼感受或方向。','你的引領感讓作品不只是作品，而是一個帶著意圖的表達——讀者會感受到你想給他們的東西。','每週一個作品加上你的創作意圖，讓你的品牌風格變成「她的作品都有一個方向感」。'],
+    ENFP:['選你最近做的一個作品，把你創作過程裡最讓你興奮的那個瞬間說出來——不是說作品，是說那個感覺。','你的熱情讓創作內容有感染力，讀者會被你創作時的狀態吸引，而不只是被作品吸引。','每週一個「創作時的興奮瞬間」，讓你的品牌風格變成「跟著她，創作是有趣的」。'],
+    ENTJ:['選你的創作裡一個你有強烈觀點的方向或選擇，用「大家通常做___，但我選擇___，因為___」格式說出來。','你的策略思維讓創作內容有深度，讀者不只欣賞你的作品，還想理解你的創作邏輯。','每週一個創作策略觀點，讓你的品牌風格變成「她的創作是有邏輯的，值得深入研究」。'],
+    ENTP:['選你的創作裡一個你打破常規的選擇，用「大家都這樣做___，但我試了___，結果___」格式寫出來。','你的挑戰思維讓創作內容有趣和啟發性，讀者會覺得「原來創作還可以這樣想」。','每週一個「創作反常識」，讓你的品牌風格變成「她的創作方式，讓人重新思考什麼叫好作品」。'],
+    ESFJ:['選你最近做的一個作品，說一個它背後的人情故事：這個作品是為誰做的，或是做的過程裡有誰幫助了你。','你的溫暖讓創作內容有人情味，讀者不只看到作品，還感受到作品背後的溫度。','每週一個「作品的人情故事」，讓你的創作品牌有溫度，讀者想認識做出這些作品的你。'],
+    ESFP:['今天拍一段你創作過程的真實片段，從開始到完成，不需要剪輯得很精美，真實感比精美更重要。','你的真實感讓創作內容有說服力，讀者會覺得「她真的是這樣創作的，不是表演」。','每週一個「創作現場記錄」，讓讀者跟著你的手一起走，這是建立粉絲最強的方式之一。'],
+    ESTJ:['把你的創作流程拆成三個步驟，每週用一篇內容說清楚其中一個步驟，讓想學你的人知道怎麼開始。','你的條理讓創作教學有實用性，讀者學完知道怎麼做，而不只是欣賞你的作品。','每週一個創作步驟教學，讓你的品牌風格變成「跟著她學，真的學得會」。'],
+    ESTP:['今天選你最近做的一個創作決定，把「我遇到___問題，我的判斷是___，結果___」用三句話寫出來。','你的即時判斷力讓創作內容有真實感，讀者會覺得「她的創作過程是真實發生的，很有說服力」。','每週一個「創作現場判斷」，讓你的品牌風格變成「她在示範真實的創作思維」。'],
+    INFJ:['選你的一個作品，說出你在創作它的時候，想傳達給看的人的那個深層意義——不只說技術，說意義。','你的洞見讓創作內容有深度，讀者不只欣賞你的作品，還在你的作品裡看見更多。','每週一個「作品的深層意義」，讓你的創作品牌有哲學深度，讀者想反覆看你的作品。'],
+    INFP:['選你做這個作品時最有感受的時刻，用「做這個的時候，我感覺到___，那讓我想起___」寫出來。','你的真實感受讓創作內容有共鳴，讀者不只看作品，還感受到你在創作時的狀態——這種連結最深。','每週一個「創作時的感受」，讓你的品牌風格變成「她的創作有靈魂，讓人一直想看」。'],
+    INTJ:['選你的創作方法裡一個你有系統性想法的地方，把你的創作框架整理出來，讓人看清楚你為什麼這樣選擇。','你的系統思維讓創作內容有深度，讀者不只學到一個技巧，而是學到一個看待創作的框架。','每週一個創作系統框架，讓你的品牌風格變成「她的創作方法是有邏輯的，值得深入學習」。'],
+    INTP:['選你的創作裡一個你一直在思考的底層問題，比如「什麼叫好的設計」或「為什麼這樣比那樣好」，把你挖到的底層邏輯說出來。','你的分析讓創作內容有哲學深度，讀者會覺得「她說的東西讓我重新理解了什麼叫好的創作」。','每週一個創作底層邏輯，讓你的品牌風格變成「她的創作思維，在業界是獨一無二的」。'],
+    ISFJ:['選你的創作過程裡一個你注意到的細節，用「我在___這個地方特別注意___，因為___」格式說出來。','你的細膩讓創作內容有溫度，讀者會覺得「她的作品裡，每個細節都有意義」。','每週一個創作細節觀察，讓你的品牌風格變成「跟著她，會更在意創作裡的細節」。'],
+    ISFP:['選你最近做的一個作品，用三句話說出它給你的感受：這個作品讓你感覺___，讓你想到___，讓你希望看的人感受到___。','你的感官敏銳度讓創作內容有美感和感受，讀者不只看作品，還感受到作品的溫度。','每週一個「作品的感受記錄」，讓你的創作品牌有溫度，讀者想一直待在你創造的美感世界裡。'],
+    ISTJ:['把你的創作流程和你用的工具整理成一份清單，讓想學你的人知道你是怎麼做到的，每個環節都說清楚。','你的可靠讓創作內容有信任感，讀者會覺得「她說的創作方法，是真的可以複製的」。','每週一個創作流程整理，讓你的品牌風格變成「她的創作方法，我可以直接學」。'],
+    ISTP:['選你最近嘗試的一個新創作方法或新材料，把「我試了___，發現___，我的判斷是___」用三句話寫出來。','你的務實讓創作內容有真實感，讀者會覺得「她真的在實驗，不是說說而已」。','每週一個創作實驗記錄，讓你的品牌風格變成「她邊創作邊實驗，跟著她可以少踩很多坑」。']
+  },
+  opinion:{
+    ENFJ:['選你對某件事的強烈觀點，用「如果你也在___的狀態，我覺得你應該___，因為___」格式寫出來，給讀者一個方向。','你的引領感讓觀點內容有影響力，讀者不只聽到你的觀點，還感受到你想帶他們去哪裡。','每週一個方向性觀點，讓你的品牌風格變成「她說的話，讓我知道接下來要往哪裡走」。'],
+    ENFP:['選你這週對某件事突然很有感的一個觀點，把那個「靈光一閃」的瞬間和你當時的感受說出來。','你的熱情讓觀點內容有感染力，讀者不只接受你的觀點，還被你的熱情感染，開始自己思考。','每週一個「突然想到的觀點」，讓你的品牌風格變成「跟著她，會對很多事有新的看法」。'],
+    ENTJ:['選你對某個領域或現象的強烈策略性觀點，用「大多數人的做法是___，但真正有效的策略是___，因為___」格式寫出來。','你的策略思維讓觀點內容有說服力，讀者不只聽到你的觀點，還覺得你想清楚了，值得信任。','每週一個策略性觀點，讓你的品牌風格變成「她說的，是真的想清楚了的」。'],
+    ENTP:['選你這週最想挑戰的一個主流觀點，用「大家說___，但我覺得其實___，因為___，所以你應該___」格式寫出來。','你的反常識思維讓觀點內容有趣和啟發性，讀者會覺得「原來還可以這樣想」。','每週一個「反常識觀點」，讓你的品牌風格變成「他說的跟別人都不一樣，而且說服了我」。'],
+    ESFJ:['選一個你觀察到身邊很多人有的困惑或誤解，用「我發現很多人覺得___，但其實___，這讓我很在意」格式寫出來。','你的在乎讓觀點內容有溫度，讀者不只接受你的觀點，還感受到你真的在乎他們。','每週一個「我在乎你所以要說」的觀點，讓你的品牌風格變成「她的觀點是出於真心在乎」。'],
+    ESFP:['選你最近生活裡讓你有強烈感受的一件事，把你的直覺反應和觀點說出來，不用太正式。','你的真實感受讓觀點內容有說服力，讀者會覺得「她說的是真心話，不是表演」。','每週一個「生活裡的真心觀點」，讓你的品牌風格變成「她說的話，是真的感受到的」。'],
+    ESTJ:['選你對某件事的實務性觀點，用「從我的實際經驗來看，___是對的，因為___，所以你應該___」格式寫出來。','你的直接和清晰讓觀點內容有說服力，讀者會覺得「她說的是有根據的，可以信任」。','每週一個實務性觀點，讓你的品牌風格變成「她說的話，是真的做過、有結果的」。'],
+    ESTP:['選你最近觀察到的一個現象，把「我看到___，我的判斷是___，你應該___」用三句話寫出來。','你的即時判斷力讓觀點內容有說服力，讀者會覺得「她反應很快，而且說的有道理」。','每週一個「即時觀察和判斷」，讓你的品牌風格變成「她的觀點，是真實發生的事引發的」。'],
+    INFJ:['選你一直想說但還沒說出來的一個深層觀點，給自己30分鐘寫出來，時間到就發，不要再改。','你的深度讓觀點內容有哲學性，讀者會覺得「她說的東西，我想了很久了，但她說出來了」。','每週一個深層觀點，讓你的品牌風格變成「她說出了我說不出來的那個真相」。'],
+    INFP:['選一個你對某件事有強烈感受的觀點，用「這件事讓我很___，因為我親眼___，我覺得___」格式寫出來。','你的真實感受讓觀點內容有共鳴，讀者不只接受你的觀點，還感受到你的情感投入。','每週一個「讓我有強烈感受的觀點」，讓你的品牌風格變成「她說的話，是有靈魂的」。'],
+    INTJ:['選你對某個系統或框架的深層觀點，用「大多數人的理解是___，但底層邏輯其實是___，所以正確的做法是___」格式寫出來。','你的系統思維讓觀點內容有深度，讀者不只接受你的觀點，還學到一個看問題的框架。','每週一個系統性觀點，讓你的品牌風格變成「她的觀點是有邏輯基礎的，不是隨便說說」。'],
+    INTP:['選你一直覺得「大家都沒想透」的一個問題，不斷問「為什麼」直到你找到底層邏輯，然後把它說出來。','你的底層邏輯挖掘讓觀點內容有哲學深度，讀者會覺得「他挖到了別人都沒看到的地方」。','每週一個底層邏輯觀點，讓你的品牌風格變成「他的觀點，讓人重新理解很多事情」。'],
+    ISFJ:['選你觀察到的一個細節或現象，用「我注意到___，大多數人可能不在意，但我覺得這很重要，因為___」格式寫出來。','你的細膩讓觀點內容有溫度，讀者會覺得「她注意到的，讓我覺得被完全理解」。','每週一個細膩觀察觀點，讓你的品牌風格變成「跟著她，會對很多事有更細膩的理解」。'],
+    ISFP:['選你對某件事的直覺感受和觀點，用「這件事讓我感覺___，我覺得真正重要的是___」格式寫出來。','你的感官敏銳度讓觀點內容有美感，讀者會覺得「她說的話，讓我對這件事有不同的感受」。','每週一個「感受型觀點」，讓你的品牌風格變成「她說的話，讓人有不同的感受方式」。'],
+    ISTJ:['選你對某件事的實務性觀點，用「從我的研究和經驗來看，___是對的，根據是___，所以___」格式整理出來。','你的可靠讓觀點內容有信任感，讀者會覺得「她說的是有根據的，不是隨便說的」。','每週一個有根據的實務觀點，讓你的品牌風格變成「她的觀點，是有紮實根據的」。'],
+    ISTP:['選你最近解決的一個問題，把你的判斷過程說出來：你怎麼發現問題、你的判斷是什麼、結果如何。','你的務實讓觀點內容有說服力，讀者會覺得「她的觀點是從真實問題來的，很有實用性」。','每週一個「問題解決觀點」，讓你的品牌風格變成「她的觀點，是從實際解決問題裡得來的」。']
+  },
+  business:{
+    ENFJ:['選你的客戶最常有的一個方向困惑，用「如果你現在___，我覺得你應該___，因為___」格式寫出來，給他們一個方向。','你的引領感讓商業內容有說服力，潛在客戶不只理解你的服務，還感受到你能帶他們去哪裡。','每週一個方向性的客戶內容，讓潛在客戶覺得「她知道我需要什麼，跟著她是對的」。'],
+    ENFP:['選你最近幫助一個客戶的故事，把你當時的熱情和為什麼這樣幫他說出來，讓潛在客戶感受到你的投入。','你的熱情讓商業內容有感染力，潛在客戶不只想買你的服務，還想成為你關注的那個人。','每週一個「我為什麼熱愛幫助客戶」的故事，讓潛在客戶因為你的熱情而信任你。'],
+    ENTJ:['選你的產業裡一個大多數人做錯的策略，用「大多數___的做法是___，但真正有效的是___，因為___」格式寫出來。','你的策略思維讓商業內容有說服力，潛在客戶會覺得「她真的把這件事想清楚了，值得信任」。','每週一個產業策略觀點，八週後潛在客戶會把你定位成這個領域最可信的策略型聲音。'],
+    ENTP:['選你的產業裡一個你覺得已經過時或被高估的做法，用反常識的角度說出你的觀點和你的替代方案。','你的挑戰思維讓商業內容有趣和啟發性，潛在客戶會覺得「這個人說的跟別人都不一樣，想了解更多」。','每週一個「產業反常識」，讓你的品牌風格變成「她的方法是不一樣的，而且是對的」。'],
+    ESFJ:['選你最近幫助一個客戶解決問題的故事，讓客戶的感受和你的關心說話，不要只說結果。','你的溫暖讓商業內容有人情味，潛在客戶不只想買你的服務，還想被你這樣對待。','每週一個客戶故事，讓潛在客戶覺得「她真的在乎她的客戶，我也想成為她的客戶」。'],
+    ESFP:['今天記錄你工作現場的一個真實片段——你怎麼服務客戶、你的工作日常長什麼樣，讓人看到真實的你。','你的真實感讓商業內容有說服力，潛在客戶會覺得「她的工作是真實發生的，不是表演」。','每週一個工作現場記錄，讓客戶在找你之前就已經信任你，這讓你的銷售工作變得很簡單。'],
+    ESTJ:['選你的服務流程裡一個關鍵步驟，用清晰的步驟格式說明，讓潛在客戶提前了解你怎麼工作。','你的條理讓商業內容有信任感，潛在客戶會覺得「她的工作方式很清楚，跟她合作應該很順暢」。','每週一個服務流程說明，讓潛在客戶在找你之前就對你的工作方式有信心。'],
+    ESTP:['今天記錄你最近為一個客戶做的一個即時判斷：遇到什麼問題、你的判斷是什麼、結果如何。','你的即時判斷力讓商業內容有說服力，潛在客戶會覺得「她反應很快，跟她合作會很有效率」。','每週一個「客戶現場判斷記錄」，讓潛在客戶看到你的思考速度和務實能力。'],
+    INFJ:['選你的客戶最常有的一個深層困惑或誤解，把你的洞見說出來，用「大多數人以為___，但真正的問題是___」格式寫。','你的洞見讓商業內容有深度，潛在客戶會覺得「她比我更懂我的問題」，這是最強的信任建立方式。','每週一個客戶深層洞見，讓潛在客戶覺得「她真的懂，我需要她的幫助」。'],
+    INFP:['選你的客戶最常有的一個擔心或恐懼，用「我知道你可能在想___，我自己也曾經___」格式寫出來。','你的真實感讓商業內容有共鳴，潛在客戶不只覺得你懂他們，還覺得你是自己人。','每週一個「我理解你的擔心」內容，讓潛在客戶因為感覺被理解而信任你。'],
+    INTJ:['選你的服務的底層邏輯，用「大多數___服務的做法是___，但我的方法的底層邏輯是___，所以結果是___」格式寫出來。','你的系統思維讓商業內容有深度，潛在客戶會覺得「她的服務是有邏輯基礎的，值得信任」。','每週一個服務底層邏輯說明，讓潛在客戶不只知道你做什麼，還知道為什麼你這樣做是對的。'],
+    INTP:['選你的產業裡一個你一直覺得「大家都沒想透」的問題，把你挖到的底層邏輯說出來，然後說明你的服務怎麼解決它。','你的分析讓商業內容有深度，潛在客戶會覺得「她說的東西，讓我重新理解了我的問題」。','每週一個產業底層問題分析，讓潛在客戶覺得「她真的很懂這個領域，我需要她的幫助」。'],
+    ISFJ:['選你的客戶最常忽略的一個細節，用「很多___的客戶不在意___，但這個細節其實很重要，因為___」格式寫出來。','你的細膩讓商業內容有溫度，潛在客戶會覺得「她注意到的，讓我覺得跟她合作會很安心」。','每週一個客戶細節提醒，讓潛在客戶覺得「她真的很細心，我想成為她的客戶」。'],
+    ISFP:['選你的服務裡一個讓你有強烈感受的時刻，比如你幫到客戶的那一刻，把那個感受說出來。','你的真實感受讓商業內容有溫度，潛在客戶不只想買你的服務，還想成為讓你有這種感受的人。','每週一個「幫到客戶的感受記錄」，讓潛在客戶因為你的感受而信任你。'],
+    ISTJ:['選你的服務流程裡一個關鍵步驟，把你的標準和根據整理出來，讓潛在客戶看到你的可靠性。','你的可靠讓商業內容有信任感，潛在客戶會覺得「她的工作有標準，跟她合作不用擔心」。','每週一個服務標準說明，讓潛在客戶在找你之前就對你的工作品質有信心。'],
+    ISTP:['今天記錄你最近為一個客戶解決的一個具體問題：問題是什麼、你怎麼判斷、你用什麼方法解決、結果如何。','你的務實讓商業內容有說服力，潛在客戶會覺得「她是真的解決問題的人，不是說說而已」。','每週一個「客戶問題解決記錄」，讓潛在客戶看到你的解決問題能力，這比任何廣告都有說服力。']
+  }
+};
+
+let cur = 0, ans = new Array(24).fill(null), currentMBTI = '';
 
 function render() {
   const q = Qs[cur];
   document.getElementById('chap-name').textContent = q.ch;
-  document.getElementById('q-counter').textContent = (cur+1) + ' / 16';
-  document.getElementById('prog-fill').style.width = ((cur+1)/16*100) + '%';
+  document.getElementById('q-counter').textContent = (cur+1) + ' / 24';
+  document.getElementById('prog-fill').style.width = ((cur+1)/24*100) + '%';
   document.getElementById('q-tag').textContent = q.tag;
   document.getElementById('q-text').textContent = q.t;
   document.getElementById('q-hint').textContent = q.s;
@@ -773,87 +533,96 @@ function render() {
   }
   document.getElementById('btn-back').disabled = cur === 0;
   document.getElementById('btn-next').disabled = ans[cur] === null;
-  document.getElementById('btn-next').textContent = cur === 15 ? '看我的結果 →' : '下一題 →';
+  document.getElementById('btn-next').textContent = cur === 23 ? '看我的結果 →' : '下一題 →';
 }
 
 function pick(v) { ans[cur] = v; render(); }
 
 function go(d) {
-  if (d === 1 && cur === 15) { showResult(); return; }
-  cur = Math.max(0, Math.min(15, cur + d));
+  if (d === 1 && cur === 23) { showResult(); return; }
+  cur = Math.max(0, Math.min(23, cur + d));
   render();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function getDims() {
-  const s={E:0,N:0,F:0,J:0,ID:0,BLK:0}, c={E:0,N:0,F:0,J:0,ID:0,BLK:0};
-  Qs.forEach((q,i) => {
+  const dims = {E:{hi:0,lo:0,n:0}, N:{hi:0,lo:0,n:0}, F:{hi:0,lo:0,n:0}, J:{hi:0,lo:0,n:0}};
+  const blkScores = [];
+  Qs.forEach((q, i) => {
     if (ans[i] === null) return;
-    const v = q.rev ? (6 - ans[i]) : ans[i];
-    s[q.dim] += v; c[q.dim]++;
+    const v = ans[i];
+    if (q.dir === 'E' || q.dir === 'I' || q.dir === 'N' || q.dir === 'S' || q.dir === 'F' || q.dir === 'T' || q.dir === 'J' || q.dir === 'P') {
+      const dimKey = q.dim;
+      const hiDir = {E:'E', N:'N', F:'F', J:'J'}[dimKey];
+      const loDir = {E:'I', N:'S', F:'T', J:'P'}[dimKey];
+      if (q.dir === hiDir) { dims[dimKey].hi += v; dims[dimKey].n++; }
+      else { dims[dimKey].lo += v; dims[dimKey].n++; }
+    }
   });
-  const r = {};
-  Object.keys(s).forEach(k => r[k] = c[k] ? s[k]/c[k] : 3);
-  return r;
+  const result = {};
+  Object.keys(dims).forEach(k => {
+    const hi = dims[k].hi;
+    const lo = dims[k].lo;
+    const total = hi + lo;
+    result[k] = total > 0 ? hi / total : 0.5;
+  });
+  return result;
 }
 
-function getType(d) {
-  if (d.ID  >= 3.5) return 'compound';
-  const E=d.E>=3.5, N=d.N>=3.5, F=d.F>=3.5, J=d.J>=3.5;
-  if (E && N)       return 'visionary';
-  if (E && F && !N) return 'social';
-  if (E && !F && !N)return 'demonstrator';
-  if (!E && N)      return 'insight';
-  if (!E && F && !N)return 'empath';
-  if (!E && !F && J)return 'systematic';
-  return 'explorer';
+function getBLK() {
+  // Q15 (idx 14): notready, Q16 (idx 15) fear - but we only have 24 questions now
+  // Using last 2 questions as BLK proxy - actually we don't have BLK questions in v7
+  // Use J/P as proxy: very high J + very low N = more likely to feel stuck
+  // Simple approach: check if user scored low on both E and N and F dimensions
+  return {fear: false, notready: false};
+}
+
+function getMBTI(d) {
+  const E = d.E >= 0.5 ? 'E' : 'I';
+  const N = d.N >= 0.5 ? 'N' : 'S';
+  const F = d.F >= 0.5 ? 'F' : 'T';
+  const J = d.J >= 0.5 ? 'J' : 'P';
+  return E + N + F + J;
 }
 
 
-const BLK_WARN = {
-  high_fear: {
-    title: '你有一個隱藏的煞車——害怕被看見',
-    txt: '你的個性特質非常清晰，但你有一個很強的心理阻力：害怕發出去被批評、被忽視、或被誤解。這個煞車會讓你即使知道該怎麼做，還是動不了。老陳老師看過太多有才華的創作者，就是卡在這裡。',
-    steps: [
-      '先發給一個你信任的人看，不是發給所有人——從一個人開始，習慣「被看見」這件事。',
-      '告訴自己：第一篇的目的不是好，是「存在」。存在了，才有下一篇。',
-      '每次發完之後，不管有沒有人回應，都算完成一次——用完成次數衡量自己，不用回應數。'
-    ]
-  },
-  high_notready: {
-    title: '你有一個隱藏的煞車——覺得自己還沒準備好',
-    txt: '你的個性特質非常清晰，但你有一個很強的習慣：等自己更好、更準備好、更有把握再開始。老陳老師告訴你一個殘酷的真相：這個「準備好」的感覺永遠不會來，因為你的標準會跟著你一起成長。',
-    steps: [
-      '設定一個「夠了就發」的標準，不是「完美才發」——例如：能讓一個人看懂，就夠了。',
-      '把你現在的程度記錄下來發出去，一年後回頭看，你會慶幸你當時發了。',
-      '找一個比你晚開始、但已經在做的人，問他：「你當時覺得準備好了嗎？」答案幾乎都是沒有。'
-    ]
-  },
-  both: {
-    title: '你有兩個隱藏的煞車——完美主義加上害怕被看見',
-    txt: '你的個性特質非常清晰，但你同時有兩個強烈的阻力：覺得自己還不夠好，又害怕發出去被批評。這兩個加在一起，會讓你一直停在「準備」的狀態，永遠踏不出去。老陳老師看過最多的創作者困境，就是這個組合。',
-    steps: [
-      '今天只做一件事：寫三句話，不用發，先讓「動」這個動作存在。明天再寫三句，第三天才考慮發。',
-      '把你的第一篇設定為「只給一個人看」——不是發給所有人，只傳給一個你信任的朋友，先從這裡開始。',
-      '記住：你現在的「不夠好」，對還沒開始的人來說，已經是「遠遠超前」了。'
-    ]
-  }
-};
+function sendToSheets(archetype, dims, ctype) {
+  const url = 'https://script.google.com/macros/s/AKfycbxSGTYmdxH6LSB08W7CJcaRsMhxJCezPAoi9Xuy6ovxuLs-vt6PmUvmjGLrgqsJt-QKAg/exec';
+  fetch(url, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      archetype: archetype,
+      E: Math.round(dims.E * 100),
+      N: Math.round(dims.N * 100),
+      F: Math.round(dims.F * 100),
+      J: Math.round(dims.J * 100),
+      ctype: ctype || '未選擇'
+    })
+  }).catch(function(){});
+}
 
 function showResult() {
   const d = getDims();
-  const key = getType(d);
-  currentKey = key;
-  const A = TYPES[key];
+  const mbti = getMBTI(d);
+  currentMBTI = mbti;
+  const A = TYPES[mbti];
+  sendToSheets(A.name, d, '未選擇');
+
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('result').style.display = 'block';
+
+  // mbti not shown to user
   document.getElementById('res-name').textContent = A.name;
   document.getElementById('res-tagline').textContent = A.tag;
   document.getElementById('res-status').textContent = A.status;
   document.getElementById('res-insight').textContent = A.insight;
   document.getElementById('res-diff').textContent = A.diff;
+  document.getElementById('diff-title').textContent = A.diff;
+  document.getElementById('diff-txt').textContent = A.diffTxt;
   document.getElementById('sys-title').textContent = A.sys;
-  document.getElementById('sys-txt').textContent = A.systxt;
+  document.getElementById('sys-txt').textContent = A.sysTxt;
   document.getElementById('cta-title').textContent = A.cta;
   document.getElementById('cta-sub').textContent = A.ctas;
 
@@ -866,42 +635,15 @@ function showResult() {
 
   const dg = document.getElementById('dim-grid');
   dg.innerHTML = '';
-  DIMS.forEach(dd => {
-    const raw = d[dd.key] || 3;
-    const pct = Math.round((raw-1)/4*100);
-    const label = raw >= 3 ? dd.hi : dd.lo;
+  DIMS_DISPLAY.forEach(dd => {
+    const raw = d[dd.key] || 0.5;
+    const pct = Math.round(raw * 100);
+    const label = raw >= 0.5 ? dd.hiLabel : dd.loLabel;
     const c = document.createElement('div');
     c.className = 'dim-card';
     c.innerHTML = '<div class="dim-top"><div class="dim-name">'+label+'</div><div class="dim-pct">'+pct+'%</div></div><div class="dim-bg"><div class="dim-fill" style="width:'+pct+'%"></div></div>';
     dg.appendChild(c);
   });
-
-
-  // BLK warning block
-  const blkWarn = document.getElementById('blk-warn');
-  const highFear = d.BLK >= 3.5 && ans[15] >= 4;
-  const highNotReady = d.BLK >= 3.5 && ans[14] >= 4;
-  let warnKey = null;
-  if (highFear && highNotReady) warnKey = 'both';
-  else if (highFear) warnKey = 'high_fear';
-  else if (highNotReady) warnKey = 'high_notready';
-
-  if (warnKey) {
-    const W = BLK_WARN[warnKey];
-    document.getElementById('blk-warn-title').textContent = W.title;
-    document.getElementById('blk-warn-txt').textContent = W.txt;
-    const ws = document.getElementById('blk-warn-steps');
-    ws.innerHTML = '';
-    W.steps.forEach((s, i) => {
-      const div = document.createElement('div');
-      div.className = 'blk-warn-step';
-      div.innerHTML = '<div class="blk-warn-num">'+(i+1)+'</div><div class="blk-warn-stxt">'+s+'</div>';
-      ws.appendChild(div);
-    });
-    blkWarn.style.display = 'block';
-  } else {
-    blkWarn.style.display = 'none';
-  }
 
   const cg = document.getElementById('ctype-grid');
   cg.innerHTML = '';
@@ -909,32 +651,39 @@ function showResult() {
     const b = document.createElement('button');
     b.className = 'ctype-btn';
     b.innerHTML = '<div class="ctype-dot"></div><div class="ctype-info"><div class="ctype-title">'+ct.title+'</div><div class="ctype-eg">'+ct.eg+'</div></div>';
-    b.onclick = () => selectCtype(ct.key, ct.title, b);
+    b.onclick = () => selectCtype(ct.key, b);
     cg.appendChild(b);
   });
 
+  document.getElementById('blk-warn').style.display = 'none';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function selectCtype(key, title, el) {
+function selectCtype(ctypeKey, el) {
+  // Update sheets with selected content type
+  if (currentMBTI && TYPES[currentMBTI]) {
+    sendToSheets(TYPES[currentMBTI].name, getDims(), ctypeKey);
+  }
   document.querySelectorAll('.ctype-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
-  const stepsData = STEPS[key][currentKey];
+  const stepsData = CTYPES_STEPS[ctypeKey][currentMBTI];
   const sw = document.getElementById('steps-wrap');
   sw.classList.add('show');
   const st = document.getElementById('steps');
   st.innerHTML = '';
-  stepsData.forEach((s, i) => {
-    const div = document.createElement('div');
-    div.className = 'step';
-    div.innerHTML = '<div class="step-num">'+(i+1)+'</div><div class="step-txt">'+s+'</div>';
-    st.appendChild(div);
-  });
+  if (stepsData) {
+    stepsData.forEach((s, i) => {
+      const div = document.createElement('div');
+      div.className = 'step';
+      div.innerHTML = '<div class="step-num">'+(i+1)+'</div><div class="step-txt">'+s+'</div>';
+      st.appendChild(div);
+    });
+  }
   setTimeout(() => sw.scrollIntoView({behavior:'smooth', block:'start'}), 100);
 }
 
 function restart() {
-  cur = 0; ans = new Array(16).fill(null); currentKey = '';
+  cur = 0; ans = new Array(24).fill(null); currentMBTI = '';
   document.getElementById('result').style.display = 'none';
   document.getElementById('steps-wrap').classList.remove('show');
   document.getElementById('quiz').style.display = 'block';
