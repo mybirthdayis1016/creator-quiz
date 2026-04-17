@@ -207,6 +207,9 @@ const Qs = [
   {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我做事情喜歡先看具體的例子，再理解背後的原理。',s:'學習新東西時，你的習慣是什麼？'},
   {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'我對「可能性」和「未來會怎樣」比「現在怎麼做」更感興趣。',s:'你更常想的是哪個？'},
   {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我比較相信親身試過的經驗，而不是理論上說得通的方法。',s:'你做決定時更依賴哪個？'},
+  // 性別與年齡（插入在第二章後）
+  {dim:'GENDER',dir:'GENDER',ch:'關於你自己',tag:'關於你自己',t:'在我們繼續之前，選一個最接近你的選項：',s:'這可以幫助我們提供更精準的分析結果。'},
+  {dim:'AGE',dir:'AGE',ch:'關於你自己',tag:'關於你自己',t:'你目前的年齡區間：',s:'選一個最接近你的選項。'},
   // F/T 6題
   {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'我希望看完我內容的人，第一個感受是「你懂我」。',s:'比起「我學到東西了」，你更想要哪一種回應？'},
   {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'做一個困難決定時，我會先列出優缺點，分析完再決定。',s:'你實際上是這樣做決定的嗎？'},
@@ -512,44 +515,75 @@ const CTYPES_STEPS = {
   }
 };
 
-let cur = 0, ans = new Array(24).fill(null), currentMBTI = '';
+let cur = 0, ans = new Array(26).fill(null), currentMBTI = '', selectedGender = '', selectedAge = '';
 
 function render() {
   const q = Qs[cur];
   document.getElementById('chap-name').textContent = q.ch;
-  document.getElementById('q-counter').textContent = (cur+1) + ' / 24';
-  document.getElementById('prog-fill').style.width = ((cur+1)/24*100) + '%';
+  document.getElementById('q-counter').textContent = (cur+1) + ' / 26';
+  document.getElementById('prog-fill').style.width = ((cur+1)/26*100) + '%';
   document.getElementById('q-tag').textContent = q.tag;
   document.getElementById('q-text').textContent = q.t;
   document.getElementById('q-hint').textContent = q.s;
   const row = document.getElementById('likert-row');
+  const likertLabels = document.querySelector('.likert-labels');
   row.innerHTML = '';
-  for (let i = 1; i <= 5; i++) {
-    const d = document.createElement('div');
-    d.className = 'lk' + (ans[cur] === i ? ' sel' : '');
-    d.innerHTML = '<div class="lk-dot"></div><div class="lk-num">'+i+'</div><div class="lk-word">'+WORDS[i-1]+'</div>';
-    d.onclick = (v => () => pick(v))(i);
-    row.appendChild(d);
+
+  if (q.dim === 'GENDER') {
+    likertLabels.style.display = 'none';
+    row.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    const genderOpts = ['女性','男性','不想透露'];
+    genderOpts.forEach((opt, i) => {
+      const d = document.createElement('div');
+      d.className = 'lk' + (ans[cur] === i+1 ? ' sel' : '');
+      d.style.padding = '16px 8px';
+      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:14px;min-height:auto;margin-top:6px">'+opt+'</div>';
+      d.onclick = (v => () => { selectedGender = opt; pick(v); })(i+1);
+      row.appendChild(d);
+    });
+  } else if (q.dim === 'AGE') {
+    likertLabels.style.display = 'none';
+    row.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    row.style.gap = '8px';
+    const ageOpts = ['18歲以下','18–20歲','21–24歲','25–29歲','30–34歲','35–39歲','40–44歲','45–49歲','50–54歲','55–59歲','60–64歲','65歲以上'];
+    ageOpts.forEach((opt, i) => {
+      const d = document.createElement('div');
+      d.className = 'lk' + (ans[cur] === i+1 ? ' sel' : '');
+      d.style.padding = '12px 4px';
+      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:13px;min-height:auto;margin-top:6px">'+opt+'</div>';
+      d.onclick = (v => () => { selectedAge = opt; pick(v); })(i+1);
+      row.appendChild(d);
+    });
+  } else {
+    likertLabels.style.display = 'flex';
+    row.style.gridTemplateColumns = 'repeat(5, 1fr)';
+    for (let i = 1; i <= 5; i++) {
+      const d = document.createElement('div');
+      d.className = 'lk' + (ans[cur] === i ? ' sel' : '');
+      d.innerHTML = '<div class="lk-dot"></div><div class="lk-num">'+i+'</div><div class="lk-word">'+WORDS[i-1]+'</div>';
+      d.onclick = (v => () => pick(v))(i);
+      row.appendChild(d);
+    }
   }
   document.getElementById('btn-back').disabled = cur === 0;
   document.getElementById('btn-next').disabled = ans[cur] === null;
-  document.getElementById('btn-next').textContent = cur === 23 ? '看我的結果 →' : '下一題 →';
+  document.getElementById('btn-next').textContent = cur === 25 ? '看我的結果 →' : '下一題 →';
 }
 
 function pick(v) { ans[cur] = v; render(); }
 
 function go(d) {
-  if (d === 1 && cur === 23) { showResult(); return; }
-  cur = Math.max(0, Math.min(23, cur + d));
+  if (d === 1 && cur === 25) { showResult(); return; }
+  cur = Math.max(0, Math.min(25, cur + d));
   render();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function getDims() {
   const dims = {E:{hi:0,lo:0,n:0}, N:{hi:0,lo:0,n:0}, F:{hi:0,lo:0,n:0}, J:{hi:0,lo:0,n:0}};
-  const blkScores = [];
   Qs.forEach((q, i) => {
     if (ans[i] === null) return;
+    if (q.dim === 'GENDER' || q.dim === 'AGE') return;
     const v = ans[i];
     if (q.dir === 'E' || q.dir === 'I' || q.dir === 'N' || q.dir === 'S' || q.dir === 'F' || q.dir === 'T' || q.dir === 'J' || q.dir === 'P') {
       const dimKey = q.dim;
@@ -598,7 +632,9 @@ function sendToSheets(archetype, dims, ctype) {
       N: Math.round(dims.N * 100),
       F: Math.round(dims.F * 100),
       J: Math.round(dims.J * 100),
-      ctype: ctype || '未選擇'
+      ctype: ctype || '未選擇',
+      gender: selectedGender || '未填寫',
+      age: selectedAge || '未填寫'
     })
   }).catch(function(){});
 }
@@ -683,7 +719,7 @@ function selectCtype(ctypeKey, el) {
 }
 
 function restart() {
-  cur = 0; ans = new Array(24).fill(null); currentMBTI = '';
+  cur = 0; ans = new Array(26).fill(null); currentMBTI = ''; selectedGender = ''; selectedAge = '';
   document.getElementById('result').style.display = 'none';
   document.getElementById('steps-wrap').classList.remove('show');
   document.getElementById('quiz').style.display = 'block';
