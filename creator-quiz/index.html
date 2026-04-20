@@ -28,9 +28,21 @@
 html { font-size: 16px; -webkit-text-size-adjust: 100%; }
 body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 .page-wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-.site-header { text-align: center; margin-bottom: 2.5rem; }
-.site-logo { font-size: 12px; letter-spacing: .18em; color: var(--text-secondary); font-weight: 500; margin-bottom: .5rem; }
-.site-divider { width: 32px; height: 1px; background: var(--border); margin: .75rem auto 0; }
+  .site-header-10xue {
+    background: #1a1a1a;
+    padding: 0 1.5rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    margin: -2.5rem -1.5rem 2rem;
+  }
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
 .prog-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
 .prog-bg { background: var(--bg-secondary); border-radius: 100px; height: 3px; margin-bottom: 2rem; overflow: hidden; }
 .prog-fill { height: 100%; background: var(--text); border-radius: 100px; transition: width .4s ease; }
@@ -136,9 +148,10 @@ src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
 </head>
 <body>
 <div class="page-wrap">
-  <header class="site-header">
-    <div class="site-logo">10XUE · 老陳老師</div>
-    <div class="site-divider"></div>
+  <header class="site-header-10xue">
+    <a href="https://10xue.tw/" target="_blank" class="logo-link">
+      <img src="https://10xue.tw/cdn/shop/files/12312312123.png" alt="拾學 10XUE" height="40" style="display:block;">
+    </a>
   </header>
 
   <div id="quiz">
