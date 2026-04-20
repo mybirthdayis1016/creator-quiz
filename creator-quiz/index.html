@@ -4,159 +4,192 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>創作者定位測驗 | 10XUE 老陳老師</title>
-<meta name="description" content="回答24個問題，找出你在16種創作者原型中的精準定位。">
+<meta name="description" content="回答26個問題，找出你在16種創作者原型中的精準定位。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #ffffff; --bg-secondary: #f5f5f3; --text: #1a1a1a;
-  --text-secondary: #6b6b6b; --text-tertiary: #9b9b9b;
-  --border: rgba(0,0,0,0.12); --border-hover: rgba(0,0,0,0.28);
-  --border-active: rgba(0,0,0,0.45); --accent: #1a1a1a;
-  --accent-text: #ffffff; --radius-md: 8px; --radius-lg: 12px;
+  --gold: #FCEEC9;
+  --gold-deep: #C8A951;
+  --black: #000000;
+  --ink: #111111;
+  --ink-light: #333333;
+  --stone: #888888;
+  --stone-light: #BBBBBB;
+  --paper: #FAFAF8;
+  --paper-warm: #F5F0E8;
+  --line: rgba(0,0,0,0.08);
+  --line-mid: rgba(0,0,0,0.15);
+  --line-dark: rgba(0,0,0,0.35);
+  --radius: 4px;
+  --radius-lg: 8px;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1a1a1a; --bg-secondary: #252525; --text: #f0f0f0;
-    --text-secondary: #a0a0a0; --text-tertiary: #6b6b6b;
-    --border: rgba(255,255,255,0.12); --border-hover: rgba(255,255,255,0.28);
-    --border-active: rgba(255,255,255,0.5); --accent: #f0f0f0; --accent-text: #1a1a1a;
-  }
-}
-html { font-size: 16px; -webkit-text-size-adjust: 100%; }
-body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-.page-wrap { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-  .site-header-10xue {
-    background: #1a1a1a;
-    padding: 0 1.5rem;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    margin: -2.5rem -1.5rem 2rem;
-  }
-  .logo-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
+html { font-size: 17px; -webkit-text-size-adjust: 100%; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; line-height: 1.7; }
 
-.prog-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
-.prog-bg { background: var(--bg-secondary); border-radius: 100px; height: 3px; margin-bottom: 2rem; overflow: hidden; }
-.prog-fill { height: 100%; background: var(--text); border-radius: 100px; transition: width .4s ease; }
-.q-tag { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 3px 10px; margin-bottom: 1rem; }
-.q-text { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 400; line-height: 1.7; margin-bottom: .4rem; }
-.q-hint { font-size: 13px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.875rem; }
-.likert-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-tertiary); margin-bottom: .625rem; }
-.likert-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 2rem; }
-.lk { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 4px 11px; border: 0.5px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color .15s, background .15s; user-select: none; -webkit-tap-highlight-color: transparent; }
-.lk:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
-.lk.sel { border-color: var(--border-active); background: var(--bg-secondary); }
-.lk.sel .lk-dot { background: var(--accent); border-color: var(--accent); }
-.lk-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border-hover); transition: all .15s; }
-.lk-num { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-.lk-word { font-size: 11px; color: var(--text-secondary); text-align: center; line-height: 1.35; min-height: 30px; display: flex; align-items: center; justify-content: center; }
-.nav { display: flex; justify-content: space-between; align-items: center; }
-.btn { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 500; padding: 11px 24px; border-radius: var(--radius-md); cursor: pointer; border: 0.5px solid var(--border-hover); background: transparent; color: var(--text); transition: background .15s; }
-.btn:hover { background: var(--bg-secondary); }
-.btn.pri { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
-.btn.pri:hover { opacity: .85; }
-.btn:disabled { opacity: .3; cursor: default; pointer-events: none; }
+/* Header */
+.header { background: var(--black); height: 60px; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; z-index: 100; }
+.header a { display: flex; align-items: center; text-decoration: none; }
+.header img { height: 36px; display: block; }
+
+/* 主容器 */
+.wrap { max-width: 600px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+
+/* 進度 */
+.prog-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.prog-chapter { font-size: 11px; letter-spacing: .12em; color: var(--stone); font-weight: 500; }
+.prog-count { font-size: 11px; color: var(--stone); font-variant-numeric: tabular-nums; }
+.prog-track { height: 1px; background: var(--line-mid); margin-bottom: 3rem; position: relative; overflow: visible; }
+.prog-fill { height: 2px; background: var(--gold-deep); position: absolute; top: -0.5px; left: 0; transition: width .5s cubic-bezier(.4,0,.2,1); }
+
+/* 問題 */
+.q-tag { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: .16em; color: var(--gold-deep); border: 1px solid var(--gold-deep); border-radius: 2px; padding: 3px 10px; margin-bottom: 1.25rem; }
+.q-text { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 500; line-height: 1.75; color: var(--ink); margin-bottom: .75rem; letter-spacing: .02em; }
+.q-hint { font-size: 13px; color: var(--stone); line-height: 1.7; margin-bottom: 2.5rem; font-weight: 300; }
+
+/* Likert */
+.likert-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--stone-light); letter-spacing: .06em; margin-bottom: .75rem; }
+.likert-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 3rem; }
+.lk { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 4px 14px; border: 1px solid var(--line-mid); border-radius: var(--radius); cursor: pointer; transition: all .2s ease; user-select: none; -webkit-tap-highlight-color: transparent; background: white; }
+.lk:hover { border-color: var(--gold-deep); background: var(--paper-warm); }
+.lk.sel { border-color: var(--black); background: var(--black); }
+.lk.sel .lk-dot { background: var(--gold-deep); border-color: var(--gold-deep); }
+.lk.sel .lk-num { color: var(--gold); }
+.lk.sel .lk-word { color: var(--stone-light); }
+.lk-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--stone-light); transition: all .2s; }
+.lk-num { font-size: 16px; font-weight: 300; color: var(--ink-light); }
+.lk-word { font-size: 10px; color: var(--stone); text-align: center; line-height: 1.3; min-height: 28px; display: flex; align-items: center; justify-content: center; }
+
+/* 按鈕 */
+.nav { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.btn { font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line-dark); background: white; color: var(--ink); transition: all .2s; letter-spacing: .04em; }
+.btn:hover { background: var(--paper-warm); border-color: var(--ink); }
+.btn.pri { background: var(--black); color: var(--gold); border-color: var(--black); flex: 1; }
+.btn.pri:hover { background: var(--ink-light); }
+.btn:disabled { opacity: .25; cursor: default; pointer-events: none; }
+
+/* 結果頁 */
 .result { display: none; }
-.res-hero { text-align: center; padding: 2rem 0; border-bottom: 0.5px solid var(--border); margin-bottom: 2rem; }
-.res-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--text-secondary); margin-bottom: .75rem; }
-.trait-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 1.125rem; }
-.trait { font-size: 11px; font-weight: 500; padding: 3px 11px; border-radius: 100px; border: 0.5px solid var(--border); color: var(--text-secondary); }
-.res-name { font-family: 'Noto Serif TC', serif; font-size: 26px; font-weight: 700; line-height: 1.35; margin-bottom: .5rem; }
-.res-tagline { font-size: 14px; color: var(--text-secondary); line-height: 1.75; }
-.sec { margin-bottom: 1.625rem; }
-.sec-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
-.sec-txt { font-size: 14px; line-height: 1.85; }
-.dim-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-bottom: 1.625rem; }
-.dim-card { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 12px 14px; }
-.dim-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
-.dim-name { font-size: 12px; font-weight: 500; }
-.dim-pct { font-size: 11px; color: var(--text-secondary); }
-.dim-bg { background: var(--bg); border-radius: 100px; height: 4px; overflow: hidden; border: 0.5px solid var(--border); }
-.dim-fill { height: 100%; border-radius: 100px; background: var(--text); }
-.insight { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
-.insight-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .625rem; }
-.insight-txt { font-size: 14px; line-height: 1.875; }
-.diff-box { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
-.diff-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
-.diff-title { font-size: 14px; font-weight: 500; margin-bottom: .5rem; }
-.diff-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
-.sys-box { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
-.sys-lbl { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .5rem; }
-.sys-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; }
-.sys-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; }
-.blk-warn { border: 0.5px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; margin-bottom: 1.625rem; }
-.blk-warn-tag { font-size: 11px; font-weight: 500; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: .625rem; }
-.blk-warn-title { font-size: 15px; font-weight: 500; margin-bottom: .5rem; line-height: 1.5; }
-.blk-warn-txt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: .875rem; }
-.blk-warn-steps { display: flex; flex-direction: column; gap: 8px; }
-.blk-warn-step { display: flex; gap: 10px; align-items: flex-start; }
-.blk-warn-num { width: 20px; height: 20px; border-radius: 50%; background: var(--bg-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
-.blk-warn-stxt { font-size: 13px; line-height: 1.7; color: var(--text-secondary); }
-.ctype-grid { display: flex; flex-direction: column; gap: 8px; margin-top: .75rem; }
-.ctype-btn { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 0.5px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: border-color .15s, background .15s; text-align: left; background: transparent; font-family: 'Noto Sans TC', sans-serif; color: var(--text); width: 100%; -webkit-tap-highlight-color: transparent; }
-.ctype-btn:hover { border-color: var(--border-hover); background: var(--bg-secondary); }
-.ctype-btn.active { border-color: var(--border-active); background: var(--bg-secondary); }
-.ctype-btn.active .ctype-dot { background: var(--accent); border-color: var(--accent); }
-.ctype-dot { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--border-hover); flex-shrink: 0; margin-top: 3px; transition: all .15s; }
+.res-hero { text-align: center; padding: 2.5rem 0; border-bottom: 1px solid var(--line-mid); margin-bottom: 2.5rem; }
+.res-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .2em; color: var(--stone); margin-bottom: 1.25rem; text-transform: uppercase; }
+.trait-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem; }
+.trait { font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 2px; border: 1px solid var(--gold-deep); color: var(--gold-deep); letter-spacing: .06em; }
+.res-name { font-family: 'Noto Serif TC', serif; font-size: 28px; font-weight: 700; line-height: 1.4; color: var(--ink); margin-bottom: .75rem; letter-spacing: .02em; }
+.res-tagline { font-size: 15px; color: var(--stone); line-height: 1.8; font-weight: 300; }
+
+/* 區塊 */
+.sec { margin-bottom: 2rem; }
+.sec-lbl { font-size: 10px; font-weight: 700; letter-spacing: .18em; color: var(--stone); margin-bottom: .75rem; text-transform: uppercase; }
+.sec-txt { font-size: 15px; line-height: 1.9; color: var(--ink-light); }
+
+/* 維度 */
+.dim-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 2rem; }
+.dim-card { background: white; border: 1px solid var(--line-mid); border-radius: var(--radius); padding: 14px 16px; }
+.dim-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.dim-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+.dim-pct { font-size: 11px; color: var(--gold-deep); font-weight: 500; }
+.dim-track { height: 2px; background: var(--line-mid); border-radius: 1px; overflow: hidden; }
+.dim-fill { height: 100%; background: var(--gold-deep); border-radius: 1px; }
+
+/* 老陳老師說 */
+.insight { background: var(--black); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 2rem; }
+.insight-lbl { font-size: 10px; font-weight: 700; letter-spacing: .18em; color: var(--gold-deep); margin-bottom: .875rem; text-transform: uppercase; }
+.insight-txt { font-size: 15px; line-height: 1.9; color: var(--gold); font-weight: 300; }
+
+/* 差異化 */
+.diff-box { border-left: 3px solid var(--gold-deep); padding: 1.25rem 1.5rem; margin-bottom: 2rem; background: white; }
+.diff-lbl { font-size: 10px; font-weight: 700; letter-spacing: .18em; color: var(--gold-deep); margin-bottom: .625rem; text-transform: uppercase; }
+.diff-txt { font-size: 14px; color: var(--ink-light); line-height: 1.9; font-weight: 300; }
+
+/* 系統 */
+.sys-box { background: var(--paper-warm); border: 1px solid var(--line-mid); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 2rem; }
+.sys-lbl { font-size: 10px; font-weight: 700; letter-spacing: .18em; color: var(--stone); margin-bottom: .625rem; text-transform: uppercase; }
+.sys-title { font-family: 'Noto Serif TC', serif; font-size: 17px; font-weight: 500; color: var(--ink); margin-bottom: .75rem; }
+.sys-txt { font-size: 14px; color: var(--ink-light); line-height: 1.9; font-weight: 300; }
+
+/* BLK 警告 */
+.blk-warn { border: 1px solid var(--gold-deep); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 2rem; }
+.blk-warn-tag { font-size: 10px; font-weight: 700; letter-spacing: .18em; color: var(--gold-deep); margin-bottom: .75rem; text-transform: uppercase; }
+.blk-warn-title { font-family: 'Noto Serif TC', serif; font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: .75rem; line-height: 1.6; }
+.blk-warn-txt { font-size: 14px; color: var(--ink-light); line-height: 1.9; margin-bottom: 1.25rem; font-weight: 300; }
+.blk-warn-steps { display: flex; flex-direction: column; gap: 10px; }
+.blk-warn-step { display: flex; gap: 12px; align-items: flex-start; }
+.blk-warn-num { width: 22px; height: 22px; border-radius: 50%; background: var(--gold-deep); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.blk-warn-stxt { font-size: 13px; line-height: 1.8; color: var(--ink-light); font-weight: 300; }
+
+/* 內容類型 */
+.ctype-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 1rem; }
+.ctype-btn { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border: 1px solid var(--line-mid); border-radius: var(--radius); cursor: pointer; transition: all .2s; text-align: left; background: white; font-family: 'Noto Sans TC', sans-serif; color: var(--ink); width: 100%; -webkit-tap-highlight-color: transparent; }
+.ctype-btn:hover { border-color: var(--gold-deep); background: var(--paper-warm); }
+.ctype-btn.active { border-color: var(--black); background: var(--black); }
+.ctype-btn.active .ctype-dot { background: var(--gold-deep); border-color: var(--gold-deep); }
+.ctype-btn.active .ctype-title { color: var(--gold); }
+.ctype-btn.active .ctype-eg { color: var(--stone); }
+.ctype-dot { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--stone-light); flex-shrink: 0; margin-top: 3px; transition: all .2s; }
 .ctype-info { flex: 1; }
-.ctype-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
-.ctype-eg { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
-.steps-wrap { display: none; margin-bottom: 1.625rem; }
+.ctype-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; color: var(--ink); }
+.ctype-eg { font-size: 12px; color: var(--stone); line-height: 1.6; font-weight: 300; }
+
+/* 步驟 */
+.steps-wrap { display: none; margin-bottom: 2rem; margin-top: 1.5rem; }
 .steps-wrap.show { display: block; }
-.steps { display: flex; flex-direction: column; gap: 14px; }
-.step { display: flex; gap: 13px; }
-.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--bg-secondary); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; margin-top: 1px; }
-.step-txt { font-size: 14px; line-height: 1.75; }
-.cta-box { border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.75rem 1.5rem; text-align: center; margin-top: .5rem; }
-.cta-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--text-secondary); margin-bottom: .875rem; }
-.cta-title { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: .75rem; }
-.cta-sub { font-size: 13px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25rem; }
-.cta-btn { display: inline-block; font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 500; padding: 12px 32px; background: var(--accent); color: var(--accent-text); border-radius: var(--radius-md); border: none; cursor: pointer; text-decoration: none; transition: opacity .15s; }
+.steps { display: flex; flex-direction: column; gap: 16px; }
+.step { display: flex; gap: 14px; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--gold-deep); color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.step-txt { font-size: 14px; line-height: 1.85; color: var(--ink-light); font-weight: 300; }
+
+/* CTA */
+.cta-box { background: var(--black); border-radius: var(--radius-lg); padding: 2.5rem 2rem; text-align: center; margin-top: 1rem; }
+.cta-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .2em; color: var(--gold-deep); margin-bottom: 1rem; text-transform: uppercase; }
+.cta-title { font-family: 'Noto Serif TC', serif; font-size: 20px; font-weight: 700; line-height: 1.6; color: var(--gold); margin-bottom: .875rem; }
+.cta-sub { font-size: 13px; color: var(--stone-light); line-height: 1.8; margin-bottom: 1.75rem; font-weight: 300; }
+.cta-btn { display: inline-block; font-family: 'Noto Sans TC', sans-serif; font-size: 14px; font-weight: 700; padding: 14px 36px; background: var(--gold-deep); color: var(--black); border-radius: var(--radius); border: none; cursor: pointer; text-decoration: none; transition: opacity .2s; letter-spacing: .06em; }
 .cta-btn:hover { opacity: .85; }
-.restart { display: block; text-align: center; font-size: 13px; color: var(--text-secondary); margin-top: 1rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; background: none; border: none; font-family: 'Noto Sans TC', sans-serif; width: 100%; }
-.divider { border: none; border-top: 0.5px solid var(--border); margin: 1.5rem 0; }
+
+.restart { display: block; text-align: center; font-size: 12px; color: var(--stone); margin-top: 1.25rem; cursor: pointer; text-decoration: none; background: none; border: none; font-family: 'Noto Sans TC', sans-serif; width: 100%; letter-spacing: .06em; }
+.divider { border: none; border-top: 1px solid var(--line); margin: 2.5rem 0; }
+
+/* 手機優化 */
 @media (max-width: 480px) {
-  .page-wrap { padding: 1.5rem 1rem 4rem; }
-  .q-text { font-size: 17px; }
-  .lk-word { font-size: 10px; }
+  html { font-size: 16px; }
+  .wrap { padding: 2rem 1.25rem 5rem; }
+  .q-text { font-size: 20px; }
+  .lk-word { font-size: 9px; }
+  .lk-num { font-size: 15px; }
   .dim-grid { grid-template-columns: 1fr; }
+  .res-name { font-size: 24px; }
+  .insight { padding: 1.5rem; }
+  .cta-box { padding: 2rem 1.5rem; }
+}
+@media (max-width: 360px) {
+  .lk { padding: 12px 2px 10px; }
+  .lk-word { font-size: 8px; }
 }
 </style>
+
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1193210454959916');
-fbq('track', 'PageView');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1193210454959916');fbq('track','PageView');
 </script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
-/></noscript>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
-<div class="page-wrap">
-  <header class="site-header-10xue">
-    <a href="https://10xue.tw/" target="_blank" class="logo-link">
-      <img src="https://10xue.tw/cdn/shop/files/12312312123.png" alt="拾學 10XUE" height="40" style="display:block;">
-    </a>
-  </header>
 
+<header class="header">
+  <a href="https://10xue.tw/" target="_blank">
+    <img src="https://10xue.tw/cdn/shop/files/12312312123.png" alt="拾學 10XUE" height="36">
+  </a>
+</header>
+
+<div class="wrap">
   <div id="quiz">
-    <div class="prog-row"><span id="chap-name"></span><span id="q-counter"></span></div>
-    <div class="prog-bg"><div class="prog-fill" id="prog-fill"></div></div>
+    <div class="prog-meta">
+      <span class="prog-chapter" id="chap-name"></span>
+      <span class="prog-count" id="q-counter"></span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
     <div class="q-tag" id="q-tag"></div>
     <div class="q-text" id="q-text"></div>
     <div class="q-hint" id="q-hint"></div>
@@ -170,21 +203,20 @@ src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
 
   <div class="result" id="result">
     <div class="res-hero">
-        <div class="res-eyebrow">你的創作者原型</div>
+      <div class="res-eyebrow">你的創作者原型</div>
       <div class="trait-row" id="trait-row"></div>
       <div class="res-name" id="res-name"></div>
       <div class="res-tagline" id="res-tagline"></div>
     </div>
     <div class="sec"><div class="sec-lbl">你現在的狀態</div><div class="sec-txt" id="res-status"></div></div>
     <hr class="divider">
-    <div class="sec-lbl" style="margin-bottom:10px">你的四個維度</div>
+    <div class="sec-lbl" style="margin-bottom:12px">你的四個維度</div>
     <div class="dim-grid" id="dim-grid"></div>
     <div class="insight"><div class="insight-lbl">老陳老師說</div><div class="insight-txt" id="res-insight"></div></div>
     <hr class="divider">
     <div class="sec"><div class="sec-lbl">你的核心優勢</div><div class="sec-txt" id="res-diff"></div></div>
     <div class="diff-box">
       <div class="diff-lbl">你和大多數人不一樣的地方</div>
-      <div class="diff-title" id="diff-title"></div>
       <div class="diff-txt" id="diff-txt"></div>
     </div>
     <hr class="divider">
@@ -194,10 +226,10 @@ src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
       <div class="sys-txt" id="sys-txt"></div>
     </div>
     <hr class="divider">
-    <div class="sec-lbl" style="margin-bottom:.75rem">選擇你主要想分享的內容類型，看你的具體行動步驟</div>
+    <div class="sec-lbl" style="margin-bottom:.875rem">選擇你主要想分享的內容類型，看你的具體行動步驟</div>
     <div class="ctype-grid" id="ctype-grid"></div>
     <div class="steps-wrap" id="steps-wrap">
-      <div class="sec-lbl" style="margin-bottom:.875rem">你的三個具體步驟</div>
+      <div class="sec-lbl" style="margin-bottom:1rem">你的三個具體步驟</div>
       <div class="steps" id="steps"></div>
     </div>
     <div class="blk-warn" id="blk-warn" style="display:none">
@@ -219,33 +251,27 @@ src="https://www.facebook.com/tr?id=1193210454959916&ev=PageView&noscript=1"
 
 <script>
 const WORDS = ['完全不像我','比較不像','有時候像','蠻像的','完全像我'];
-
 const Qs = [
-  // E/I 6題
   {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'跟一群人相處一整天之後，我需要一個人待著充電。',s:'想想你實際上的感受，不是你覺得應該怎樣。'},
   {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'比起很多人留言互動，我更享受一個人慢慢把一篇文章寫好。',s:'哪種狀態讓你更有成就感？'},
   {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡在網路上認識新朋友、和陌生人聊天。',s:'就算只是文字互動也算，選最像你平常的狀態。'},
   {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我在人多的場合會比較有活力，一個人反而容易感到無聊。',s:'這描述你嗎？'},
   {dim:'E',dir:'I',ch:'第一章：能量來源',tag:'能量來源',t:'我通常需要一段獨處時間，才能把想法整理清楚。',s:'獨處對你來說是充電還是消耗？'},
   {dim:'E',dir:'E',ch:'第一章：能量來源',tag:'能量來源',t:'我喜歡把我在做的事說給別人聽，分享本身就讓我有動力。',s:'分享這個動作，對你來說是享受還是義務？'},
-  // N/S 6題
   {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'看到一件新事物，我第一個想的是「這讓我聯想到什麼」。',s:'不是應該怎麼想，是你真實的第一個念頭。'},
   {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我比較喜歡有步驟、有清單的內容，而不是概念性的思考文章。',s:'在消費別人內容的時候，你偏好哪一種？'},
   {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'我常常同時有很多想法，腦袋停不下來。',s:'這是描述你日常的狀態嗎？'},
   {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我做事情喜歡先看具體的例子，再理解背後的原理。',s:'學習新東西時，你的習慣是什麼？'},
   {dim:'N',dir:'N',ch:'第二章：思考方式',tag:'思考方式',t:'我對「可能性」和「未來會怎樣」比「現在怎麼做」更感興趣。',s:'你更常想的是哪個？'},
   {dim:'N',dir:'S',ch:'第二章：思考方式',tag:'思考方式',t:'我比較相信親身試過的經驗，而不是理論上說得通的方法。',s:'你做決定時更依賴哪個？'},
-  // 性別與年齡（插入在第二章後）
   {dim:'GENDER',dir:'GENDER',ch:'關於你自己',tag:'關於你自己',t:'在我們繼續之前，選一個最接近你的選項：',s:'這可以幫助我們提供更精準的分析結果。'},
   {dim:'AGE',dir:'AGE',ch:'關於你自己',tag:'關於你自己',t:'你目前的年齡區間：',s:'選一個最接近你的選項。'},
-  // F/T 6題
   {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'我希望看完我內容的人，第一個感受是「你懂我」。',s:'比起「我學到東西了」，你更想要哪一種回應？'},
   {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'做一個困難決定時，我會先列出優缺點，分析完再決定。',s:'你實際上是這樣做決定的嗎？'},
   {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'有人跟我說他的困境，我會先陪他說說感受，而不是馬上給建議。',s:'你通常的第一反應是什麼？'},
   {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'我在乎我的內容有沒有邏輯、有沒有根據，而不只是感覺好不好。',s:'你評估內容品質的標準是什麼？'},
   {dim:'F',dir:'F',ch:'第三章：決策方式',tag:'決策方式',t:'我做決定時，「感覺對不對」比「數據說什麼」更重要。',s:'誠實選，不用想應該怎麼答。'},
   {dim:'F',dir:'T',ch:'第三章：決策方式',tag:'決策方式',t:'我喜歡用數字、案例、比較來說服人，而不是靠情感共鳴。',s:'你說服別人時，通常用哪種方式？'},
-  // J/P 6題
   {dim:'J',dir:'J',ch:'第四章：行動方式',tag:'行動方式',t:'我比較喜歡先把計畫想清楚，確定了再動手。',s:'描述你實際做事的方式，不是你理想的方式。'},
   {dim:'J',dir:'J',ch:'第四章：行動方式',tag:'行動方式',t:'沒做完的事情放著，會讓我一直不舒服。',s:'那種「還沒做完」的感覺，對你來說有多強烈？'},
   {dim:'J',dir:'P',ch:'第四章：行動方式',tag:'行動方式',t:'我做事比較隨興，根據當下狀態決定今天做什麼。',s:'這句話像不像你平常的行動模式？'},
@@ -263,305 +289,182 @@ const CTYPES = [
 ];
 
 const BLK_WARN = {
-  high_fear:{
-    title:'你有一個隱藏的煞車——害怕被看見',
-    txt:'你的個性特質非常清晰，但你有一個很強的心理阻力：害怕發出去被批評、被忽視、或被誤解。這個煞車會讓你即使知道該怎麼做，還是動不了。',
-    steps:['先發給一個你信任的人看，不是發給所有人——從一個人開始，習慣「被看見」這件事。','告訴自己：第一篇的目的不是好，是「存在」。存在了，才有下一篇。','每次發完之後，不管有沒有人回應，都算完成一次——用完成次數衡量自己，不用回應數。']
-  },
-  high_notready:{
-    title:'你有一個隱藏的煞車——覺得自己還沒準備好',
-    txt:'你的個性特質非常清晰，但你有一個很強的習慣：等自己更好、更準備好、更有把握再開始。老陳老師告訴你：這個「準備好」的感覺永遠不會來，因為你的標準會跟著你一起成長。',
-    steps:['設定一個「夠了就發」的標準，不是「完美才發」——例如：能讓一個人看懂，就夠了。','把你現在的程度記錄下來發出去，一年後回頭看，你會慶幸你當時發了。','找一個比你晚開始、但已經在做的人，問他：「你當時覺得準備好了嗎？」答案幾乎都是沒有。']
-  },
-  both:{
-    title:'你有兩個隱藏的煞車——完美主義加上害怕被看見',
-    txt:'你的個性特質非常清晰，但你同時有兩個強烈的阻力：覺得自己還不夠好，又害怕發出去被批評。這兩個加在一起，會讓你一直停在「準備」的狀態，永遠踏不出去。',
-    steps:['今天只做一件事：寫三句話，不用發，先讓「動」這個動作存在。明天再寫三句，第三天才考慮發。','把你的第一篇設定為「只給一個人看」——不是發給所有人，只傳給一個你信任的朋友，先從這裡開始。','記住：你現在的「不夠好」，對還沒開始的人來說，已經是「遠遠超前」了。']
-  }
+  high_fear:{title:'你有一個隱藏的煞車——害怕被看見',txt:'你的個性特質非常清晰，但你有一個很強的心理阻力：害怕發出去被批評、被忽視、或被誤解。這個煞車會讓你即使知道該怎麼做，還是動不了。',steps:['先發給一個你信任的人看，不是發給所有人——從一個人開始，習慣「被看見」這件事。','告訴自己：第一篇的目的不是好，是「存在」。存在了，才有下一篇。','每次發完之後，不管有沒有人回應，都算完成一次——用完成次數衡量自己，不用回應數。']},
+  high_notready:{title:'你有一個隱藏的煞車——覺得自己還沒準備好',txt:'你的個性特質非常清晰，但你有一個很強的習慣：等自己更好、更準備好、更有把握再開始。老陳老師告訴你：這個「準備好」的感覺永遠不會來，因為你的標準會跟著你一起成長。',steps:['設定一個「夠了就發」的標準，不是「完美才發」——例如：能讓一個人看懂，就夠了。','把你現在的程度記錄下來發出去，一年後回頭看，你會慶幸你當時發了。','找一個比你晚開始、但已經在做的人，問他：「你當時覺得準備好了嗎？」答案幾乎都是沒有。']},
+  both:{title:'你有兩個隱藏的煞車——完美主義加上害怕被看見',txt:'你的個性特質非常清晰，但你同時有兩個強烈的阻力：覺得自己還不夠好，又害怕發出去被批評。這兩個加在一起，會讓你一直停在「準備」的狀態，永遠踏不出去。',steps:['今天只做一件事：寫三句話，不用發，先讓「動」這個動作存在。明天再寫三句，第三天才考慮發。','把你的第一篇設定為「只給一個人看」——不是發給所有人，只傳給一個你信任的朋友，先從這裡開始。','記住：你現在的「不夠好」，對還沒開始的人來說，已經是「遠遠超前」了。']}
 };
 
 const DIMS_DISPLAY = [
-  {key:'E', loLabel:'內向能量', hiLabel:'外向能量'},
-  {key:'N', loLabel:'實感思考', hiLabel:'直覺思考'},
-  {key:'F', loLabel:'邏輯決策', hiLabel:'情感決策'},
-  {key:'J', loLabel:'彈性行動', hiLabel:'計畫行動'}
+  {key:'E',loLabel:'內向能量',hiLabel:'外向能量'},
+  {key:'N',loLabel:'實感思考',hiLabel:'直覺思考'},
+  {key:'F',loLabel:'邏輯決策',hiLabel:'情感決策'},
+  {key:'J',loLabel:'彈性行動',hiLabel:'計畫行動'}
 ];
 
-let cur = 0, ans = new Array(26).fill(null), currentMBTI = '', selectedGender = '', selectedAge = '';
+let cur=0, ans=new Array(26).fill(null), currentMBTI='', selectedGender='', selectedAge='';
 
 function render() {
   const q = Qs[cur];
   document.getElementById('chap-name').textContent = q.ch;
-  document.getElementById('q-counter').textContent = (cur+1) + ' / 26';
-  document.getElementById('prog-fill').style.width = ((cur+1)/26*100) + '%';
+  document.getElementById('q-counter').textContent = (cur+1)+' / 26';
+  document.getElementById('prog-fill').style.width = ((cur+1)/26*100)+'%';
   document.getElementById('q-tag').textContent = q.tag;
   document.getElementById('q-text').textContent = q.t;
   document.getElementById('q-hint').textContent = q.s;
   const row = document.getElementById('likert-row');
-  const likertLabels = document.querySelector('.likert-labels');
+  const ll = document.querySelector('.likert-labels');
   row.innerHTML = '';
-
   if (q.dim === 'GENDER') {
-    likertLabels.style.display = 'none';
+    ll.style.display = 'none';
     row.style.gridTemplateColumns = 'repeat(3, 1fr)';
-    const genderOpts = ['女性','男性','不想透露'];
-    genderOpts.forEach((opt, i) => {
+    ['女性','男性','不想透露'].forEach((opt,i) => {
       const d = document.createElement('div');
-      d.className = 'lk' + (ans[cur] === i+1 ? ' sel' : '');
-      d.style.padding = '16px 8px';
-      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:14px;min-height:auto;margin-top:6px">'+opt+'</div>';
-      d.onclick = (v => () => { selectedGender = opt; pick(v); })(i+1);
+      d.className = 'lk'+(ans[cur]===i+1?' sel':'');
+      d.style.padding = '18px 8px';
+      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:15px;min-height:auto;margin-top:8px;font-weight:400">'+opt+'</div>';
+      d.onclick = (v=>()=>{selectedGender=opt;pick(v);})(i+1);
       row.appendChild(d);
     });
   } else if (q.dim === 'AGE') {
-    likertLabels.style.display = 'none';
+    ll.style.display = 'none';
     row.style.gridTemplateColumns = 'repeat(3, 1fr)';
-    row.style.gap = '8px';
-    const ageOpts = ['18歲以下','18–20歲','21–24歲','25–29歲','30–34歲','35–39歲','40–44歲','45–49歲','50–54歲','55–59歲','60–64歲','65歲以上'];
-    ageOpts.forEach((opt, i) => {
+    ['18歲以下','18–20歲','21–24歲','25–29歲','30–34歲','35–39歲','40–44歲','45–49歲','50–54歲','55–59歲','60–64歲','65歲以上'].forEach((opt,i) => {
       const d = document.createElement('div');
-      d.className = 'lk' + (ans[cur] === i+1 ? ' sel' : '');
-      d.style.padding = '12px 4px';
-      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:13px;min-height:auto;margin-top:6px">'+opt+'</div>';
-      d.onclick = (v => () => { selectedAge = opt; pick(v); })(i+1);
+      d.className = 'lk'+(ans[cur]===i+1?' sel':'');
+      d.style.padding = '14px 4px';
+      d.innerHTML = '<div class="lk-dot"></div><div class="lk-word" style="font-size:13px;min-height:auto;margin-top:8px;font-weight:400">'+opt+'</div>';
+      d.onclick = (v=>()=>{selectedAge=opt;pick(v);})(i+1);
       row.appendChild(d);
     });
   } else {
-    likertLabels.style.display = 'flex';
+    ll.style.display = 'flex';
     row.style.gridTemplateColumns = 'repeat(5, 1fr)';
-    for (let i = 1; i <= 5; i++) {
+    for (let i=1;i<=5;i++) {
       const d = document.createElement('div');
-      d.className = 'lk' + (ans[cur] === i ? ' sel' : '');
+      d.className = 'lk'+(ans[cur]===i?' sel':'');
       d.innerHTML = '<div class="lk-dot"></div><div class="lk-num">'+i+'</div><div class="lk-word">'+WORDS[i-1]+'</div>';
-      d.onclick = (v => () => pick(v))(i);
+      d.onclick = (v=>()=>pick(v))(i);
       row.appendChild(d);
     }
   }
-  document.getElementById('btn-back').disabled = cur === 0;
-  document.getElementById('btn-next').disabled = ans[cur] === null;
-  document.getElementById('btn-next').textContent = cur === 25 ? '看我的結果 →' : '下一題 →';
+  document.getElementById('btn-back').disabled = cur===0;
+  document.getElementById('btn-next').disabled = ans[cur]===null;
+  document.getElementById('btn-next').textContent = cur===25?'看我的結果 →':'下一題 →';
 }
 
-function pick(v) { ans[cur] = v; render(); }
+function pick(v){ans[cur]=v;render();}
 
-function go(d) {
-  if (d === 1 && cur === 25) { showResult(); return; }
-  cur = Math.max(0, Math.min(25, cur + d));
+function go(d){
+  if(d===1&&cur===25){showResult();return;}
+  cur=Math.max(0,Math.min(25,cur+d));
   render();
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function getDims() {
-  const dims = {E:{hi:0,lo:0,n:0}, N:{hi:0,lo:0,n:0}, F:{hi:0,lo:0,n:0}, J:{hi:0,lo:0,n:0}};
-  Qs.forEach((q, i) => {
-    if (ans[i] === null) return;
-    if (q.dim === 'GENDER' || q.dim === 'AGE') return;
-    const v = ans[i];
-    if (q.dir === 'E' || q.dir === 'I' || q.dir === 'N' || q.dir === 'S' || q.dir === 'F' || q.dir === 'T' || q.dir === 'J' || q.dir === 'P') {
-      const dimKey = q.dim;
-      const hiDir = {E:'E', N:'N', F:'F', J:'J'}[dimKey];
-      const loDir = {E:'I', N:'S', F:'T', J:'P'}[dimKey];
-      if (q.dir === hiDir) { dims[dimKey].hi += v; dims[dimKey].n++; }
-      else { dims[dimKey].lo += v; dims[dimKey].n++; }
-    }
+function getDims(){
+  const dims={E:{hi:0,lo:0},N:{hi:0,lo:0},F:{hi:0,lo:0},J:{hi:0,lo:0}};
+  Qs.forEach((q,i)=>{
+    if(ans[i]===null||q.dim==='GENDER'||q.dim==='AGE')return;
+    const hiDir={E:'E',N:'N',F:'F',J:'J'}[q.dim];
+    if(q.dir===hiDir)dims[q.dim].hi+=ans[i];
+    else dims[q.dim].lo+=ans[i];
   });
-  const result = {};
-  Object.keys(dims).forEach(k => {
-    const hi = dims[k].hi;
-    const lo = dims[k].lo;
-    const total = hi + lo;
-    result[k] = total > 0 ? hi / total : 0.5;
-  });
-  return result;
+  const r={};
+  Object.keys(dims).forEach(k=>{const t=dims[k].hi+dims[k].lo;r[k]=t>0?dims[k].hi/t:0.5;});
+  return r;
 }
 
-function getBLK() {
-  // Q15 (idx 14): notready, Q16 (idx 15) fear - but we only have 24 questions now
-  // Using last 2 questions as BLK proxy - actually we don't have BLK questions in v7
-  // Use J/P as proxy: very high J + very low N = more likely to feel stuck
-  // Simple approach: check if user scored low on both E and N and F dimensions
-  return {fear: false, notready: false};
+function getMBTI(d){
+  return (d.E>=0.5?'E':'I')+(d.N>=0.5?'N':'S')+(d.F>=0.5?'F':'T')+(d.J>=0.5?'J':'P');
 }
 
-function getMBTI(d) {
-  const E = d.E >= 0.5 ? 'E' : 'I';
-  const N = d.N >= 0.5 ? 'N' : 'S';
-  const F = d.F >= 0.5 ? 'F' : 'T';
-  const J = d.J >= 0.5 ? 'J' : 'P';
-  return E + N + F + J;
+function sendToSheets(archetype,dims,ctype){
+  fetch('https://script.google.com/macros/s/AKfycbxSGTYmdxH6LSB08W7CJcaRsMhxJCezPAoi9Xuy6ovxuLs-vt6PmUvmjGLrgqsJt-QKAg/exec',{
+    method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({archetype,ctype:ctype||'未選擇',E:Math.round(dims.E*100),N:Math.round(dims.N*100),F:Math.round(dims.F*100),J:Math.round(dims.J*100),gender:selectedGender||'未填寫',age:selectedAge||'未填寫'})
+  }).catch(()=>{});
 }
 
-
-function sendToSheets(archetype, dims, ctype) {
-  const url = 'https://script.google.com/macros/s/AKfycbxSGTYmdxH6LSB08W7CJcaRsMhxJCezPAoi9Xuy6ovxuLs-vt6PmUvmjGLrgqsJt-QKAg/exec';
-  fetch(url, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      archetype: archetype,
-      E: Math.round(dims.E * 100),
-      N: Math.round(dims.N * 100),
-      F: Math.round(dims.F * 100),
-      J: Math.round(dims.J * 100),
-      ctype: ctype || '未選擇',
-      gender: selectedGender || '未填寫',
-      age: selectedAge || '未填寫'
-    })
-  }).catch(function(){});
-}
-
-function showResult() {
-  const d = getDims();
-  const mbti = getMBTI(d);
-  currentMBTI = mbti;
-
-  // Show loading state
-  document.getElementById('quiz').style.display = 'none';
-  document.getElementById('result').style.display = 'block';
-  document.getElementById('res-name').textContent = '分析中...';
-  document.getElementById('res-tagline').textContent = '正在為你生成定位報告';
-  window.scrollTo({top: 0, behavior: 'smooth'});
-
-  // Fetch result from Workers API
-  fetch('https://quiz-api.mybirthdayis1016.workers.dev', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      E: Math.round(d.E * 100),
-      N: Math.round(d.N * 100),
-      F: Math.round(d.F * 100),
-      J: Math.round(d.J * 100)
-    })
-  })
-  .then(r => r.json())
-  .then(A => {
-    sendToSheets(A.name, d, '未選擇');
-
-    // Meta Pixel - 追蹤完成測驗事件
-    if (typeof fbq !== 'undefined') {
-      fbq('track', 'Lead', {content_name: A.name, content_category: A.mbti});
-    }
-
-    document.getElementById('res-name').textContent = A.name;
-    document.getElementById('res-tagline').textContent = A.tag;
-    document.getElementById('res-status').textContent = A.status;
-    document.getElementById('res-insight').textContent = A.insight;
-    document.getElementById('res-diff').textContent = A.diff;
-    document.getElementById('diff-title').textContent = A.diff;
-    document.getElementById('diff-txt').textContent = A.diffTxt;
-    document.getElementById('sys-title').textContent = A.sys;
-    document.getElementById('sys-txt').textContent = A.sysTxt;
-    document.getElementById('cta-title').textContent = A.cta;
-    document.getElementById('cta-sub').textContent = A.ctas;
-
-    const tr = document.getElementById('trait-row');
-    tr.innerHTML = '';
-    (A.traits || []).forEach(t => {
-      const s = document.createElement('span');
-      s.className = 'trait'; s.textContent = t; tr.appendChild(s);
-    });
-
-    const dg = document.getElementById('dim-grid');
-    dg.innerHTML = '';
-    DIMS_DISPLAY.forEach(dd => {
-      const raw = d[dd.key] || 0.5;
-      const pct = Math.round(raw * 100);
-      const label = raw >= 0.5 ? dd.hiLabel : dd.loLabel;
-      const c = document.createElement('div');
-      c.className = 'dim-card';
-      c.innerHTML = '<div class="dim-top"><div class="dim-name">'+label+'</div><div class="dim-pct">'+pct+'%</div></div><div class="dim-bg"><div class="dim-fill" style="width:'+pct+'%"></div></div>';
+function showResult(){
+  const d=getDims(),mbti=getMBTI(d);
+  currentMBTI=mbti;
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='block';
+  document.getElementById('res-name').textContent='分析中...';
+  document.getElementById('res-tagline').textContent='正在為你生成定位報告';
+  window.scrollTo({top:0,behavior:'smooth'});
+  fetch('https://quiz-api.mybirthdayis1016.workers.dev',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({E:Math.round(d.E*100),N:Math.round(d.N*100),F:Math.round(d.F*100),J:Math.round(d.J*100)})
+  }).then(r=>r.json()).then(A=>{
+    sendToSheets(A.name,d,'未選擇');
+    if(typeof fbq!=='undefined')fbq('track','Lead',{content_name:A.name,content_category:A.mbti});
+    document.getElementById('res-name').textContent=A.name;
+    document.getElementById('res-tagline').textContent=A.tag;
+    document.getElementById('res-status').textContent=A.status;
+    document.getElementById('res-insight').textContent=A.insight;
+    document.getElementById('res-diff').textContent=A.diff;
+    document.getElementById('diff-txt').textContent=A.diffTxt;
+    document.getElementById('sys-title').textContent=A.sys;
+    document.getElementById('sys-txt').textContent=A.sysTxt;
+    document.getElementById('cta-title').textContent=A.cta;
+    document.getElementById('cta-sub').textContent=A.ctas;
+    const tr=document.getElementById('trait-row');tr.innerHTML='';
+    (A.traits||[]).forEach(t=>{const s=document.createElement('span');s.className='trait';s.textContent=t;tr.appendChild(s);});
+    const dg=document.getElementById('dim-grid');dg.innerHTML='';
+    DIMS_DISPLAY.forEach(dd=>{
+      const raw=d[dd.key]||0.5,pct=Math.round(raw*100),label=raw>=0.5?dd.hiLabel:dd.loLabel;
+      const c=document.createElement('div');c.className='dim-card';
+      c.innerHTML='<div class="dim-top"><div class="dim-name">'+label+'</div><div class="dim-pct">'+pct+'%</div></div><div class="dim-track"><div class="dim-fill" style="width:'+pct+'%"></div></div>';
       dg.appendChild(c);
     });
-
-    const cg = document.getElementById('ctype-grid');
-    cg.innerHTML = '';
-    CTYPES.forEach(ct => {
-      const b = document.createElement('button');
-      b.className = 'ctype-btn';
-      b.innerHTML = '<div class="ctype-dot"></div><div class="ctype-info"><div class="ctype-title">'+ct.title+'</div><div class="ctype-eg">'+ct.eg+'</div></div>';
-      b.onclick = () => selectCtype(ct.key, b, A.name, d);
-      cg.appendChild(b);
+    const cg=document.getElementById('ctype-grid');cg.innerHTML='';
+    CTYPES.forEach(ct=>{
+      const b=document.createElement('button');b.className='ctype-btn';
+      b.innerHTML='<div class="ctype-dot"></div><div class="ctype-info"><div class="ctype-title">'+ct.title+'</div><div class="ctype-eg">'+ct.eg+'</div></div>';
+      b.onclick=()=>selectCtype(ct.key,b,A.name,d);cg.appendChild(b);
     });
-
-    // BLK warning
-    const blkWarn = document.getElementById('blk-warn');
-    const highFear = d.BLK >= 0.7 && ans[15] >= 4;
-    const highNotReady = d.BLK >= 0.7 && ans[14] >= 4;
-    let warnKey = null;
-    if (highFear && highNotReady) warnKey = 'both';
-    else if (highFear) warnKey = 'high_fear';
-    else if (highNotReady) warnKey = 'high_notready';
-    if (warnKey) {
-      const W = BLK_WARN[warnKey];
-      document.getElementById('blk-warn-title').textContent = W.title;
-      document.getElementById('blk-warn-txt').textContent = W.txt;
-      const ws = document.getElementById('blk-warn-steps');
-      ws.innerHTML = '';
-      W.steps.forEach((s, i) => {
-        const div = document.createElement('div');
-        div.className = 'blk-warn-step';
-        div.innerHTML = '<div class="blk-warn-num">'+(i+1)+'</div><div class="blk-warn-stxt">'+s+'</div>';
-        ws.appendChild(div);
-      });
-      blkWarn.style.display = 'block';
-    } else {
-      blkWarn.style.display = 'none';
-    }
-  })
-  .catch(err => {
-    document.getElementById('res-name').textContent = '載入失敗，請重新整理頁面';
-    document.getElementById('res-tagline').textContent = err.message;
+    const bw=document.getElementById('blk-warn');
+    const hf=d.BLK>=0.7&&ans[15]>=4,hn=d.BLK>=0.7&&ans[14]>=4;
+    let wk=null;if(hf&&hn)wk='both';else if(hf)wk='high_fear';else if(hn)wk='high_notready';
+    if(wk){
+      const W=BLK_WARN[wk];
+      document.getElementById('blk-warn-title').textContent=W.title;
+      document.getElementById('blk-warn-txt').textContent=W.txt;
+      const ws=document.getElementById('blk-warn-steps');ws.innerHTML='';
+      W.steps.forEach((s,i)=>{const div=document.createElement('div');div.className='blk-warn-step';div.innerHTML='<div class="blk-warn-num">'+(i+1)+'</div><div class="blk-warn-stxt">'+s+'</div>';ws.appendChild(div);});
+      bw.style.display='block';
+    }else{bw.style.display='none';}
+  }).catch(err=>{
+    document.getElementById('res-name').textContent='載入失敗，請重新整理頁面';
+    document.getElementById('res-tagline').textContent=err.message;
   });
 }
 
-function selectCtype(ctypeKey, el, archetypeName, dims) {
-  document.querySelectorAll('.ctype-btn').forEach(b => b.classList.remove('active'));
+function selectCtype(ctypeKey,el,archetypeName,dims){
+  document.querySelectorAll('.ctype-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-
-  if (archetypeName) {
-    sendToSheets(archetypeName, dims || getDims(), ctypeKey);
-  }
-
-  // Fetch steps from Workers API
-  fetch('https://quiz-api.mybirthdayis1016.workers.dev/steps', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      E: Math.round((dims || getDims()).E * 100),
-      N: Math.round((dims || getDims()).N * 100),
-      F: Math.round((dims || getDims()).F * 100),
-      J: Math.round((dims || getDims()).J * 100),
-      ctype: ctypeKey
-    })
-  })
-  .then(r => r.json())
-  .then(data => {
-    const sw = document.getElementById('steps-wrap');
-    sw.classList.add('show');
-    const st = document.getElementById('steps');
-    st.innerHTML = '';
-    (data.steps || []).forEach((s, i) => {
-      const div = document.createElement('div');
-      div.className = 'step';
-      div.innerHTML = '<div class="step-num">'+(i+1)+'</div><div class="step-txt">'+s+'</div>';
-      st.appendChild(div);
-    });
-    setTimeout(() => sw.scrollIntoView({behavior:'smooth', block:'start'}), 100);
-  })
-  .catch(() => {
-    const sw = document.getElementById('steps-wrap');
-    sw.classList.add('show');
-    document.getElementById('steps').innerHTML = '<div class="step"><div class="step-txt">載入失敗，請重新整理頁面</div></div>';
+  if(archetypeName)sendToSheets(archetypeName,dims||getDims(),ctypeKey);
+  fetch('https://quiz-api.mybirthdayis1016.workers.dev/steps',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({E:Math.round((dims||getDims()).E*100),N:Math.round((dims||getDims()).N*100),F:Math.round((dims||getDims()).F*100),J:Math.round((dims||getDims()).J*100),ctype:ctypeKey})
+  }).then(r=>r.json()).then(data=>{
+    const sw=document.getElementById('steps-wrap');sw.classList.add('show');
+    const st=document.getElementById('steps');st.innerHTML='';
+    (data.steps||[]).forEach((s,i)=>{const div=document.createElement('div');div.className='step';div.innerHTML='<div class="step-num">'+(i+1)+'</div><div class="step-txt">'+s+'</div>';st.appendChild(div);});
+    setTimeout(()=>sw.scrollIntoView({behavior:'smooth',block:'start'}),100);
+  }).catch(()=>{
+    document.getElementById('steps-wrap').classList.add('show');
+    document.getElementById('steps').innerHTML='<div class="step"><div class="step-txt">載入失敗，請重新整理頁面</div></div>';
   });
 }
-function restart() {
-  cur = 0; ans = new Array(26).fill(null); currentMBTI = ''; selectedGender = ''; selectedAge = '';
-  document.getElementById('result').style.display = 'none';
+
+function restart(){
+  cur=0;ans=new Array(26).fill(null);currentMBTI='';selectedGender='';selectedAge='';
+  document.getElementById('result').style.display='none';
   document.getElementById('steps-wrap').classList.remove('show');
-  document.getElementById('quiz').style.display = 'block';
-  render();
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  document.getElementById('quiz').style.display='block';
+  render();window.scrollTo({top:0,behavior:'smooth'});
 }
 
 render();
