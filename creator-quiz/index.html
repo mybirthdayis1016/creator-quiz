@@ -240,10 +240,10 @@ fbq('init','1193210454959916');fbq('track','PageView');
     </div>
     <hr class="divider">
     <div class="cta-box">
-      <div class="cta-eyebrow">老陳老師的訂閱服務</div>
-      <div class="cta-title" id="cta-title"></div>
-      <div class="cta-sub" id="cta-sub"></div>
-      <a class="cta-btn" href="https://10xue.tw" target="_blank">了解訂閱服務 →</a>
+      <div class="cta-eyebrow">與老陳老師一起學習</div>
+      <div class="cta-title">你的創作者之路，從這裡開始</div>
+      <div class="cta-sub">老陳老師幫助創作者找到自己的定位、建立可持續的內容系統。到官網了解更多。</div>
+      <a class="cta-btn" href="https://10xue.tw/" target="_blank">前往 10XUE 官網 →</a>
     </div>
     <button class="restart" onclick="restart()">重新測驗</button>
   </div>
@@ -399,7 +399,6 @@ function showResult(){
   }).then(r=>r.json()).then(A=>{
     sendToSheets(A.name,d,'未選擇');
     if(typeof fbq!=='undefined')fbq('track','Lead',{content_name:A.name,content_category:A.mbti});
-    document.getElementById('res-name').textContent=A.name;
     document.getElementById('res-tagline').textContent=A.tag;
     document.getElementById('res-status').textContent=A.status;
     document.getElementById('res-insight').textContent=A.insight;
@@ -407,8 +406,6 @@ function showResult(){
     document.getElementById('diff-txt').textContent=A.diffTxt;
     document.getElementById('sys-title').textContent=A.sys;
     document.getElementById('sys-txt').textContent=A.sysTxt;
-    document.getElementById('cta-title').textContent=A.cta;
-    document.getElementById('cta-sub').textContent=A.ctas;
     const tr=document.getElementById('trait-row');tr.innerHTML='';
     (A.traits||[]).forEach(t=>{const s=document.createElement('span');s.className='trait';s.textContent=t;tr.appendChild(s);});
     const dg=document.getElementById('dim-grid');dg.innerHTML='';
