@@ -399,6 +399,7 @@ function showResult(){
   }).then(r=>r.json()).then(A=>{
     sendToSheets(A.name,d,'未選擇');
     if(typeof fbq!=='undefined')fbq('track','Lead',{content_name:A.name,content_category:A.mbti});
+    document.getElementById('res-name').textContent=A.name;
     document.getElementById('res-tagline').textContent=A.tag;
     document.getElementById('res-status').textContent=A.status;
     document.getElementById('res-insight').textContent=A.insight;
